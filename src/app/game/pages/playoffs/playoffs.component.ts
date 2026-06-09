@@ -30,8 +30,27 @@ export class PlayoffsComponent {
   readonly userTie = this.tournament.userTie;
   readonly eliminatedAt = this.tournament.eliminatedAt;
   readonly won = this.tournament.won;
+  readonly champion = this.tournament.champion;
 
   readonly viewState = signal<PlayoffsViewState>('idle');
+
+  /**
+   * Whether the user is still alive in the bracket — i.e., they have
+   * a tie in the current round. When false, the page enters "ghost
+   * mode": the user watches subsequent rounds simulate without playing.
+   */
+  readonly userInCurrentRound = computed(() => {
+    const user = this.userTeam();
+    const round = this.currentRound();
+    if (!user || !round) return false;
+    return round.ties.some((t) => t.teamA.id === user.id || t.teamB.id === user.id);
+  });
+
+  /** True when the user has been eliminated from the bracket. */
+  readonly userEliminated = computed(() => {
+    const e = this.eliminatedAt();
+    return e !== null && e !== 'group';
+  });
 
   /** Leg 1: user's tie home/away as-is. */
   readonly leg1Home = computed<MatchTeam | null>(() => this.userTie()?.teamA ?? null);
@@ -61,12 +80,15 @@ export class PlayoffsComponent {
         this.router.navigate(['/tournament/victory']);
         return;
       }
-      const elim = this.eliminatedAt();
-      if (elim && elim !== 'group') {
+      // Group-stage elimination shortcuts past the bracket entirely.
+      if (this.eliminatedAt() === 'group') {
         this.router.navigate(['/tournament/eliminated']);
         return;
       }
-      // Sync view state when the round changes (or first enters page).
+      // Bracket-stage elimination keeps the user on this page in ghost
+      // mode so they can watch the rest of the tournament play out and
+      // see who lifted the cup. Navigation to /eliminated only happens
+      // when the user explicitly presses "Ver resumen final".
       const round = this.currentRound();
       if (round && this.syncedRoundName !== round.name) {
         this.syncedRoundName = round.name;
@@ -128,5 +150,20 @@ export class PlayoffsComponent {
    */
   advanceToNextRound(): void {
     this.tournament.advanceToNextRound();
+  }
+
+  /**
+   * Ghost-mode path: the user is already out, so they hit one button
+   * per round to fast-forward the simulation until the final.
+   */
+  simulateThisRound(): void {
+    this.simulateRest();
+  }
+
+  /**
+   * From the eliminated final-state screen, navigate to the summary.
+   */
+  viewSummary(): void {
+    this.router.navigate(['/tournament/eliminated']);
   }
 }

@@ -13,10 +13,17 @@
 
     @switch (viewState()) {
       @case ('idle') {
-        <button type="button" class="btn" (click)="playLeg1()">
-          @if (isFinalRound()) { Jugar la final }
-          @else { Jugar la ida }
-        </button>
+        @if (userInCurrentRound()) {
+          <button type="button" class="btn" (click)="playLeg1()">
+            @if (isFinalRound()) { Jugar la final }
+            @else { Jugar la ida }
+          </button>
+        } @else {
+          <!-- Ghost mode: user is out, just sim the round -->
+          <button type="button" class="btn" (click)="simulateThisRound()">
+            Simular ronda
+          </button>
+        }
       }
       @case ('between-legs') {
         <button type="button" class="btn" (click)="playLeg2()">
@@ -33,10 +40,23 @@
           <button type="button" class="btn" (click)="advanceToNextRound()">
             Siguiente ronda
           </button>
+        } @else if (userEliminated() && champion()) {
+          <button type="button" class="btn" (click)="viewSummary()">
+            Ver resumen final
+          </button>
         }
       }
     }
   </header>
+
+  @if (userEliminated()) {
+    <div class="ghost-banner">
+      <span class="ghost-banner__tag">Eliminado</span>
+      <span class="ghost-banner__msg">
+        Mirando cómo sigue el torneo hasta saber quién levanta la copa.
+      </span>
+    </div>
+  }
 
   <div class="rounds-strip">
     @for (round of rounds(); track round.name) {

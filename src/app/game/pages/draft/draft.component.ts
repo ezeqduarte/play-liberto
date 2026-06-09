@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, effect, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { DraftService } from '../../services/draft.service';
+import { DraftService, SquadEntry } from '../../services/draft.service';
 import { Player } from '../../models';
 
 @Component({
@@ -15,29 +15,24 @@ export class DraftComponent {
 
   readonly formation = this.draft.formation;
   readonly squad = this.draft.squad;
-  readonly currentSlot = this.draft.currentSlot;
-  readonly currentSlotIndex = this.draft.currentSlotIndex;
   readonly currentTeam = this.draft.currentTeam;
   readonly rollsLeft = this.draft.rollsLeft;
   readonly isComplete = this.draft.isComplete;
+  readonly slotsFilled = this.draft.slotsFilled;
+  readonly selectedPlayer = this.draft.selectedPlayer;
+  readonly isSelectingSlot = this.draft.isSelectingSlot;
+  readonly eligibleSlotIds = this.draft.eligibleSlotIdsForSelection;
 
-  readonly selectablePlayers = computed<Player[]>(() => {
-    // Re-read signal-dependent state to recompute when any of these change.
+  readonly roster = computed<Player[]>(() => {
     this.draft.currentTeam();
-    this.draft.currentSlotIndex();
-    this.draft.squad();
-    return this.draft.selectablePlayers();
+    return this.draft.rosterOfCurrentTeam();
   });
 
-  readonly canRollYear = computed(() => {
-    const team = this.currentTeam();
-    if (!team || this.rollsLeft() <= 0) return false;
-    // checked inside service too, but reflect it in the UI
-    return true;
-  });
+  readonly canRollYear = computed(
+    () => this.rollsLeft() > 0 && this.draft.canRollYear(),
+  );
 
   constructor() {
-    // If no formation has been chosen, bounce back to the select screen.
     effect(() => {
       if (!this.formation()) {
         this.router.navigate(['/draft/formation']);
@@ -53,8 +48,19 @@ export class DraftComponent {
     this.draft.rollYear();
   }
 
-  pickPlayer(player: Player): void {
-    this.draft.pickPlayer(player);
+  selectPlayer(player: Player): void {
+    this.draft.selectPlayer(player);
+  }
+
+  cancelSelection(): void {
+    this.draft.cancelSelection();
+  }
+
+  assignToSlot(entry: SquadEntry): void {
+    if (!this.isSelectingSlot()) return;
+    if (entry.player !== null) return;
+    if (!this.eligibleSlotIds().has(entry.slot.id)) return;
+    this.draft.assignSelectedToSlot(entry.slot.id);
   }
 
   startTournament(): void {
@@ -64,5 +70,17 @@ export class DraftComponent {
   resetDraft(): void {
     this.draft.reset();
     this.router.navigate(['/draft/formation']);
+  }
+
+  isAlreadyPicked(player: Player): boolean {
+    return this.draft.isAlreadyPicked(player);
+  }
+
+  hasEligibleSlot(player: Player): boolean {
+    return this.draft.hasEligibleSlot(player);
+  }
+
+  isPlayerSelected(player: Player): boolean {
+    return this.selectedPlayer()?.name === player.name;
   }
 }

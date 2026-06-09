@@ -215,8 +215,25 @@ export class TournamentService {
 
     const updatedTies = round.ties.map((t) => {
       if (t.teamA.id !== user.id && t.teamB.id !== user.id) return t;
-      if (legNumber === 1) return { ...t, leg1: result };
-      return { ...t, leg2: result };
+      if (legNumber === 1) {
+        // Leg 1: team A is home, team B is away — running aggregate
+        // already maps cleanly. For the final this is also the only leg.
+        return {
+          ...t,
+          leg1: result,
+          aggregateA: result.homeGoals,
+          aggregateB: result.awayGoals,
+        };
+      }
+      // Leg 2: team B is home, team A is away. Combine with leg1 to
+      // get the full aggregate.
+      const leg1 = t.leg1!;
+      return {
+        ...t,
+        leg2: result,
+        aggregateA: leg1.homeGoals + result.awayGoals,
+        aggregateB: leg1.awayGoals + result.homeGoals,
+      };
     });
     const updatedRound = { ...round, ties: updatedTies };
     const idx = rounds.indexOf(round);

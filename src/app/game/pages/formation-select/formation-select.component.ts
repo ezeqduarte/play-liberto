@@ -8,6 +8,18 @@ import {
 } from '../../models';
 import { PageNavComponent } from '../../components/page-nav/page-nav.component';
 
+/**
+ * localStorage flag that gates the admin shortcut button. Defaults to
+ * 'false' on first visit. To reveal the button, run in the browser
+ * devtools console:
+ *
+ *   localStorage.setItem('liberto.adminEnabled', 'true')
+ *
+ * Reload the formation-select page and the dashed admin button will
+ * appear under the main CTA.
+ */
+const ADMIN_FLAG_KEY = 'liberto.adminEnabled';
+
 @Component({
   selector: 'app-formation-select',
   imports: [PageNavComponent],
@@ -18,6 +30,18 @@ import { PageNavComponent } from '../../components/page-nav/page-nav.component';
 export class FormationSelectComponent {
   private readonly draft = inject(DraftService);
   private readonly router = inject(Router);
+
+  readonly showAdminButton = signal(false);
+
+  constructor() {
+    if (typeof localStorage === 'undefined') return;
+    // Seed the flag as 'false' on the very first visit so the user can
+    // discover and toggle it manually in devtools.
+    if (localStorage.getItem(ADMIN_FLAG_KEY) === null) {
+      localStorage.setItem(ADMIN_FLAG_KEY, 'false');
+    }
+    this.showAdminButton.set(localStorage.getItem(ADMIN_FLAG_KEY) === 'true');
+  }
 
   /** All 10 unique shapes, derived from the formation pool. */
   readonly shapes: FormationShape[] = Array.from(

@@ -1,0 +1,69 @@
+<section class="groups-page">
+  <header class="groups-page__head">
+    <div>
+      <h1>Fase de grupos</h1>
+      <p>32 equipos · 8 grupos · top 2 avanzan a octavos</p>
+    </div>
+    @if (!completed()) {
+      <button type="button" class="btn" (click)="simulate()">
+        Simular fase de grupos
+      </button>
+    } @else if (userAdvanced()) {
+      <button type="button" class="btn" (click)="goToBracket()">
+        Sortear playoffs
+      </button>
+    } @else if (eliminatedAt() === 'group') {
+      <button type="button" class="btn btn-secondary" (click)="goToEliminated()">
+        Ver resultado
+      </button>
+    }
+  </header>
+
+  <div class="groups-grid">
+    @for (group of groups(); track group.id) {
+      <article
+        class="group-card"
+        [class.group-card--user]="userGroup()?.id === group.id"
+      >
+        <div class="group-card__head">
+          <span class="group-card__label">Grupo {{ group.id }}</span>
+          @if (userGroup()?.id === group.id) {
+            <span class="group-card__user-tag">Tu grupo</span>
+          }
+        </div>
+        <table class="group-card__table">
+          <thead>
+            <tr>
+              <th class="left">Equipo</th>
+              <th>PJ</th>
+              <th>G</th>
+              <th>E</th>
+              <th>P</th>
+              <th>DG</th>
+              <th>Pts</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (row of group.standings; track row.team.id; let i = $index) {
+              <tr
+                [class.group-card__row--qualified]="completed() && i < 2"
+                [class.group-card__row--user]="row.team.id === userTeam()?.id"
+              >
+                <td class="left">
+                  <span class="group-card__position">{{ i + 1 }}</span>
+                  {{ row.team.displayName }}
+                </td>
+                <td>{{ row.played }}</td>
+                <td>{{ row.won }}</td>
+                <td>{{ row.drawn }}</td>
+                <td>{{ row.lost }}</td>
+                <td>{{ row.goalDifference > 0 ? '+' : '' }}{{ row.goalDifference }}</td>
+                <td><strong>{{ row.points }}</strong></td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </article>
+    }
+  </div>
+</section>

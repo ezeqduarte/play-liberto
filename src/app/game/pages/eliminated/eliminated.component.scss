@@ -1,0 +1,39 @@
+.eliminated {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 48px 24px;
+  background:
+    radial-gradient(
+      ellipse at top,
+      rgba(239, 79, 91, 0.12),
+      transparent 60%
+    ),
+    var(--surface-bg);
+
+  &__crest {
+    font-size: 96px;
+    margin-bottom: 24px;
+  }
+
+  &__title {
+    font-size: 48px;
+    font-weight: 800;
+    margin: 0 0 12px;
+    color: var(--danger);
+  }
+
+  &__subtitle {
+    color: var(--text-secondary);
+    font-size: 18px;
+    max-width: 480px;
+    margin: 0 0 32px;
+
+    strong {
+      color: var(--text-primary);
+    }
+  }
+}

@@ -1,0 +1,84 @@
+<section class="playoffs">
+  <header class="playoffs__head">
+    <div>
+      <h1>{{ activeRound()?.label ?? 'Playoffs' }}</h1>
+      <p>
+        @if (rounds().length > 0) {
+          {{ rounds().length === 1 ? 'Mano a mano. Top 16 equipos del torneo.' : '' }}
+        }
+      </p>
+    </div>
+    @if (activeRound() && !currentRoundPlayed()) {
+      <button type="button" class="btn" (click)="simulateRound()">
+        @if (activeRound()?.name === 'F') {
+          Jugar la final
+        } @else {
+          Simular ronda
+        }
+      </button>
+    } @else if (currentRoundPlayed() && activeRound()?.name !== 'F') {
+      <button type="button" class="btn" (click)="simulateRound()">
+        Siguiente ronda
+      </button>
+    }
+  </header>
+
+  <!-- All round progress badges -->
+  <div class="rounds-strip">
+    @for (round of rounds(); track round.name) {
+      <span
+        class="rounds-strip__item"
+        [class.rounds-strip__item--active]="round.name === activeRound()?.name"
+        [class.rounds-strip__item--done]="round.completed"
+      >
+        {{ round.label }}
+      </span>
+    }
+  </div>
+
+  <!-- Active round bracket -->
+  @if (activeRound(); as round) {
+    <div class="ties" [class.ties--final]="round.name === 'F'">
+      @for (tie of round.ties; track tie.id) {
+        <article
+          class="tie"
+          [class.tie--user]="isUserTie(tie)"
+          [class.tie--final]="tie.isFinal"
+        >
+          <div
+            class="tie__team"
+            [class.tie__team--winner]="tie.winner?.id === tie.teamA.id"
+            [class.tie__team--loser]="tie.winner && tie.winner.id !== tie.teamA.id"
+          >
+            <span class="tie__team-name">{{ tie.teamA.displayName }}</span>
+            @if (tie.leg1) {
+              <span class="tie__team-score">{{ tie.aggregateA }}</span>
+            }
+          </div>
+          <div
+            class="tie__team"
+            [class.tie__team--winner]="tie.winner?.id === tie.teamB.id"
+            [class.tie__team--loser]="tie.winner && tie.winner.id !== tie.teamB.id"
+          >
+            <span class="tie__team-name">{{ tie.teamB.displayName }}</span>
+            @if (tie.leg1) {
+              <span class="tie__team-score">{{ tie.aggregateB }}</span>
+            }
+          </div>
+          @if (tie.leg1 && !tie.isFinal) {
+            <div class="tie__legs">
+              <span>Ida {{ tie.leg1.homeGoals }}-{{ tie.leg1.awayGoals }}</span>
+              @if (tie.leg2) {
+                <span>Vuelta {{ tie.leg2.homeGoals }}-{{ tie.leg2.awayGoals }}</span>
+              }
+            </div>
+          } @else if (tie.leg1 && tie.isFinal) {
+            <div class="tie__legs">
+              <span>Final {{ tie.leg1.homeGoals }}-{{ tie.leg1.awayGoals }}</span>
+            </div>
+          }
+        </article>
+      }
+    </div>
+  }
+</section>

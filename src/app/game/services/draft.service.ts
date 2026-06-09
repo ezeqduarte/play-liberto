@@ -248,6 +248,49 @@ export class DraftService {
     this._selectedPlayer.set(null);
   }
 
+  /**
+   * Admin shortcut for debugging end-to-end flows (especially the
+   * victory screen). Bypasses the draft by filling every slot with a
+   * synthetic 99-rated player matching the slot's primary allowed
+   * position, plus a 99-rated coach. Sets the draft to a complete
+   * state so the tournament can start immediately.
+   */
+  fillAdminSquad(formationId: string): void {
+    const formation = getFormationById(formationId);
+    if (!formation) {
+      throw new Error(`Unknown formation: ${formationId}`);
+    }
+    const adminCoach: Coach = {
+      name: 'Admin DT',
+      rating: 99,
+      rarity: 'legendary',
+    };
+    const adminTeam: Team = {
+      name: 'Admin XI',
+      year: 2099,
+      players: [],
+      coach: adminCoach,
+    };
+
+    this._formation.set(formation);
+    const squad: SquadEntry[] = formation.slots.map((slot, i) => {
+      const primary = slot.allowed[0];
+      const player: Player = {
+        name: `Admin ${slot.label} ${i + 1}`,
+        rating: 99,
+        rarity: 'legendary',
+        positions: [primary],
+      };
+      return { slot, player, fromTeam: adminTeam };
+    });
+    this._squad.set(squad);
+    this._coachEntry.set({ coach: adminCoach, fromTeam: adminTeam });
+    this._pickedNames.set(new Set(squad.map((e) => e.player!.name)));
+    this._selectedPlayer.set(null);
+    this._currentTeam.set(null);
+    this._rollsLeft.set(0);
+  }
+
   private matchesSlot(player: Player, slot: FormationSlot): boolean {
     return player.positions.some((p: Position) => slot.allowed.includes(p));
   }

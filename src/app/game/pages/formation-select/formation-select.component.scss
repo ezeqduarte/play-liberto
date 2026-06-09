@@ -133,6 +133,26 @@
   }
 }
 
+.admin-btn {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px dashed var(--surface-hairline);
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  transition: all 0.15s ease;
+  margin-top: 6px;
+
+  &:hover {
+    color: var(--rarity-legendary);
+    border-color: var(--rarity-legendary);
+    background: rgba(255, 181, 71, 0.08);
+  }
+}
+
 .bullet-list {
   list-style: none;
   margin: 0;

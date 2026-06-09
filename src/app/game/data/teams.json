@@ -508,5 +508,39 @@
       { "name": "Bruno Henrique", "rarity": "epic", "rating": 85, "positions": ["LW"] },
       { "name": "Gabriel Barbosa", "rarity": "legendary", "rating": 87, "positions": ["ST"] }
     ]
+  },
+  {
+    "name": "LDU Quito",
+    "year": 2008,
+    "players": [
+      { "name": "José Francisco Cevallos", "rarity": "epic", "rating": 85, "positions": ["GK"] },
+      { "name": "Neicer Reasco", "rarity": "rare", "rating": 81, "positions": ["RB"] },
+      { "name": "Jairo Campos", "rarity": "rare", "rating": 80, "positions": ["CB"] },
+      { "name": "Diego Calderón", "rarity": "rare", "rating": 80, "positions": ["CB"] },
+      { "name": "Paul Ambrosi", "rarity": "rare", "rating": 80, "positions": ["LB"] },
+      { "name": "Patricio Urrutia", "rarity": "epic", "rating": 83, "positions": ["CDM"] },
+      { "name": "Edú Manga", "rarity": "rare", "rating": 81, "positions": ["CM"] },
+      { "name": "Joffre Guerrón", "rarity": "epic", "rating": 83, "positions": ["RW"] },
+      { "name": "Luis Bolaños", "rarity": "rare", "rating": 81, "positions": ["LW"] },
+      { "name": "Damián Manso", "rarity": "epic", "rating": 82, "positions": ["CAM"] },
+      { "name": "Claudio Bieler", "rarity": "epic", "rating": 84, "positions": ["ST"] }
+    ]
+  },
+  {
+    "name": "Nacional",
+    "year": 1988,
+    "players": [
+      { "name": "Jorge Seré", "rarity": "epic", "rating": 83, "positions": ["GK"] },
+      { "name": "Daniel Revelez", "rarity": "rare", "rating": 80, "positions": ["RB"] },
+      { "name": "Hugo de León", "rarity": "epic", "rating": 84, "positions": ["CB"] },
+      { "name": "Tabaré Silva", "rarity": "rare", "rating": 80, "positions": ["CB"] },
+      { "name": "Néstor Montelongo", "rarity": "rare", "rating": 80, "positions": ["LB"] },
+      { "name": "Pablo Forlán", "rarity": "epic", "rating": 82, "positions": ["CDM"] },
+      { "name": "Daniel Carreño", "rarity": "rare", "rating": 81, "positions": ["CM"] },
+      { "name": "Ostolaza", "rarity": "epic", "rating": 84, "positions": ["CM", "CAM"] },
+      { "name": "Tony Gómez", "rarity": "rare", "rating": 80, "positions": ["RW"] },
+      { "name": "Antonio Alzamendi", "rarity": "epic", "rating": 84, "positions": ["ST", "RW"] },
+      { "name": "Rubén Sosa", "rarity": "legendary", "rating": 87, "positions": ["ST", "CAM"] }
+    ]
   }
 ]

@@ -2,44 +2,75 @@
 <section class="formation-select">
   <header class="formation-select__head">
     <h1>Elegí tu formación</h1>
-    <p>Definí el dibujo táctico y el estilo de juego antes de armar tu 11.</p>
+    <p>Dibujo táctico y estilo de juego. La cancha refleja la combinación.</p>
   </header>
 
-  <div class="style-tabs" role="tablist">
-    @for (style of styles; track style) {
-      <button
-        type="button"
-        role="tab"
-        class="style-tabs__tab"
-        [class.style-tabs__tab--active]="selectedStyle() === style"
-        (click)="selectStyle(style)"
-      >
-        {{ styleLabel[style] }}
-      </button>
-    }
-  </div>
-
-  <div class="shapes-grid">
-    @for (formation of shapesForStyle(); track formation.id) {
-      <button
-        type="button"
-        class="shape-card"
-        (click)="chooseFormation(formation)"
-      >
-        <div class="shape-card__pitch">
-          @for (slot of formation.slots; track slot.id) {
-            <span
-              class="shape-card__dot"
+  <div class="formation-select__body">
+    <div class="pitch-preview">
+      @if (selectedFormation(); as f) {
+        <div class="pitch">
+          @for (slot of f.slots; track slot.id) {
+            <div
+              class="pitch__slot"
               [style.left.%]="slot.x"
               [style.bottom.%]="slot.y"
-            ></span>
+            >
+              <span>{{ slot.label }}</span>
+            </div>
           }
         </div>
-        <div class="shape-card__meta">
-          <span class="shape-card__shape">{{ formation.shape }}</span>
-          <span class="shape-card__style">{{ styleLabel[formation.style] }}</span>
+        <div class="pitch-preview__caption">
+          <strong>{{ f.shape }}</strong> · {{ styleLabel[f.style] }}
         </div>
+      }
+    </div>
+
+    <aside class="bullets">
+      <section class="bullets__section">
+        <h2>Dibujo</h2>
+        <ul class="bullet-list" role="radiogroup" aria-label="Dibujo táctico">
+          @for (shape of shapes; track shape) {
+            <li>
+              <button
+                type="button"
+                role="radio"
+                class="bullet"
+                [class.bullet--active]="selectedShape() === shape"
+                [attr.aria-checked]="selectedShape() === shape"
+                (click)="selectShape(shape)"
+              >
+                <span class="bullet__dot"></span>
+                <span class="bullet__label">{{ shape }}</span>
+              </button>
+            </li>
+          }
+        </ul>
+      </section>
+
+      <section class="bullets__section">
+        <h2>Estilo</h2>
+        <ul class="bullet-list" role="radiogroup" aria-label="Estilo de juego">
+          @for (style of styles; track style) {
+            <li>
+              <button
+                type="button"
+                role="radio"
+                class="bullet"
+                [class.bullet--active]="selectedStyle() === style"
+                [attr.aria-checked]="selectedStyle() === style"
+                (click)="selectStyle(style)"
+              >
+                <span class="bullet__dot"></span>
+                <span class="bullet__label">{{ styleLabel[style] }}</span>
+              </button>
+            </li>
+          }
+        </ul>
+      </section>
+
+      <button type="button" class="btn bullets__cta" (click)="confirm()">
+        Empezar draft
       </button>
-    }
+    </aside>
   </div>
 </section>

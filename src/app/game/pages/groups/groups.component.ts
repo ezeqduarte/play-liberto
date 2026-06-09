@@ -2,9 +2,11 @@ import { ChangeDetectionStrategy, Component, computed, effect, inject } from '@a
 import { Router } from '@angular/router';
 import { TournamentService } from '../../services/tournament.service';
 import { DraftService } from '../../services/draft.service';
+import { PageNavComponent } from '../../components/page-nav/page-nav.component';
 
 @Component({
   selector: 'app-groups',
+  imports: [PageNavComponent],
   templateUrl: './groups.component.html',
   styleUrl: './groups.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -2,9 +2,11 @@ import { ChangeDetectionStrategy, Component, computed, effect, inject } from '@a
 import { Router } from '@angular/router';
 import { TournamentService } from '../../services/tournament.service';
 import { KnockoutTie } from '../../models';
+import { PageNavComponent } from '../../components/page-nav/page-nav.component';
 
 @Component({
   selector: 'app-playoffs',
+  imports: [PageNavComponent],
   templateUrl: './playoffs.component.html',
   styleUrl: './playoffs.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

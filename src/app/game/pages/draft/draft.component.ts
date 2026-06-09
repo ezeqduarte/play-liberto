@@ -2,9 +2,11 @@ import { ChangeDetectionStrategy, Component, computed, effect, inject } from '@a
 import { Router } from '@angular/router';
 import { DraftService, SquadEntry } from '../../services/draft.service';
 import { Player } from '../../models';
+import { PageNavComponent } from '../../components/page-nav/page-nav.component';
 
 @Component({
   selector: 'app-draft',
+  imports: [PageNavComponent],
   templateUrl: './draft.component.html',
   styleUrl: './draft.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

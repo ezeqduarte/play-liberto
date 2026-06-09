@@ -3,3 +3,4 @@ export * from './team.model';
 export * from './position.model';
 export * from './rarity.model';
 export * from './formation.model';
+export * from './match.model';

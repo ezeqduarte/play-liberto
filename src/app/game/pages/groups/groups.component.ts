@@ -75,7 +75,8 @@ export class GroupsComponent {
   }
 
   goToBracket(): void {
-    this.tournament.drawBracket();
+    // The /draw page picks teams one-by-one and commits the bracket
+    // via TournamentService.commitBracket once the draw finishes.
     this.router.navigate(['/tournament/draw']);
   }
 

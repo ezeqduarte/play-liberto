@@ -3,49 +3,91 @@
   <header class="draw__head">
     <div>
       <h1>Sorteo de octavos de final</h1>
-      <p>16 equipos. 8 llaves a doble partido.</p>
+      <p>
+        16 equipos van saliendo del bolillero y se ubican aleatoriamente
+        en las 8 llaves.
+      </p>
     </div>
-    @if (!drawStarted()) {
+    @if (!started()) {
       <button type="button" class="btn" (click)="startDraw()">
         Comenzar sorteo
       </button>
-    } @else if (allRevealed()) {
+    } @else if (allDrawn()) {
       <button type="button" class="btn" (click)="goToPlayoffs()">
         Comenzar octavos
       </button>
     }
   </header>
 
-  <div class="cards-grid">
-    @for (tie of ties(); track trackTie($index, tie); let i = $index) {
+  <div class="draw__progress">
+    <span class="draw__counter">{{ drawnCount() }} / 16</span>
+    <div class="draw__speed-controls">
+      @for (s of speeds; track s) {
+        <button
+          type="button"
+          class="speed-btn"
+          [class.speed-btn--active]="speed() === s"
+          [disabled]="!isDrawing()"
+          (click)="setSpeed(s)"
+        >
+          {{ speedLabels[s] }}
+        </button>
+      }
+    </div>
+  </div>
+
+  <div class="ties-grid">
+    @for (row of tieRows(); track trackTieRow($index, row)) {
       <article
-        class="card"
-        [class.card--flipped]="isRevealed(i)"
-        [class.card--user]="isUserTie(tie)"
+        class="tie-card"
+        [class.tie-card--user]="isUserTie(row.tieIndex)"
       >
-        <div class="card__inner">
-          <div class="card__face card__face--front">
-            <div class="card__pattern" aria-hidden="true">
-              <span>?</span>
-            </div>
-            <span class="card__index">Llave {{ i + 1 }}</span>
-          </div>
-          <div class="card__face card__face--back">
-            @if (isUserTie(tie)) {
-              <span class="card__user-pill">Tu llave</span>
-            }
-            <div class="card__team">
-              <span class="card__team-name">{{ tie.teamA.displayName }}</span>
-              <span class="card__team-rating">OVR {{ tie.teamA.strength.overall }}</span>
-            </div>
-            <span class="card__vs">vs</span>
-            <div class="card__team">
-              <span class="card__team-name">{{ tie.teamB.displayName }}</span>
-              <span class="card__team-rating">OVR {{ tie.teamB.strength.overall }}</span>
-            </div>
-          </div>
+        <span class="tie-card__index">Llave {{ row.tieIndex + 1 }}</span>
+        @if (isUserTie(row.tieIndex)) {
+          <span class="tie-card__user-pill">Tu llave</span>
+        }
+        <div
+          class="tie-card__slot"
+          [class.tie-card__slot--filled]="row.a.team !== null"
+          [class.tie-card__slot--just-filled]="row.a.justFilled"
+          [class.tie-card__slot--user]="isUserTeam(row.a.team)"
+        >
+          @if (row.a.team; as t) {
+            <span class="tie-card__team">{{ t.displayName }}</span>
+          } @else {
+            <span class="tie-card__placeholder">?</span>
+          }
+        </div>
+        <span class="tie-card__vs">vs</span>
+        <div
+          class="tie-card__slot"
+          [class.tie-card__slot--filled]="row.b.team !== null"
+          [class.tie-card__slot--just-filled]="row.b.justFilled"
+          [class.tie-card__slot--user]="isUserTeam(row.b.team)"
+        >
+          @if (row.b.team; as t) {
+            <span class="tie-card__team">{{ t.displayName }}</span>
+          } @else {
+            <span class="tie-card__placeholder">?</span>
+          }
         </div>
       </article>
     }
   </div>
+
+  @if (pool().length > 0) {
+    <div class="pool">
+      <h3>En el bolillero · {{ pool().length }}</h3>
+      <ul class="pool__chips">
+        @for (team of pool(); track trackTeamChip($index, team)) {
+          <li
+            class="pool__chip"
+            [class.pool__chip--user]="isUserTeam(team)"
+          >
+            {{ team.displayName }}
+          </li>
+        }
+      </ul>
+    </div>
+  }
 </section>

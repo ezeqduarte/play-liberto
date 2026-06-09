@@ -171,32 +171,27 @@ export class TournamentService {
   }
 
   /**
-   * Draws the R16 bracket from the group winners and runners-up.
-   * Pairing: A1-B2, C1-D2, E1-F2, G1-H2, B1-A2, D1-C2, F1-E2, H1-G2.
+   * Returns the 16 qualified teams from the group stage (winner +
+   * runner-up of each of the 8 groups). The bracket-draw page uses
+   * this list as the pool to randomly assign into ties.
    */
-  drawBracket(): void {
-    const groups = this._groups();
-    const get = (id: string, pos: 0 | 1): MatchTeam => {
-      const g = groups.find((x) => x.id === id)!;
-      return g.standings[pos].team;
-    };
+  getQualifiedTeams(): MatchTeam[] {
+    return this._groups().flatMap((g) => [
+      g.standings[0].team,
+      g.standings[1].team,
+    ]);
+  }
 
-    const pairings: [MatchTeam, MatchTeam][] = [
-      [get('A', 0), get('B', 1)],
-      [get('C', 0), get('D', 1)],
-      [get('E', 0), get('F', 1)],
-      [get('G', 0), get('H', 1)],
-      [get('B', 0), get('A', 1)],
-      [get('D', 0), get('C', 1)],
-      [get('F', 0), get('E', 1)],
-      [get('H', 0), get('G', 1)],
-    ];
-
+  /**
+   * Commits the R16 ties produced by the live draw and flips
+   * bracketDrawn so the playoffs page can render them.
+   */
+  commitBracket(ties: KnockoutTie[]): void {
     const r16: KnockoutRound = {
       name: 'R16',
       label: 'Octavos de final',
       completed: false,
-      ties: pairings.map(([a, b], i) => buildTie(`R16-${i + 1}`, a, b, false)),
+      ties,
     };
     this._rounds.set([r16]);
     this._bracketDrawn.set(true);

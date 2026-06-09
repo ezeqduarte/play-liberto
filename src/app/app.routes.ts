@@ -38,8 +38,8 @@ export const routes: Routes = [
   },
   {
     path: 'tournament/victory',
-    // Wired up in M5. Until then, redirects to home.
-    redirectTo: '',
+    loadComponent: () =>
+      import('./game/pages/victory/victory.component').then((m) => m.VictoryComponent),
   },
   { path: '**', redirectTo: '' },
 ];

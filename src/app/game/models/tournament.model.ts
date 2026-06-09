@@ -1,6 +1,7 @@
 import { MatchResult, MatchTeam } from './match.model';
 
 export interface GroupFixture {
+  matchday: number;
   home: MatchTeam;
   away: MatchTeam;
   result: MatchResult | null;

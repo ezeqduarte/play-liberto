@@ -1,0 +1,66 @@
+<article class="live-match">
+  <header class="live-match__scoreboard">
+    <div class="team team--home" [class.team--flash]="flashSide() === 'home'">
+      <span class="team__name">{{ home().displayName }}</span>
+      <span class="team__rating">OVR {{ home().strength.overall }}</span>
+    </div>
+
+    <div class="score">
+      <span class="score__goals">{{ live.homeGoals() }}</span>
+      <span class="score__sep">–</span>
+      <span class="score__goals">{{ live.awayGoals() }}</span>
+      <span class="score__minute">
+        {{ live.minute() }}'
+        @if (live.isFinished()) { · FT }
+      </span>
+    </div>
+
+    <div class="team team--away" [class.team--flash]="flashSide() === 'away'">
+      <span class="team__name">{{ away().displayName }}</span>
+      <span class="team__rating">OVR {{ away().strength.overall }}</span>
+    </div>
+  </header>
+
+  <div class="live-match__controls">
+    @for (s of speeds; track s) {
+      <button
+        type="button"
+        class="speed-btn"
+        [class.speed-btn--active]="live.speed() === s"
+        [disabled]="live.isFinished()"
+        (click)="setSpeed(s)"
+      >
+        {{ speedLabels[s] }}
+      </button>
+    }
+    <button
+      type="button"
+      class="speed-btn speed-btn--pause"
+      [disabled]="live.isFinished()"
+      (click)="togglePause()"
+    >
+      {{ live.isPaused() ? '▶' : '⏸' }}
+    </button>
+  </div>
+
+  <div class="live-match__feed">
+    @for (e of feedEvents(); track $index) {
+      <div class="event event--{{ e.type }}" [class.event--home]="e.side === 'home'" [class.event--away]="e.side === 'away'">
+        <span class="event__minute">{{ e.minute }}'</span>
+        <span class="event__icon" aria-hidden="true">
+          @switch (e.type) {
+            @case ('goal') { ⚽ }
+            @case ('shot') { 🎯 }
+            @case ('yellow') { 🟨 }
+            @case ('red') { 🟥 }
+            @case ('half-time') { ⏸ }
+            @case ('second-half') { ▶ }
+            @case ('full-time') { 🏁 }
+            @case ('kickoff') { 🟢 }
+          }
+        </span>
+        <span class="event__desc">{{ e.description }}</span>
+      </div>
+    }
+  </div>
+</article>

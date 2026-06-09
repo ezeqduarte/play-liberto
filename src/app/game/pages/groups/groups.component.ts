@@ -76,7 +76,7 @@ export class GroupsComponent {
 
   goToBracket(): void {
     this.tournament.drawBracket();
-    this.router.navigate(['/tournament/playoffs']);
+    this.router.navigate(['/tournament/draw']);
   }
 
   goToEliminated(): void {

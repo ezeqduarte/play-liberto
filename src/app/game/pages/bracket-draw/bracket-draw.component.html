@@ -1,0 +1,51 @@
+<app-page-nav />
+<section class="draw">
+  <header class="draw__head">
+    <div>
+      <h1>Sorteo de octavos de final</h1>
+      <p>16 equipos. 8 llaves a doble partido.</p>
+    </div>
+    @if (!drawStarted()) {
+      <button type="button" class="btn" (click)="startDraw()">
+        Comenzar sorteo
+      </button>
+    } @else if (allRevealed()) {
+      <button type="button" class="btn" (click)="goToPlayoffs()">
+        Comenzar octavos
+      </button>
+    }
+  </header>
+
+  <div class="cards-grid">
+    @for (tie of ties(); track trackTie($index, tie); let i = $index) {
+      <article
+        class="card"
+        [class.card--flipped]="isRevealed(i)"
+        [class.card--user]="isUserTie(tie)"
+      >
+        <div class="card__inner">
+          <div class="card__face card__face--front">
+            <div class="card__pattern" aria-hidden="true">
+              <span>?</span>
+            </div>
+            <span class="card__index">Llave {{ i + 1 }}</span>
+          </div>
+          <div class="card__face card__face--back">
+            @if (isUserTie(tie)) {
+              <span class="card__user-pill">Tu llave</span>
+            }
+            <div class="card__team">
+              <span class="card__team-name">{{ tie.teamA.displayName }}</span>
+              <span class="card__team-rating">OVR {{ tie.teamA.strength.overall }}</span>
+            </div>
+            <span class="card__vs">vs</span>
+            <div class="card__team">
+              <span class="card__team-name">{{ tie.teamB.displayName }}</span>
+              <span class="card__team-rating">OVR {{ tie.teamB.strength.overall }}</span>
+            </div>
+          </div>
+        </div>
+      </article>
+    }
+  </div>
+</section>

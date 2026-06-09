@@ -542,5 +542,209 @@
       { "name": "Antonio Alzamendi", "rarity": "epic", "rating": 84, "positions": ["ST", "RW"] },
       { "name": "Rubén Sosa", "rarity": "legendary", "rating": 87, "positions": ["ST", "CAM"] }
     ]
+  },
+  {
+    "name": "Peñarol",
+    "year": 1966,
+    "players": [
+      { "name": "Ladislao Mazurkiewicz", "rarity": "legendary", "rating": 88, "positions": ["GK"] },
+      { "name": "Roberto Matosas", "rarity": "epic", "rating": 84, "positions": ["CB"] },
+      { "name": "Néstor Gonçalves", "rarity": "epic", "rating": 85, "positions": ["CDM", "CM"] },
+      { "name": "Roberto Lezcano", "rarity": "rare", "rating": 80, "positions": ["RB"] },
+      { "name": "Pedro Virgilio Rocha", "rarity": "legendary", "rating": 89, "positions": ["CAM", "CF"] },
+      { "name": "Alberto Spencer", "rarity": "legendary", "rating": 91, "positions": ["ST", "CF"] },
+      { "name": "Julio César Abbadie", "rarity": "epic", "rating": 84, "positions": ["RW"] },
+      { "name": "Carlos Caetano", "rarity": "rare", "rating": 80, "positions": ["LB"] },
+      { "name": "Daniel Caetano", "rarity": "rare", "rating": 79, "positions": ["CB"] },
+      { "name": "Domingo Pérez", "rarity": "rare", "rating": 80, "positions": ["LW"] },
+      { "name": "Luis Cubilla", "rarity": "epic", "rating": 85, "positions": ["RW", "ST"] }
+    ]
+  },
+  {
+    "name": "Peñarol",
+    "year": 1987,
+    "players": [
+      { "name": "Eduardo Pereira", "rarity": "epic", "rating": 83, "positions": ["GK"] },
+      { "name": "Obdulio Trasante", "rarity": "rare", "rating": 81, "positions": ["RB"] },
+      { "name": "Nelson Gutiérrez", "rarity": "epic", "rating": 84, "positions": ["CB"] },
+      { "name": "Eduardo Acevedo", "rarity": "rare", "rating": 80, "positions": ["CB"] },
+      { "name": "Jorge Villazán", "rarity": "rare", "rating": 80, "positions": ["LB"] },
+      { "name": "José Perdomo", "rarity": "epic", "rating": 83, "positions": ["CDM"] },
+      { "name": "Ricardo Viera", "rarity": "rare", "rating": 81, "positions": ["CM"] },
+      { "name": "Diego Aguirre", "rarity": "epic", "rating": 84, "positions": ["ST", "CF"] },
+      { "name": "Diego Domínguez", "rarity": "rare", "rating": 80, "positions": ["LW"] },
+      { "name": "Alfonso Domínguez", "rarity": "rare", "rating": 80, "positions": ["RW"] },
+      { "name": "Pablo Bengoechea", "rarity": "epic", "rating": 84, "positions": ["CAM"] }
+    ]
+  },
+  {
+    "name": "Santos",
+    "year": 1963,
+    "players": [
+      { "name": "Gilmar dos Santos Neves", "rarity": "epic", "rating": 86, "positions": ["GK"] },
+      { "name": "Mauro Ramos", "rarity": "epic", "rating": 84, "positions": ["CB"] },
+      { "name": "Calvet", "rarity": "rare", "rating": 79, "positions": ["CB"] },
+      { "name": "Dalmo", "rarity": "rare", "rating": 79, "positions": ["RB"] },
+      { "name": "Mengálvio", "rarity": "epic", "rating": 84, "positions": ["CM"] },
+      { "name": "Zito", "rarity": "epic", "rating": 85, "positions": ["CM", "CDM"] },
+      { "name": "Dorval", "rarity": "rare", "rating": 80, "positions": ["RW"] },
+      { "name": "Coutinho", "rarity": "epic", "rating": 87, "positions": ["CF", "CAM"] },
+      { "name": "Pelé", "rarity": "legendary", "rating": 96, "positions": ["CF", "CAM", "ST"] },
+      { "name": "Pepe", "rarity": "epic", "rating": 86, "positions": ["LW", "ST"] },
+      { "name": "Lima", "rarity": "common", "rating": 75, "positions": ["LB"] }
+    ]
+  },
+  {
+    "name": "Independiente",
+    "year": 1972,
+    "players": [
+      { "name": "Miguel Ángel Santoro", "rarity": "epic", "rating": 84, "positions": ["GK"] },
+      { "name": "Francisco Sa", "rarity": "rare", "rating": 80, "positions": ["RB", "CB"] },
+      { "name": "Ricardo Pavoni", "rarity": "epic", "rating": 83, "positions": ["LB"] },
+      { "name": "Mario Mendoza", "rarity": "rare", "rating": 80, "positions": ["CM"] },
+      { "name": "Raúl Maidana", "rarity": "rare", "rating": 79, "positions": ["CB"] },
+      { "name": "Ricardo Bochini", "rarity": "legendary", "rating": 89, "positions": ["CAM"] },
+      { "name": "Daniel Bertoni", "rarity": "epic", "rating": 84, "positions": ["RW", "ST"] },
+      { "name": "Miguel Raimondo", "rarity": "rare", "rating": 80, "positions": ["CM"] },
+      { "name": "Agustín Balbuena", "rarity": "epic", "rating": 82, "positions": ["LW"] },
+      { "name": "José Omar Pastoriza", "rarity": "epic", "rating": 84, "positions": ["CDM"] },
+      { "name": "Rubén Galván", "rarity": "rare", "rating": 80, "positions": ["CM"] }
+    ]
+  },
+  {
+    "name": "Independiente",
+    "year": 1973,
+    "players": [
+      { "name": "Miguel Ángel Santoro", "rarity": "epic", "rating": 85, "positions": ["GK"] },
+      { "name": "Francisco Sa", "rarity": "epic", "rating": 82, "positions": ["RB", "CB"] },
+      { "name": "Ricardo Pavoni", "rarity": "epic", "rating": 84, "positions": ["LB"] },
+      { "name": "Enzo Trossero", "rarity": "rare", "rating": 80, "positions": ["CB"] },
+      { "name": "Ricardo Bochini", "rarity": "legendary", "rating": 90, "positions": ["CAM"] },
+      { "name": "Daniel Bertoni", "rarity": "epic", "rating": 85, "positions": ["RW", "ST"] },
+      { "name": "Rubén Galván", "rarity": "rare", "rating": 81, "positions": ["CM"] },
+      { "name": "Agustín Balbuena", "rarity": "epic", "rating": 83, "positions": ["LW"] },
+      { "name": "Carlos Pachamé", "rarity": "rare", "rating": 80, "positions": ["CM", "CDM"] },
+      { "name": "Miguel Raimondo", "rarity": "rare", "rating": 80, "positions": ["CM"] },
+      { "name": "Eduardo Maglioni", "rarity": "rare", "rating": 81, "positions": ["ST"] }
+    ]
+  },
+  {
+    "name": "River Plate",
+    "year": 1996,
+    "players": [
+      { "name": "Germán Burgos", "rarity": "epic", "rating": 85, "positions": ["GK"] },
+      { "name": "Hernán Crespo", "rarity": "legendary", "rating": 88, "positions": ["ST"] },
+      { "name": "Enzo Francescoli", "rarity": "legendary", "rating": 89, "positions": ["CAM"] },
+      { "name": "Ariel Ortega", "rarity": "legendary", "rating": 88, "positions": ["CAM", "RW"] },
+      { "name": "Marcelo Gallardo", "rarity": "epic", "rating": 86, "positions": ["CAM", "CM"] },
+      { "name": "Leonardo Astrada", "rarity": "epic", "rating": 84, "positions": ["CDM"] },
+      { "name": "Matías Almeyda", "rarity": "epic", "rating": 84, "positions": ["CDM", "CM"] },
+      { "name": "Celso Ayala", "rarity": "epic", "rating": 83, "positions": ["CB"] },
+      { "name": "Hernán Díaz", "rarity": "rare", "rating": 81, "positions": ["RB"] },
+      { "name": "Roberto Trotta", "rarity": "epic", "rating": 82, "positions": ["CB"] },
+      { "name": "Sergio Berti", "rarity": "rare", "rating": 81, "positions": ["RW"] }
+    ]
+  },
+  {
+    "name": "Boca Juniors",
+    "year": 2000,
+    "players": [
+      { "name": "Óscar Córdoba", "rarity": "epic", "rating": 85, "positions": ["GK"] },
+      { "name": "Hugo Ibarra", "rarity": "epic", "rating": 82, "positions": ["RB"] },
+      { "name": "Jorge Bermúdez", "rarity": "epic", "rating": 84, "positions": ["CB"] },
+      { "name": "Walter Samuel", "rarity": "legendary", "rating": 87, "positions": ["CB"] },
+      { "name": "Aníbal Matellán", "rarity": "rare", "rating": 80, "positions": ["LB"] },
+      { "name": "Sebastián Battaglia", "rarity": "epic", "rating": 83, "positions": ["CDM"] },
+      { "name": "Mauricio Serna", "rarity": "rare", "rating": 81, "positions": ["CM"] },
+      { "name": "Juan Román Riquelme", "rarity": "legendary", "rating": 90, "positions": ["CAM"] },
+      { "name": "Marcelo Delgado", "rarity": "epic", "rating": 83, "positions": ["ST"] },
+      { "name": "Martín Palermo", "rarity": "legendary", "rating": 88, "positions": ["ST", "CF"] },
+      { "name": "Guillermo Barros Schelotto", "rarity": "epic", "rating": 85, "positions": ["RW"] }
+    ]
+  },
+  {
+    "name": "Grêmio",
+    "year": 2017,
+    "players": [
+      { "name": "Marcelo Grohe", "rarity": "epic", "rating": 84, "positions": ["GK"] },
+      { "name": "Léo Moura", "rarity": "rare", "rating": 81, "positions": ["RB"] },
+      { "name": "Pedro Geromel", "rarity": "epic", "rating": 84, "positions": ["CB"] },
+      { "name": "Walter Kannemann", "rarity": "epic", "rating": 84, "positions": ["CB"] },
+      { "name": "Bruno Cortez", "rarity": "rare", "rating": 81, "positions": ["LB"] },
+      { "name": "Michel", "rarity": "rare", "rating": 82, "positions": ["CDM"] },
+      { "name": "Maicon", "rarity": "epic", "rating": 84, "positions": ["CM"] },
+      { "name": "Arthur", "rarity": "epic", "rating": 83, "positions": ["CM", "CAM"] },
+      { "name": "Luan", "rarity": "epic", "rating": 85, "positions": ["CAM", "ST"] },
+      { "name": "Lucas Barrios", "rarity": "epic", "rating": 83, "positions": ["ST"] },
+      { "name": "Ramiro", "rarity": "rare", "rating": 81, "positions": ["RW"] }
+    ]
+  },
+  {
+    "name": "Internacional",
+    "year": 2010,
+    "players": [
+      { "name": "Lauro", "rarity": "rare", "rating": 81, "positions": ["GK"] },
+      { "name": "Bolívar", "rarity": "epic", "rating": 83, "positions": ["CB"] },
+      { "name": "Índio", "rarity": "epic", "rating": 83, "positions": ["CB"] },
+      { "name": "Nei", "rarity": "rare", "rating": 80, "positions": ["RB"] },
+      { "name": "Kléber", "rarity": "epic", "rating": 83, "positions": ["LB"] },
+      { "name": "Tinga", "rarity": "epic", "rating": 84, "positions": ["CM"] },
+      { "name": "Sandro", "rarity": "epic", "rating": 83, "positions": ["CDM"] },
+      { "name": "Andrés D'Alessandro", "rarity": "legendary", "rating": 87, "positions": ["CAM"] },
+      { "name": "Giuliano", "rarity": "epic", "rating": 84, "positions": ["CAM", "RW"] },
+      { "name": "Alecsandro", "rarity": "epic", "rating": 83, "positions": ["ST"] },
+      { "name": "Rafael Sóbis", "rarity": "epic", "rating": 83, "positions": ["LW", "ST"] }
+    ]
+  },
+  {
+    "name": "Atlético Nacional",
+    "year": 2016,
+    "players": [
+      { "name": "Franco Armani", "rarity": "epic", "rating": 86, "positions": ["GK"] },
+      { "name": "Daniel Bocanegra", "rarity": "rare", "rating": 81, "positions": ["RB"] },
+      { "name": "Alexis Henríquez", "rarity": "epic", "rating": 83, "positions": ["CB"] },
+      { "name": "Felipe Aguilar", "rarity": "rare", "rating": 81, "positions": ["CB"] },
+      { "name": "Farid Díaz", "rarity": "rare", "rating": 81, "positions": ["LB"] },
+      { "name": "Alexander Mejía", "rarity": "epic", "rating": 83, "positions": ["CDM"] },
+      { "name": "Macnelly Torres", "rarity": "epic", "rating": 84, "positions": ["CAM"] },
+      { "name": "Orlando Berrío", "rarity": "rare", "rating": 81, "positions": ["RW"] },
+      { "name": "Marlos Moreno", "rarity": "epic", "rating": 83, "positions": ["LW"] },
+      { "name": "Miguel Borja", "rarity": "epic", "rating": 85, "positions": ["ST"] },
+      { "name": "Andrés Ibargüen", "rarity": "rare", "rating": 82, "positions": ["RW", "LW"] }
+    ]
+  },
+  {
+    "name": "Palmeiras",
+    "year": 2020,
+    "players": [
+      { "name": "Weverton", "rarity": "epic", "rating": 85, "positions": ["GK"] },
+      { "name": "Marcos Rocha", "rarity": "epic", "rating": 83, "positions": ["RB"] },
+      { "name": "Gustavo Gómez", "rarity": "epic", "rating": 84, "positions": ["CB"] },
+      { "name": "Luan", "rarity": "epic", "rating": 83, "positions": ["CB"] },
+      { "name": "Matías Viña", "rarity": "epic", "rating": 83, "positions": ["LB"] },
+      { "name": "Felipe Melo", "rarity": "epic", "rating": 83, "positions": ["CDM"] },
+      { "name": "Patrick de Paula", "rarity": "rare", "rating": 81, "positions": ["CDM", "CM"] },
+      { "name": "Raphael Veiga", "rarity": "epic", "rating": 85, "positions": ["CAM"] },
+      { "name": "Gabriel Menino", "rarity": "rare", "rating": 81, "positions": ["CM"] },
+      { "name": "Rony", "rarity": "epic", "rating": 84, "positions": ["RW", "ST"] },
+      { "name": "Luiz Adriano", "rarity": "epic", "rating": 83, "positions": ["ST"] }
+    ]
+  },
+  {
+    "name": "Palmeiras",
+    "year": 2021,
+    "players": [
+      { "name": "Weverton", "rarity": "epic", "rating": 85, "positions": ["GK"] },
+      { "name": "Marcos Rocha", "rarity": "epic", "rating": 83, "positions": ["RB"] },
+      { "name": "Gustavo Gómez", "rarity": "epic", "rating": 85, "positions": ["CB"] },
+      { "name": "Luan", "rarity": "epic", "rating": 84, "positions": ["CB"] },
+      { "name": "Joaquín Piquerez", "rarity": "epic", "rating": 83, "positions": ["LB"] },
+      { "name": "Danilo", "rarity": "epic", "rating": 84, "positions": ["CDM"] },
+      { "name": "Zé Rafael", "rarity": "epic", "rating": 83, "positions": ["CM"] },
+      { "name": "Raphael Veiga", "rarity": "epic", "rating": 86, "positions": ["CAM"] },
+      { "name": "Dudu", "rarity": "epic", "rating": 85, "positions": ["LW"] },
+      { "name": "Rony", "rarity": "epic", "rating": 84, "positions": ["RW", "ST"] },
+      { "name": "Deyverson", "rarity": "epic", "rating": 83, "positions": ["ST"] }
+    ]
   }
 ]

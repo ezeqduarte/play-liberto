@@ -72,14 +72,16 @@
         Empezar draft
       </button>
 
-      <button
-        type="button"
-        class="admin-btn"
-        title="Skip draft con plantel 99"
-        (click)="adminFill()"
-      >
-        ⚡ Admin · plantel 99
-      </button>
+      @if (showAdminButton()) {
+        <button
+          type="button"
+          class="admin-btn"
+          title="Skip draft con plantel 99"
+          (click)="adminFill()"
+        >
+          ⚡ Admin · plantel 99
+        </button>
+      }
     </aside>
   </div>
 </section>

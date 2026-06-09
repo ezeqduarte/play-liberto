@@ -55,4 +55,16 @@ export class FormationSelectComponent {
     this.draft.startDraft(f.id);
     this.router.navigate(['/draft/squad']);
   }
+
+  /**
+   * Admin shortcut: skip the draft entirely with a synthetic 99-rated
+   * squad and jump straight to the tournament. Useful for testing the
+   * championship flow without grinding through 12 picks.
+   */
+  adminFill(): void {
+    const f = this.selectedFormation();
+    if (!f) return;
+    this.draft.fillAdminSquad(f.id);
+    this.router.navigate(['/tournament/groups']);
+  }
 }

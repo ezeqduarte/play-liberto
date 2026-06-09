@@ -63,6 +63,15 @@
   }
 }
 
+.pitch-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  height: 100%;
+  min-height: 0;
+}
+
 .pitch {
   position: relative;
   // Fills the body row height. Width derives from the 2:3 ratio so
@@ -70,7 +79,6 @@
   height: 100%;
   aspect-ratio: 2 / 3;
   max-width: 540px;
-  margin: 0 auto;
   background:
     repeating-linear-gradient(
       180deg,
@@ -195,6 +203,104 @@
   }
   50% {
     box-shadow: 0 0 0 8px var(--accent-soft), 0 0 28px var(--accent);
+  }
+}
+
+@keyframes pulse-gold {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 4px rgba(255, 181, 71, 0.18),
+      0 0 18px rgba(255, 181, 71, 0.7);
+  }
+  50% {
+    box-shadow:
+      0 0 0 8px rgba(255, 181, 71, 0.18),
+      0 0 28px rgba(255, 181, 71, 0.9);
+  }
+}
+
+.dt-slot {
+  flex-shrink: 0;
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  background: rgba(11, 18, 32, 0.55);
+  border: 2px dashed rgba(255, 181, 71, 0.45);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 4px;
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+  cursor: default;
+  position: relative;
+
+  &__placeholder {
+    font-size: 14px;
+    font-weight: 800;
+    color: rgba(255, 181, 71, 0.7);
+    letter-spacing: 1px;
+  }
+
+  &__rating {
+    font-weight: 800;
+    font-size: 13px;
+    color: #001a09;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__name {
+    font-size: 9px;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.1;
+    max-width: 70px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  &__tag {
+    position: absolute;
+    bottom: -6px;
+    background: var(--rarity-legendary);
+    color: #1f1100;
+    font-size: 8px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 1px 6px;
+    border-radius: var(--radius-pill);
+  }
+
+  &--filled {
+    background: var(--surface-panel);
+    border: 2px solid var(--rarity-legendary);
+    border-style: solid;
+  }
+
+  &--eligible {
+    cursor: pointer;
+    border-color: var(--rarity-legendary);
+    border-style: solid;
+    animation: pulse-gold 1.8s ease-in-out infinite;
+  }
+
+  &--eligible:hover {
+    transform: scale(1.06);
+  }
+
+  &--dimmed {
+    opacity: 0.3;
   }
 }
 

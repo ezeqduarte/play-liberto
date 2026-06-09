@@ -2,6 +2,7 @@ import { Injectable, computed, signal } from '@angular/core';
 import { TEAMS } from '../data';
 import { FORMATIONS, getFormationById } from '../formations';
 import {
+  Coach,
   Formation,
   FormationSlot,
   Player,
@@ -17,10 +18,16 @@ export interface SquadEntry {
   fromTeam: Team | null;
 }
 
+export interface CoachEntry {
+  coach: Coach | null;
+  fromTeam: Team | null;
+}
+
 @Injectable({ providedIn: 'root' })
 export class DraftService {
   private readonly _formation = signal<Formation | null>(null);
   private readonly _squad = signal<SquadEntry[]>([]);
+  private readonly _coachEntry = signal<CoachEntry>({ coach: null, fromTeam: null });
   private readonly _currentTeam = signal<Team | null>(null);
   private readonly _rollsLeft = signal(ROLLS_PER_PICK);
   private readonly _pickedNames = signal<Set<string>>(new Set());
@@ -28,24 +35,36 @@ export class DraftService {
 
   readonly formation = this._formation.asReadonly();
   readonly squad = this._squad.asReadonly();
+  readonly coachEntry = this._coachEntry.asReadonly();
   readonly currentTeam = this._currentTeam.asReadonly();
   readonly rollsLeft = this._rollsLeft.asReadonly();
   readonly selectedPlayer = this._selectedPlayer.asReadonly();
   readonly availableFormations = FORMATIONS;
 
-  /** How many slots are still empty. */
+  /** Total slots = 11 player slots + 1 coach slot. */
+  readonly totalSlots = computed(() => this._squad().length + 1);
+
+  /** How many slots are still empty (players + coach). */
   readonly slotsRemaining = computed(
-    () => this._squad().filter((e) => e.player === null).length,
+    () =>
+      this._squad().filter((e) => e.player === null).length +
+      (this._coachEntry().coach === null ? 1 : 0),
   );
 
-  /** All filled-slot counts. */
+  /** All filled-slot counts (players + coach). */
   readonly slotsFilled = computed(
-    () => this._squad().filter((e) => e.player !== null).length,
+    () =>
+      this._squad().filter((e) => e.player !== null).length +
+      (this._coachEntry().coach !== null ? 1 : 0),
   );
 
   readonly isComplete = computed(() => {
     const squad = this._squad();
-    return squad.length > 0 && squad.every((entry) => entry.player !== null);
+    return (
+      squad.length > 0 &&
+      squad.every((entry) => entry.player !== null) &&
+      this._coachEntry().coach !== null
+    );
   });
 
   /** Whether the user is currently in slot-selection mode for a chosen player. */
@@ -78,6 +97,7 @@ export class DraftService {
     this._squad.set(
       formation.slots.map((slot) => ({ slot, player: null, fromTeam: null })),
     );
+    this._coachEntry.set({ coach: null, fromTeam: null });
     this._pickedNames.set(new Set());
     this._selectedPlayer.set(null);
     this._rollsLeft.set(ROLLS_PER_PICK);
@@ -129,6 +149,33 @@ export class DraftService {
     return team ? team.players : [];
   }
 
+  /** Returns the coach of the currently-rolled team. */
+  coachOfCurrentTeam(): Coach | null {
+    const team = this._currentTeam();
+    return team ? team.coach : null;
+  }
+
+  /** Whether a coach has already been picked into the squad. */
+  isCoachPicked(): boolean {
+    return this._coachEntry().coach !== null;
+  }
+
+  /**
+   * Picks the current team's coach into the coach slot and advances the
+   * draft cycle. Cancels any in-flight player selection.
+   */
+  selectCoach(): void {
+    const team = this._currentTeam();
+    if (!team) return;
+    if (this.isCoachPicked()) return;
+    this._coachEntry.set({ coach: team.coach, fromTeam: team });
+    this._selectedPlayer.set(null);
+    if (!this.isComplete()) {
+      this._rollsLeft.set(ROLLS_PER_PICK);
+      this._currentTeam.set(this.randomTeam());
+    }
+  }
+
   /**
    * Highlights a player as the candidate the user wants to draft.
    * Player must not already be picked. If the player has no eligible
@@ -170,7 +217,7 @@ export class DraftService {
 
     this._selectedPlayer.set(null);
 
-    if (next.some((e) => e.player === null)) {
+    if (!this.isComplete()) {
       // Reset for the next pick cycle.
       this._rollsLeft.set(ROLLS_PER_PICK);
       this._currentTeam.set(this.randomTeam());
@@ -194,6 +241,7 @@ export class DraftService {
   reset(): void {
     this._formation.set(null);
     this._squad.set([]);
+    this._coachEntry.set({ coach: null, fromTeam: null });
     this._currentTeam.set(null);
     this._rollsLeft.set(ROLLS_PER_PICK);
     this._pickedNames.set(new Set());

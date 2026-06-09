@@ -25,6 +25,13 @@ export const routes: Routes = [
       import('./game/pages/groups/groups.component').then((m) => m.GroupsComponent),
   },
   {
+    path: 'tournament/draw',
+    loadComponent: () =>
+      import('./game/pages/bracket-draw/bracket-draw.component').then(
+        (m) => m.BracketDrawComponent,
+      ),
+  },
+  {
     path: 'tournament/playoffs',
     loadComponent: () =>
       import('./game/pages/playoffs/playoffs.component').then((m) => m.PlayoffsComponent),

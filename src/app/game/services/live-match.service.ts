@@ -26,7 +26,7 @@ const SPEED_MS: Record<LiveMatchSpeed, number> = {
   slow: 400,
   normal: 160,
   fast: 60,
-  instant: 0,
+  instant: 12,
 };
 
 const ATTACK_POSITIONS: Position[] = ['LW', 'RW', 'ST', 'CF', 'CAM'];
@@ -100,18 +100,16 @@ export class LiveMatchService {
     this._result.set(null);
     this.cursor = 0;
 
-    if (this._speed() === 'instant') {
-      this.skipToEnd(result);
-    } else {
-      this.tick();
-    }
+    this.tick();
   }
 
   setSpeed(speed: LiveMatchSpeed): void {
     this._speed.set(speed);
-    if (speed === 'instant' && this._isRunning() && !this._isFinished()) {
-      const result = this.predictResult();
-      this.skipToEnd(result);
+    // Cancel any pending tick and reschedule with the new delay so the
+    // change feels immediate (including when going TO or FROM instant).
+    if (this._isRunning() && !this._isPaused() && !this._isFinished()) {
+      this.stopTimer();
+      this.tick();
     }
   }
 
@@ -172,19 +170,6 @@ export class LiveMatchService {
     const delay = SPEED_MS[this._speed()];
     this.timer = setTimeout(this.tick, delay);
   };
-
-  private skipToEnd(result: MatchResult): void {
-    this.stopTimer();
-    const events = this._events();
-    // Drain everything immediately.
-    this._displayedEvents.set([...events]);
-    this._minute.set(90);
-    this._homeGoals.set(result.homeGoals);
-    this._awayGoals.set(result.awayGoals);
-    this._isFinished.set(true);
-    this._isRunning.set(false);
-    this._result.set(result);
-  }
 
   private predictResult(): MatchResult {
     const home = this._home()!;

@@ -154,6 +154,33 @@ const STYLE_MODIFIERS: Record<FormationStyle, FormationModifiers> = {
   offensive: { attack: 5, midfield: 0, defense: -3 },
 };
 
+/**
+ * Vertical shift (in pitch %) applied to outfield slots per style.
+ * Defensive variants pull every line back toward the own goal; offensive
+ * variants push them up toward the opponent. The goalkeeper is pinned.
+ */
+const STYLE_Y_SHIFT: Record<FormationStyle, number> = {
+  defensive: -7,
+  normal: 0,
+  offensive: 7,
+};
+
+function applyStyleShift(
+  slots: FormationSlot[],
+  style: FormationStyle,
+): FormationSlot[] {
+  const shift = STYLE_Y_SHIFT[style];
+  if (shift === 0) return slots;
+  return slots.map((slot) => {
+    if (slot.allowed.length === 1 && slot.allowed[0] === 'GK') return slot;
+    return { ...slot, y: clamp(slot.y + shift, 12, 92) };
+  });
+}
+
+function clamp(value: number, min: number, max: number): number {
+  return Math.max(min, Math.min(max, value));
+}
+
 const SHAPES: FormationShape[] = [
   '4-4-2',
   '4-3-3',
@@ -175,12 +202,13 @@ const STYLES: FormationStyle[] = ['defensive', 'normal', 'offensive'];
 function buildFormations(): Formation[] {
   const all: Formation[] = [];
   for (const shape of SHAPES) {
+    const baseSlots = SHAPE_SLOTS[shape];
     for (const style of STYLES) {
       all.push({
         id: `${shape}-${style}`,
         shape,
         style,
-        slots: SHAPE_SLOTS[shape],
+        slots: applyStyleShift(baseSlots, style),
         modifiers: STYLE_MODIFIERS[style],
       });
     }

@@ -239,9 +239,13 @@ export class TournamentService {
 
   /**
    * Resolve the user's tie aggregate + simulate every other tie in the
-   * current round. Sets up the next round (or victory / elimination).
+   * current round. The round is marked completed but the next round is
+   * NOT yet created — the user gets a chance to see the results before
+   * pressing "Siguiente ronda" (advanceToNextRound).
+   *
+   * Sets eliminatedAt / won where applicable so the UI can react.
    */
-  finishCurrentRound(): void {
+  simulateRemainingTies(): void {
     const rounds = [...this._rounds()];
     const round = rounds.find((r) => !r.completed);
     if (!round) return;
@@ -256,26 +260,39 @@ export class TournamentService {
     const completedRound: KnockoutRound = { ...round, ties: playedTies, completed: true };
     const idx = rounds.indexOf(round);
     rounds[idx] = completedRound;
+    this._rounds.set(rounds);
 
     const userTie = playedTies.find((t) => t.teamA.id === user?.id || t.teamB.id === user?.id);
     if (user && userTie && userTie.winner && userTie.winner.id !== user.id) {
       this._eliminatedAt.set(round.name);
-      this._rounds.set(rounds);
-      return;
     }
 
-    const next = nextRoundFromWinners(playedTies, round.name);
-    if (next) {
-      rounds.push(next);
-    } else {
+    if (round.name === 'F') {
       const finalTie = playedTies[0];
       if (user && finalTie.winner?.id === user.id) {
         this._won.set(true);
-      } else if (user) {
+      } else if (user && finalTie.winner) {
         this._eliminatedAt.set('F');
       }
     }
-    this._rounds.set(rounds);
+  }
+
+  /**
+   * Build the next knockout round from the winners of the last
+   * completed round. No-op if the last round is the final or still
+   * in progress.
+   */
+  advanceToNextRound(): void {
+    const rounds = [...this._rounds()];
+    const lastCompleted = [...rounds].reverse().find((r) => r.completed);
+    if (!lastCompleted) return;
+    if (lastCompleted.name === 'F') return;
+    if (rounds[rounds.length - 1] !== lastCompleted) return;
+    const next = nextRoundFromWinners(lastCompleted.ties, lastCompleted.name);
+    if (next) {
+      rounds.push(next);
+      this._rounds.set(rounds);
+    }
   }
 
   reset(): void {

@@ -6,11 +6,12 @@ import { PageNavComponent } from '../../components/page-nav/page-nav.component';
 import { LiveMatchComponent } from '../../components/live-match/live-match.component';
 
 type PlayoffsViewState =
-  | 'idle'           // round started, ready to play leg 1
-  | 'playing-leg1'   // live leg 1
-  | 'between-legs'   // leg 1 done, wait for user to start leg 2
-  | 'playing-leg2'   // live leg 2
-  | 'round-done';    // round complete (waiting for user to advance)
+  | 'idle'             // round started, user can play their leg
+  | 'playing-leg1'     // live leg 1
+  | 'between-legs'     // leg 1 done, user can play leg 2
+  | 'playing-leg2'     // live leg 2
+  | 'user-tie-done'    // user's tie complete, other ties not yet sim'd
+  | 'round-resolved';  // every tie in the round resolved, ready to advance
 
 @Component({
   selector: 'app-playoffs',
@@ -65,11 +66,11 @@ export class PlayoffsComponent {
         this.router.navigate(['/tournament/eliminated']);
         return;
       }
-      // Sync view state when the round changes.
+      // Sync view state when the round changes (or first enters page).
       const round = this.currentRound();
       if (round && this.syncedRoundName !== round.name) {
         this.syncedRoundName = round.name;
-        this.viewState.set(round.completed ? 'round-done' : 'idle');
+        this.viewState.set(round.completed ? 'round-resolved' : 'idle');
       }
     });
   }
@@ -89,14 +90,17 @@ export class PlayoffsComponent {
 
   /**
    * Called by LiveMatchComponent.finished. The result minutes apply to
-   * the current leg. For non-finals, we wait for the user to start leg 2.
-   * For final, we auto-finish the round (which sets won/eliminated).
+   * the current leg. For finals we resolve the tie immediately (no other
+   * ties to wait for). For non-finals, we wait for the user to play
+   * both legs and then press "Simular el resto".
    */
   onMatchFinished(result: MatchResult): void {
     if (this.isFinalRound()) {
       this.tournament.applyUserLeg(1, result);
-      this.tournament.finishCurrentRound();
-      this.viewState.set('round-done');
+      // The final has only one tie. Resolve it so the won / eliminated
+      // signal fires and the page can route to victory or eliminated.
+      this.tournament.simulateRemainingTies();
+      this.viewState.set('round-resolved');
       return;
     }
     if (this.viewState() === 'playing-leg1') {
@@ -104,16 +108,25 @@ export class PlayoffsComponent {
       this.viewState.set('between-legs');
     } else if (this.viewState() === 'playing-leg2') {
       this.tournament.applyUserLeg(2, result);
-      this.viewState.set('round-done');
+      this.viewState.set('user-tie-done');
     }
   }
 
   /**
-   * After the user's tie is fully played, this triggers the simulation
-   * of every other tie in the round and advances to the next round.
+   * Step 1 of resolving the round: simulate every non-user tie. The user
+   * stays on the same page so they can scan all the results before
+   * pressing "Siguiente ronda".
    */
-  finishRound(): void {
-    this.tournament.finishCurrentRound();
-    // viewState will sync on the next round via the effect.
+  simulateRest(): void {
+    this.tournament.simulateRemainingTies();
+    this.viewState.set('round-resolved');
+  }
+
+  /**
+   * Step 2: build the next round from the winners and switch into it.
+   * The effect picks up the new round and resets viewState to 'idle'.
+   */
+  advanceToNextRound(): void {
+    this.tournament.advanceToNextRound();
   }
 }

@@ -23,10 +23,15 @@
           Jugar la vuelta
         </button>
       }
-      @case ('round-done') {
+      @case ('user-tie-done') {
+        <button type="button" class="btn" (click)="simulateRest()">
+          Simular el resto de la ronda
+        </button>
+      }
+      @case ('round-resolved') {
         @if (!isFinalRound()) {
-          <button type="button" class="btn" (click)="finishRound()">
-            Simular el resto y avanzar
+          <button type="button" class="btn" (click)="advanceToNextRound()">
+            Siguiente ronda
           </button>
         }
       }

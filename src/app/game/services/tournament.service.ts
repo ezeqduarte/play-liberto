@@ -29,6 +29,7 @@ export class TournamentService {
   private readonly _bracketDrawn = signal(false);
   private readonly _eliminatedAt = signal<KnockoutRoundName | 'group' | null>(null);
   private readonly _won = signal(false);
+  private readonly _champion = signal<MatchTeam | null>(null);
 
   readonly userTeam = this._userTeam.asReadonly();
   readonly groups = this._groups.asReadonly();
@@ -38,6 +39,8 @@ export class TournamentService {
   readonly bracketDrawn = this._bracketDrawn.asReadonly();
   readonly eliminatedAt = this._eliminatedAt.asReadonly();
   readonly won = this._won.asReadonly();
+  /** Champion of the whole tournament. Null until the final is played. */
+  readonly champion = this._champion.asReadonly();
   readonly totalMatchdays = TOTAL_MATCHDAYS;
 
   readonly userGroup = computed<Group | null>(() => {
@@ -269,9 +272,12 @@ export class TournamentService {
 
     if (round.name === 'F') {
       const finalTie = playedTies[0];
+      if (finalTie.winner) {
+        this._champion.set(finalTie.winner);
+      }
       if (user && finalTie.winner?.id === user.id) {
         this._won.set(true);
-      } else if (user && finalTie.winner) {
+      } else if (user && finalTie.winner && !this._eliminatedAt()) {
         this._eliminatedAt.set('F');
       }
     }
@@ -304,6 +310,7 @@ export class TournamentService {
     this._bracketDrawn.set(false);
     this._eliminatedAt.set(null);
     this._won.set(false);
+    this._champion.set(null);
   }
 
   // ─────────────────────────── internals ───────────────────────────

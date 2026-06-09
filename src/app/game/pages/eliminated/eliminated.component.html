@@ -6,9 +6,20 @@
     Tu equipo fue eliminado en <strong>{{ stageLabel() }}</strong>.
     @if (eliminatedAt() === 'F') {
       Una pena, llegaste hasta la final.
-    } @else {
+    } @else if (eliminatedAt() !== 'group') {
       ¡Probá de nuevo con otra formación!
     }
   </p>
+
+  @if (champion(); as champ) {
+    <div class="champion-card">
+      <span class="champion-card__crown" aria-hidden="true">🏆</span>
+      <div>
+        <span class="champion-card__label">Campeón de la Libertadores</span>
+        <strong class="champion-card__name">{{ champ.displayName }}</strong>
+      </div>
+    </div>
+  }
+
   <button type="button" class="btn" (click)="playAgain()">Jugar otra vez</button>
 </section>

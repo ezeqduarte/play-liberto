@@ -18,6 +18,7 @@ export class EliminatedComponent {
 
   readonly eliminatedAt = this.tournament.eliminatedAt;
   readonly userTeam = this.tournament.userTeam;
+  readonly champion = this.tournament.champion;
 
   readonly stageLabel = computed(() => {
     switch (this.eliminatedAt()) {

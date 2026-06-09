@@ -26,12 +26,15 @@
     height: 320px;
     margin-bottom: 24px;
     animation: bob 3.5s ease-in-out infinite;
-    filter: drop-shadow(0 12px 24px rgba(255, 181, 71, 0.45));
+    filter: drop-shadow(0 12px 28px rgba(255, 181, 71, 0.4))
+      drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
+  }
 
-    svg {
-      width: 100%;
-      height: 100%;
-    }
+  &__trophy-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
   }
 
   &__title {

@@ -133,6 +133,27 @@
     font-size: 20px;
   }
 
+  &__tiebreaker {
+    display: inline-block;
+    background: var(--accent-soft);
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-pill);
+    padding: 2px 10px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 4px auto 0;
+    text-align: center;
+
+    &--pen {
+      background: rgba(255, 181, 71, 0.15);
+      color: var(--rarity-legendary);
+      border-color: var(--rarity-legendary);
+    }
+  }
+
   &__legs {
     display: flex;
     justify-content: center;

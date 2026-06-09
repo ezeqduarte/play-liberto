@@ -29,6 +29,8 @@ export interface Group {
 
 export type KnockoutRoundName = 'R16' | 'QF' | 'SF' | 'F';
 
+export type KnockoutTieBreaker = null | 'away-goals' | 'penalties';
+
 export interface KnockoutTie {
   id: string;
   teamA: MatchTeam;
@@ -40,6 +42,8 @@ export interface KnockoutTie {
   winner: MatchTeam | null;
   aggregateA: number;
   aggregateB: number;
+  /** How the winner was decided when the aggregate ended level. */
+  tieBreaker: KnockoutTieBreaker;
 }
 
 export interface KnockoutRound {

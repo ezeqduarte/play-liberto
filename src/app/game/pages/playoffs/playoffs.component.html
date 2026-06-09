@@ -106,6 +106,15 @@
               <span>Final {{ tie.leg1.homeGoals }}-{{ tie.leg1.awayGoals }}</span>
             </div>
           }
+          @if (tie.tieBreaker) {
+            <span
+              class="tie__tiebreaker"
+              [class.tie__tiebreaker--pen]="tie.tieBreaker === 'penalties'"
+            >
+              @if (tie.tieBreaker === 'away-goals') { Avanza por gol de visitante }
+              @else { Avanza por penales }
+            </span>
+          }
         </article>
       }
     </div>

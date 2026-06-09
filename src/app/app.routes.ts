@@ -3,12 +3,14 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: '',
+    title: 'Liberto • Home',
     pathMatch: 'full',
     loadComponent: () =>
       import('./game/pages/home/home.component').then((m) => m.HomeComponent),
   },
   {
     path: 'draft/formation',
+    title: 'Liberto • Formation Select',
     loadComponent: () =>
       import('./game/pages/formation-select/formation-select.component').then(
         (m) => m.FormationSelectComponent,
@@ -16,16 +18,19 @@ export const routes: Routes = [
   },
   {
     path: 'draft/squad',
+    title: 'Liberto • Draft Squad',
     loadComponent: () =>
       import('./game/pages/draft/draft.component').then((m) => m.DraftComponent),
   },
   {
     path: 'tournament/groups',
+    title: 'Liberto • Tournament Groups',
     loadComponent: () =>
       import('./game/pages/groups/groups.component').then((m) => m.GroupsComponent),
   },
   {
     path: 'tournament/draw',
+    title: 'Liberto • Tournament Draw',
     loadComponent: () =>
       import('./game/pages/bracket-draw/bracket-draw.component').then(
         (m) => m.BracketDrawComponent,
@@ -33,11 +38,13 @@ export const routes: Routes = [
   },
   {
     path: 'tournament/playoffs',
+    title: 'Liberto • Tournament Playoffs',
     loadComponent: () =>
       import('./game/pages/playoffs/playoffs.component').then((m) => m.PlayoffsComponent),
   },
   {
     path: 'tournament/eliminated',
+    title: 'Liberto • Tournament Eliminated',
     loadComponent: () =>
       import('./game/pages/eliminated/eliminated.component').then(
         (m) => m.EliminatedComponent,
@@ -45,6 +52,7 @@ export const routes: Routes = [
   },
   {
     path: 'tournament/victory',
+    title: 'Liberto • Tournament Victory',
     loadComponent: () =>
       import('./game/pages/victory/victory.component').then((m) => m.VictoryComponent),
   },

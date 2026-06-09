@@ -428,6 +428,7 @@ function buildTie(id: string, teamA: MatchTeam, teamB: MatchTeam, isFinal: boole
     winner: null,
     aggregateA: 0,
     aggregateB: 0,
+    tieBreaker: null,
   };
 }
 
@@ -449,14 +450,33 @@ function resolveTieFromLegs(tie: KnockoutTie, leg1: MatchResult, leg2: MatchResu
   const aggregateA = leg1.homeGoals + leg2.awayGoals;
   const aggregateB = leg1.awayGoals + leg2.homeGoals;
   let winner: MatchTeam;
-  if (aggregateA > aggregateB) winner = tie.teamA;
-  else if (aggregateB > aggregateA) winner = tie.teamB;
-  else {
-    const aRoll = tie.teamA.strength.overall + Math.random() * 8;
-    const bRoll = tie.teamB.strength.overall + Math.random() * 8;
-    winner = aRoll >= bRoll ? tie.teamA : tie.teamB;
+  let tieBreaker: KnockoutTie['tieBreaker'] = null;
+
+  if (aggregateA > aggregateB) {
+    winner = tie.teamA;
+  } else if (aggregateB > aggregateA) {
+    winner = tie.teamB;
+  } else {
+    // Aggregate level → away goals first (classic Libertadores rule).
+    // teamA is away in leg 2; teamB is away in leg 1.
+    const awayA = leg2.awayGoals;
+    const awayB = leg1.awayGoals;
+    if (awayA > awayB) {
+      winner = tie.teamA;
+      tieBreaker = 'away-goals';
+    } else if (awayB > awayA) {
+      winner = tie.teamB;
+      tieBreaker = 'away-goals';
+    } else {
+      // Still level → penalties weighted by overall strength.
+      const aRoll = tie.teamA.strength.overall + Math.random() * 8;
+      const bRoll = tie.teamB.strength.overall + Math.random() * 8;
+      winner = aRoll >= bRoll ? tie.teamA : tie.teamB;
+      tieBreaker = 'penalties';
+    }
   }
-  return { ...tie, leg1, leg2, winner, aggregateA, aggregateB };
+
+  return { ...tie, leg1, leg2, winner, aggregateA, aggregateB, tieBreaker };
 }
 
 function nextRoundFromWinners(

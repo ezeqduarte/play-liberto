@@ -203,6 +203,7 @@ export class BracketDrawComponent {
         winner: null,
         aggregateA: 0,
         aggregateB: 0,
+        tieBreaker: null,
       });
     }
     this.tournament.commitBracket(ties);

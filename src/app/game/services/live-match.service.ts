@@ -22,6 +22,16 @@ export interface LiveEvent {
   description: string;
 }
 
+export interface MatchStats {
+  possession: number;
+  shots: number;
+  shotsOnTarget: number;
+  corners: number;
+  fouls: number;
+  yellowCards: number;
+  redCards: number;
+}
+
 const SPEED_MS: Record<LiveMatchSpeed, number> = {
   slow: 400,
   normal: 160,
@@ -47,6 +57,8 @@ export class LiveMatchService {
   private readonly _home = signal<MatchTeam | null>(null);
   private readonly _away = signal<MatchTeam | null>(null);
   private readonly _result = signal<MatchResult | null>(null);
+  private readonly _finalHomeStats = signal<MatchStats | null>(null);
+  private readonly _finalAwayStats = signal<MatchStats | null>(null);
 
   readonly minute = this._minute.asReadonly();
   readonly homeGoals = this._homeGoals.asReadonly();
@@ -69,6 +81,14 @@ export class LiveMatchService {
     return null;
   });
 
+  /** Stats interpolated linearly from the pre-computed totals. */
+  readonly homeStats = computed<MatchStats>(() =>
+    this.statsForSide('home'),
+  );
+  readonly awayStats = computed<MatchStats>(() =>
+    this.statsForSide('away'),
+  );
+
   private timer: ReturnType<typeof setTimeout> | null = null;
   private cursor = 0;
 
@@ -86,6 +106,7 @@ export class LiveMatchService {
       ? this.matches.simulateKnockout(home, away)
       : this.matches.simulate(home, away);
     const events = generateEvents(result);
+    const [finalHome, finalAway] = computeFinalStats(home, away, result, events);
 
     this._home.set(home);
     this._away.set(away);
@@ -94,6 +115,8 @@ export class LiveMatchService {
     this._awayGoals.set(0);
     this._events.set(events);
     this._displayedEvents.set([]);
+    this._finalHomeStats.set(finalHome);
+    this._finalAwayStats.set(finalAway);
     this._isRunning.set(true);
     this._isFinished.set(false);
     this._isPaused.set(false);
@@ -132,6 +155,8 @@ export class LiveMatchService {
     this._awayGoals.set(0);
     this._events.set([]);
     this._displayedEvents.set([]);
+    this._finalHomeStats.set(null);
+    this._finalAwayStats.set(null);
     this._isRunning.set(false);
     this._isFinished.set(false);
     this._isPaused.set(false);
@@ -139,6 +164,27 @@ export class LiveMatchService {
     this._away.set(null);
     this._result.set(null);
     this.cursor = 0;
+  }
+
+  /**
+   * Linearly interpolates between 0 and the precomputed final stats
+   * based on the current minute. Yellow/red are read directly from the
+   * displayed event stream so the count is exact.
+   */
+  private statsForSide(side: 'home' | 'away'): MatchStats {
+    const final = side === 'home' ? this._finalHomeStats() : this._finalAwayStats();
+    if (!final) return emptyStats();
+    const progress = Math.min(1, this._minute() / 90);
+    const displayed = this._displayedEvents();
+    return {
+      possession: final.possession,
+      shots: Math.round(final.shots * progress),
+      shotsOnTarget: Math.round(final.shotsOnTarget * progress),
+      corners: Math.round(final.corners * progress),
+      fouls: Math.round(final.fouls * progress),
+      yellowCards: displayed.filter((e) => e.type === 'yellow' && e.side === side).length,
+      redCards: displayed.filter((e) => e.type === 'red' && e.side === side).length,
+    };
   }
 
   // ─────────────────────────── internals ───────────────────────────
@@ -327,4 +373,61 @@ function pickAttacker(team: MatchTeam): Player | null {
 function pickRandomPlayer(team: MatchTeam): Player | null {
   if (team.lineup.length === 0) return null;
   return team.lineup[Math.floor(Math.random() * team.lineup.length)];
+}
+
+function emptyStats(): MatchStats {
+  return {
+    possession: 50,
+    shots: 0,
+    shotsOnTarget: 0,
+    corners: 0,
+    fouls: 0,
+    yellowCards: 0,
+    redCards: 0,
+  };
+}
+
+/**
+ * Pre-computes the final stats for each side. Possession is based on
+ * midfield-strength ratio. Shots / corners / fouls scale with attack
+ * and goals scored. Yellows and reds are not pre-computed — they're
+ * counted from the event feed at display time.
+ */
+function computeFinalStats(
+  home: MatchTeam,
+  away: MatchTeam,
+  result: MatchResult,
+  events: LiveEvent[],
+): [MatchStats, MatchStats] {
+  const totalMid = home.strength.midfield + away.strength.midfield || 1;
+  const homePossession = Math.round((home.strength.midfield / totalMid) * 100);
+  const awayPossession = 100 - homePossession;
+
+  const homeShots = 8 + Math.floor(home.strength.attack / 12) + result.homeGoals + randInt(0, 4);
+  const awayShots = 8 + Math.floor(away.strength.attack / 12) + result.awayGoals + randInt(0, 4);
+
+  return [
+    {
+      possession: homePossession,
+      shots: homeShots,
+      shotsOnTarget: result.homeGoals + Math.floor(homeShots * 0.35) + randInt(0, 2),
+      corners: 3 + result.homeGoals + randInt(0, 4),
+      fouls: 7 + randInt(0, 8),
+      yellowCards: 0,
+      redCards: 0,
+    },
+    {
+      possession: awayPossession,
+      shots: awayShots,
+      shotsOnTarget: result.awayGoals + Math.floor(awayShots * 0.35) + randInt(0, 2),
+      corners: 3 + result.awayGoals + randInt(0, 4),
+      fouls: 7 + randInt(0, 8),
+      yellowCards: 0,
+      redCards: 0,
+    },
+  ];
+}
+
+function randInt(min: number, max: number): number {
+  return min + Math.floor(Math.random() * (max - min + 1));
 }

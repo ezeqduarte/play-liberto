@@ -25,6 +25,16 @@
     flex-wrap: wrap;
   }
 
+  &__stats {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 12px;
+    background: var(--surface-elevated);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--surface-hairline);
+  }
+
   &__feed {
     display: flex;
     flex-direction: column;
@@ -138,6 +148,63 @@
   &--pause {
     font-size: 14px;
     padding: 6px 14px;
+  }
+}
+
+.stat {
+  display: grid;
+  grid-template-columns: 50px 1fr 50px;
+  align-items: center;
+  font-size: 13px;
+  gap: 8px;
+
+  &__home {
+    text-align: right;
+    font-weight: 700;
+  }
+
+  &__away {
+    text-align: left;
+    font-weight: 700;
+  }
+
+  &__label {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  &--possession {
+    grid-template-columns: 50px 1fr 50px;
+    grid-template-rows: auto auto;
+
+    .stat__home,
+    .stat__away {
+      grid-row: 1;
+    }
+
+    .stat__bar {
+      position: relative;
+      height: 6px;
+      background: var(--surface-hairline);
+      border-radius: var(--radius-pill);
+      overflow: hidden;
+      grid-row: 1;
+    }
+
+    .stat__bar-fill {
+      position: absolute;
+      inset: 0;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+
+    .stat__label {
+      grid-column: 1 / 4;
+      grid-row: 2;
+    }
   }
 }
 

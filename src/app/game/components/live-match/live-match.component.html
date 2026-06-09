@@ -43,6 +43,31 @@
     </button>
   </div>
 
+  <div class="live-match__stats">
+    <div class="stat stat--possession">
+      <span class="stat__home">{{ live.homeStats().possession }}%</span>
+      <div class="stat__bar">
+        <span class="stat__bar-fill" [style.width.%]="live.homeStats().possession"></span>
+      </div>
+      <span class="stat__away">{{ live.awayStats().possession }}%</span>
+      <span class="stat__label">Posesión</span>
+    </div>
+    @for (row of [
+      { label: 'Tiros', home: live.homeStats().shots, away: live.awayStats().shots },
+      { label: 'Al arco', home: live.homeStats().shotsOnTarget, away: live.awayStats().shotsOnTarget },
+      { label: 'Corners', home: live.homeStats().corners, away: live.awayStats().corners },
+      { label: 'Faltas', home: live.homeStats().fouls, away: live.awayStats().fouls },
+      { label: 'Amarillas', home: live.homeStats().yellowCards, away: live.awayStats().yellowCards },
+      { label: 'Rojas', home: live.homeStats().redCards, away: live.awayStats().redCards }
+    ]; track row.label) {
+      <div class="stat">
+        <span class="stat__home">{{ row.home }}</span>
+        <span class="stat__label">{{ row.label }}</span>
+        <span class="stat__away">{{ row.away }}</span>
+      </div>
+    }
+  </div>
+
   <div class="live-match__feed">
     @for (e of feedEvents(); track $index) {
       <div class="event event--{{ e.type }}" [class.event--home]="e.side === 'home'" [class.event--away]="e.side === 'away'">

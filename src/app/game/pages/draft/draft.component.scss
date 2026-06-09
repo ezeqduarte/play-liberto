@@ -2,24 +2,31 @@
   max-width: 1400px;
   margin: 0 auto;
   // Top padding clears the floating page-nav chip in the corner.
-  padding: 52px 24px 24px;
-  min-height: 100vh;
+  padding: 48px 24px 16px;
+  // Lock the section to the viewport and let body fill the remaining
+  // space via flex. Internal scrolling lives in the panel's roster.
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 
   &__head {
+    flex: 0 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    margin-bottom: 20px;
+    margin-bottom: 14px;
 
     h1 {
-      font-size: 26px;
+      font-size: 22px;
       margin: 0;
     }
   }
 
   &__subtitle {
     color: var(--text-secondary);
-    margin: 4px 0 0;
+    margin: 2px 0 0;
+    font-size: 13px;
   }
 
   &__progress {
@@ -29,7 +36,7 @@
   }
 
   &__progress-count {
-    font-size: 30px;
+    font-size: 26px;
     font-weight: 700;
     color: var(--accent);
     line-height: 1;
@@ -43,10 +50,12 @@
   }
 
   &__body {
+    flex: 1;
+    min-height: 0;
     display: grid;
     grid-template-columns: 1fr 380px;
-    gap: 24px;
-    align-items: start;
+    gap: 20px;
+    align-items: stretch;
 
     @media (max-width: 960px) {
       grid-template-columns: 1fr;
@@ -56,13 +65,12 @@
 
 .pitch {
   position: relative;
-  // Fit within remaining viewport: header ~85px + page padding 56px.
-  // The pitch keeps a 2:3 ratio capped at the available height.
-  width: 100%;
+  // Fills the body row height. Width derives from the 2:3 ratio so
+  // the pitch keeps its proportions whatever the viewport.
+  height: 100%;
+  aspect-ratio: 2 / 3;
   max-width: 540px;
   margin: 0 auto;
-  aspect-ratio: 2 / 3;
-  max-height: calc(100vh - 142px);
   background:
     repeating-linear-gradient(
       180deg,
@@ -195,12 +203,14 @@
   border: 1px solid var(--surface-hairline);
   border-radius: var(--radius-md);
   padding: 16px;
-  position: sticky;
-  top: 16px;
   display: flex;
   flex-direction: column;
   gap: 14px;
-  max-height: calc(100vh - 32px);
+  min-height: 0;
+  // The grid cell already stretches to body height; this guard keeps
+  // long rosters from blowing past it before the inner roster's
+  // overflow-y kicks in.
+  max-height: 100%;
 
   &__selecting {
     background: var(--accent-soft);

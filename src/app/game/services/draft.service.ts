@@ -9,7 +9,7 @@ import {
   Team,
 } from '../models';
 
-const ROLLS_PER_SLOT = 5;
+const ROLLS_PER_PICK = 5;
 
 export interface SquadEntry {
   slot: FormationSlot;
@@ -21,33 +21,53 @@ export interface SquadEntry {
 export class DraftService {
   private readonly _formation = signal<Formation | null>(null);
   private readonly _squad = signal<SquadEntry[]>([]);
-  private readonly _currentSlotIndex = signal(0);
   private readonly _currentTeam = signal<Team | null>(null);
-  private readonly _rollsLeft = signal(ROLLS_PER_SLOT);
+  private readonly _rollsLeft = signal(ROLLS_PER_PICK);
   private readonly _pickedNames = signal<Set<string>>(new Set());
+  private readonly _selectedPlayer = signal<Player | null>(null);
 
   readonly formation = this._formation.asReadonly();
   readonly squad = this._squad.asReadonly();
-  readonly currentSlotIndex = this._currentSlotIndex.asReadonly();
   readonly currentTeam = this._currentTeam.asReadonly();
   readonly rollsLeft = this._rollsLeft.asReadonly();
+  readonly selectedPlayer = this._selectedPlayer.asReadonly();
+  readonly availableFormations = FORMATIONS;
 
-  readonly currentSlot = computed<FormationSlot | null>(() => {
-    const squad = this._squad();
-    const index = this._currentSlotIndex();
-    return squad[index]?.slot ?? null;
-  });
+  /** How many slots are still empty. */
+  readonly slotsRemaining = computed(
+    () => this._squad().filter((e) => e.player === null).length,
+  );
+
+  /** All filled-slot counts. */
+  readonly slotsFilled = computed(
+    () => this._squad().filter((e) => e.player !== null).length,
+  );
 
   readonly isComplete = computed(() => {
     const squad = this._squad();
     return squad.length > 0 && squad.every((entry) => entry.player !== null);
   });
 
-  readonly availableFormations = FORMATIONS;
+  /** Whether the user is currently in slot-selection mode for a chosen player. */
+  readonly isSelectingSlot = computed(() => this._selectedPlayer() !== null);
+
+  /**
+   * Slots that the selected player could fill (must be empty AND match
+   * one of the player's positions). Returns an empty array when no
+   * player is selected.
+   */
+  readonly eligibleSlotIdsForSelection = computed<Set<string>>(() => {
+    const player = this._selectedPlayer();
+    if (!player) return new Set();
+    const slots = this._squad()
+      .filter((entry) => entry.player === null && this.matchesSlot(player, entry.slot))
+      .map((entry) => entry.slot.id);
+    return new Set(slots);
+  });
 
   /**
    * Sets the chosen formation and initialises the draft with the first
-   * team-year roll for slot 0.
+   * team-year roll. Resets any in-progress state.
    */
   startDraft(formationId: string): void {
     const formation = getFormationById(formationId);
@@ -58,14 +78,15 @@ export class DraftService {
     this._squad.set(
       formation.slots.map((slot) => ({ slot, player: null, fromTeam: null })),
     );
-    this._currentSlotIndex.set(0);
     this._pickedNames.set(new Set());
-    this._rollsLeft.set(ROLLS_PER_SLOT);
+    this._selectedPlayer.set(null);
+    this._rollsLeft.set(ROLLS_PER_PICK);
     this._currentTeam.set(this.randomTeam());
   }
 
   /**
-   * Rolls a completely new team-year (different club + year). Costs one roll.
+   * Rolls a brand-new team-year (different club). Costs one roll.
+   * Cancels any pending slot selection so the user re-evaluates.
    */
   rollTeam(): void {
     if (this._rollsLeft() <= 0) return;
@@ -74,6 +95,7 @@ export class DraftService {
       (t) => !current || t.name !== current.name || t.year !== current.year,
     );
     this._currentTeam.set(this.pickRandom(candidates));
+    this._selectedPlayer.set(null);
     this._rollsLeft.update((r) => r - 1);
   }
 
@@ -90,58 +112,92 @@ export class DraftService {
     );
     if (candidates.length === 0) return;
     this._currentTeam.set(this.pickRandom(candidates));
+    this._selectedPlayer.set(null);
     this._rollsLeft.update((r) => r - 1);
   }
 
-  /**
-   * Returns the players from the current team that match the active slot's
-   * allowed positions AND haven't been picked yet.
-   */
-  selectablePlayers(): Player[] {
+  /** Whether the same-club roll-year action would actually have candidates. */
+  canRollYear(): boolean {
+    const current = this._currentTeam();
+    if (!current) return false;
+    return TEAMS.some((t) => t.name === current.name && t.year !== current.year);
+  }
+
+  /** Returns the full lineup of the currently-rolled team. */
+  rosterOfCurrentTeam(): Player[] {
     const team = this._currentTeam();
-    const slot = this.currentSlot();
-    if (!team || !slot) return [];
-    const picked = this._pickedNames();
-    return team.players.filter(
-      (p) => !picked.has(p.name) && this.matchesSlot(p, slot),
-    );
+    return team ? team.players : [];
   }
 
   /**
-   * Assigns a player to the current slot and advances to the next one
-   * (re-rolling a fresh team-year and resetting the roll counter).
+   * Highlights a player as the candidate the user wants to draft.
+   * Player must not already be picked. If the player has no eligible
+   * empty slots, this is a no-op (UI should disable the click).
    */
-  pickPlayer(player: Player): void {
+  selectPlayer(player: Player): void {
+    if (this._pickedNames().has(player.name)) return;
+    if (!this.hasEligibleSlot(player)) return;
+    this._selectedPlayer.set(player);
+  }
+
+  cancelSelection(): void {
+    this._selectedPlayer.set(null);
+  }
+
+  /**
+   * Confirms the selected player into the given slot. Advances the
+   * pick cycle: refills the rolls, fetches a new random team, clears
+   * the selection.
+   */
+  assignSelectedToSlot(slotId: string): void {
+    const player = this._selectedPlayer();
     const team = this._currentTeam();
-    const slot = this.currentSlot();
-    if (!team || !slot) return;
-    if (!this.matchesSlot(player, slot)) return;
+    if (!player || !team) return;
+    const squad = this._squad();
+    const idx = squad.findIndex((e) => e.slot.id === slotId);
+    if (idx < 0) return;
+    const entry = squad[idx];
+    if (entry.player !== null) return;
+    if (!this.matchesSlot(player, entry.slot)) return;
+
+    const next = [...squad];
+    next[idx] = { ...entry, player, fromTeam: team };
+    this._squad.set(next);
 
     const picked = new Set(this._pickedNames());
-    if (picked.has(player.name)) return;
     picked.add(player.name);
     this._pickedNames.set(picked);
 
-    const index = this._currentSlotIndex();
-    const next = [...this._squad()];
-    next[index] = { ...next[index], player, fromTeam: team };
-    this._squad.set(next);
+    this._selectedPlayer.set(null);
 
-    const nextIndex = index + 1;
-    if (nextIndex < next.length) {
-      this._currentSlotIndex.set(nextIndex);
-      this._rollsLeft.set(ROLLS_PER_SLOT);
+    if (next.some((e) => e.player === null)) {
+      // Reset for the next pick cycle.
+      this._rollsLeft.set(ROLLS_PER_PICK);
       this._currentTeam.set(this.randomTeam());
     }
+  }
+
+  /**
+   * True if a player has at least one eligible empty slot in the current
+   * squad. UI uses this to grey-out un-pickable players.
+   */
+  hasEligibleSlot(player: Player): boolean {
+    return this._squad().some(
+      (entry) => entry.player === null && this.matchesSlot(player, entry.slot),
+    );
+  }
+
+  isAlreadyPicked(player: Player): boolean {
+    return this._pickedNames().has(player.name);
   }
 
   reset(): void {
     this._formation.set(null);
     this._squad.set([]);
-    this._currentSlotIndex.set(0);
     this._currentTeam.set(null);
-    this._rollsLeft.set(ROLLS_PER_SLOT);
+    this._rollsLeft.set(ROLLS_PER_PICK);
     this._pickedNames.set(new Set());
+    this._selectedPlayer.set(null);
   }
 
   private matchesSlot(player: Player, slot: FormationSlot): boolean {

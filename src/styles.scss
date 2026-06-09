@@ -1,1 +1,129 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global tokens and base styles for Liberto */
+
+:root {
+  // Surface
+  --surface-bg: #0b1220;
+  --surface-panel: #131c2e;
+  --surface-elevated: #1c2740;
+  --surface-hairline: #2a3656;
+
+  // Text
+  --text-primary: #f5f7fb;
+  --text-secondary: #a9b3c7;
+  --text-muted: #6f7a90;
+
+  // Brand / interactive
+  --accent: #00d165;
+  --accent-strong: #00b358;
+  --accent-soft: rgba(0, 209, 101, 0.15);
+  --danger: #ef4f5b;
+
+  // Rarity
+  --rarity-common: #8a93a6;
+  --rarity-rare: #4a90ff;
+  --rarity-epic: #b667ff;
+  --rarity-legendary: #ffb547;
+
+  // Pitch
+  --pitch-grass: #1f8a4d;
+  --pitch-grass-stripe: #1c7d46;
+  --pitch-line: rgba(255, 255, 255, 0.45);
+
+  // Layout
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-pill: 9999px;
+
+  --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: var(--surface-bg);
+  color: var(--text-primary);
+  font-family:
+    'Inter',
+    -apple-system,
+    system-ui,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.btn {
+  background: var(--accent);
+  color: #001a09;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: var(--radius-sm);
+  transition: background 0.15s ease, transform 0.05s ease;
+
+  &:hover:not(:disabled) {
+    background: var(--accent-strong);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(1px);
+  }
+
+  &:disabled {
+    background: var(--surface-elevated);
+    color: var(--text-muted);
+    cursor: not-allowed;
+  }
+}
+
+.btn-secondary {
+  background: var(--surface-elevated);
+  color: var(--text-primary);
+  border: 1px solid var(--surface-hairline);
+
+  &:hover:not(:disabled) {
+    background: var(--surface-hairline);
+  }
+}
+
+.rarity-common {
+  color: var(--rarity-common);
+}
+.rarity-rare {
+  color: var(--rarity-rare);
+}
+.rarity-epic {
+  color: var(--rarity-epic);
+}
+.rarity-legendary {
+  color: var(--rarity-legendary);
+}
+
+.rarity-bg-common {
+  background: var(--rarity-common);
+}
+.rarity-bg-rare {
+  background: var(--rarity-rare);
+}
+.rarity-bg-epic {
+  background: var(--rarity-epic);
+}
+.rarity-bg-legendary {
+  background: var(--rarity-legendary);
+}

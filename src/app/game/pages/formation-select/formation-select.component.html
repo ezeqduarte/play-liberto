@@ -1,0 +1,44 @@
+<section class="formation-select">
+  <header class="formation-select__head">
+    <h1>Elegí tu formación</h1>
+    <p>Definí el dibujo táctico y el estilo de juego antes de armar tu 11.</p>
+  </header>
+
+  <div class="style-tabs" role="tablist">
+    @for (style of styles; track style) {
+      <button
+        type="button"
+        role="tab"
+        class="style-tabs__tab"
+        [class.style-tabs__tab--active]="selectedStyle() === style"
+        (click)="selectStyle(style)"
+      >
+        {{ styleLabel[style] }}
+      </button>
+    }
+  </div>
+
+  <div class="shapes-grid">
+    @for (formation of shapesForStyle(); track formation.id) {
+      <button
+        type="button"
+        class="shape-card"
+        (click)="chooseFormation(formation)"
+      >
+        <div class="shape-card__pitch">
+          @for (slot of formation.slots; track slot.id) {
+            <span
+              class="shape-card__dot"
+              [style.left.%]="slot.x"
+              [style.bottom.%]="slot.y"
+            ></span>
+          }
+        </div>
+        <div class="shape-card__meta">
+          <span class="shape-card__shape">{{ formation.shape }}</span>
+          <span class="shape-card__style">{{ styleLabel[formation.style] }}</span>
+        </div>
+      </button>
+    }
+  </div>
+</section>

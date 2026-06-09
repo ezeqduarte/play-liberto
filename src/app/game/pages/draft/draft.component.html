@@ -1,0 +1,138 @@
+@if (formation(); as f) {
+  <section class="draft">
+    <header class="draft__head">
+      <div>
+        <h1>Armá tu 11</h1>
+        <p class="draft__subtitle">
+          {{ f.shape }} ·
+          @switch (f.style) {
+            @case ('defensive') { Defensivo }
+            @case ('normal') { Equilibrado }
+            @case ('offensive') { Ofensivo }
+          }
+        </p>
+      </div>
+      <div class="draft__progress">
+        <span class="draft__progress-count">
+          {{ currentSlotIndex() + (isComplete() ? 0 : 1) }}/{{ squad().length }}
+        </span>
+        <span class="draft__progress-label">jugadores</span>
+      </div>
+    </header>
+
+    <div class="draft__body">
+      <div class="pitch">
+        @for (entry of squad(); track entry.slot.id; let i = $index) {
+          <div
+            class="pitch__slot"
+            [class.pitch__slot--filled]="entry.player !== null"
+            [class.pitch__slot--active]="!isComplete() && i === currentSlotIndex()"
+            [style.left.%]="entry.slot.x"
+            [style.bottom.%]="entry.slot.y"
+          >
+            @if (entry.player) {
+              <div class="pitch__player">
+                <span class="pitch__player-rating rarity-bg-{{ entry.player.rarity }}">
+                  {{ entry.player.rating }}
+                </span>
+                <span class="pitch__player-name">{{ entry.player.name }}</span>
+                @if (entry.fromTeam; as team) {
+                  <span class="pitch__player-team">
+                    {{ team.name }} '{{ team.year % 100 }}
+                  </span>
+                }
+              </div>
+            } @else {
+              <span class="pitch__slot-label">{{ entry.slot.label }}</span>
+            }
+          </div>
+        }
+      </div>
+
+      <aside class="panel">
+        @if (isComplete()) {
+          <div class="panel__done">
+            <h2>¡11 completo!</h2>
+            <p>Tu equipo está listo para entrar a la Libertadores.</p>
+            <button type="button" class="btn" (click)="startTournament()">
+              Arrancar torneo
+            </button>
+            <button type="button" class="btn btn-secondary" (click)="resetDraft()">
+              Empezar de nuevo
+            </button>
+          </div>
+        } @else if (currentTeam(); as team) {
+          <div class="panel__team">
+            <span class="panel__team-year">{{ team.year }}</span>
+            <h2 class="panel__team-name">{{ team.name }}</h2>
+          </div>
+
+          <div class="panel__slot-info">
+            <span>Eligiendo para:</span>
+            <strong>{{ currentSlot()?.label }}</strong>
+          </div>
+
+          <div class="panel__rolls">
+            <span class="panel__rolls-count">{{ rollsLeft() }}</span>
+            <span class="panel__rolls-label">rolls restantes</span>
+          </div>
+
+          <div class="panel__buttons">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              [disabled]="rollsLeft() <= 0"
+              (click)="rollTeam()"
+            >
+              🎲 Roll equipo
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              [disabled]="!canRollYear()"
+              (click)="rollYear()"
+            >
+              📅 Roll año
+            </button>
+          </div>
+
+          <div class="panel__roster">
+            <h3>Jugadores disponibles</h3>
+            @if (selectablePlayers().length === 0) {
+              <p class="panel__empty">
+                Ningún jugador de este equipo cubre la posición
+                <strong>{{ currentSlot()?.label }}</strong>. Rolleá para cambiar
+                de equipo o de año.
+              </p>
+            } @else {
+              <ul class="player-list">
+                @for (player of selectablePlayers(); track player.name) {
+                  <li>
+                    <button
+                      type="button"
+                      class="player-card"
+                      (click)="pickPlayer(player)"
+                    >
+                      <span class="player-card__rating rarity-bg-{{ player.rarity }}">
+                        {{ player.rating }}
+                      </span>
+                      <span class="player-card__body">
+                        <span class="player-card__name">{{ player.name }}</span>
+                        <span class="player-card__positions">
+                          {{ player.positions.join(' · ') }}
+                        </span>
+                      </span>
+                      <span class="player-card__rarity rarity-{{ player.rarity }}">
+                        {{ player.rarity }}
+                      </span>
+                    </button>
+                  </li>
+                }
+              </ul>
+            }
+          </div>
+        }
+      </aside>
+    </div>
+  </section>
+}

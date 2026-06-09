@@ -21,7 +21,24 @@ export const routes: Routes = [
   },
   {
     path: 'tournament/groups',
-    // Placeholder — wired up in M4. For now redirects home.
+    loadComponent: () =>
+      import('./game/pages/groups/groups.component').then((m) => m.GroupsComponent),
+  },
+  {
+    path: 'tournament/playoffs',
+    loadComponent: () =>
+      import('./game/pages/playoffs/playoffs.component').then((m) => m.PlayoffsComponent),
+  },
+  {
+    path: 'tournament/eliminated',
+    loadComponent: () =>
+      import('./game/pages/eliminated/eliminated.component').then(
+        (m) => m.EliminatedComponent,
+      ),
+  },
+  {
+    path: 'tournament/victory',
+    // Wired up in M5. Until then, redirects to home.
     redirectTo: '',
   },
   { path: '**', redirectTo: '' },

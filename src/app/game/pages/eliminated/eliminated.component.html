@@ -1,0 +1,13 @@
+<section class="eliminated">
+  <div class="eliminated__crest">😢</div>
+  <h1 class="eliminated__title">Quedaste afuera</h1>
+  <p class="eliminated__subtitle">
+    Tu equipo fue eliminado en <strong>{{ stageLabel() }}</strong>.
+    @if (eliminatedAt() === 'F') {
+      Una pena, llegaste hasta la final.
+    } @else {
+      ¡Probá de nuevo con otra formación!
+    }
+  </p>
+  <button type="button" class="btn" (click)="playAgain()">Jugar otra vez</button>
+</section>

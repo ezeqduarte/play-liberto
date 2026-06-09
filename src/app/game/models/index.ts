@@ -4,3 +4,4 @@ export * from './position.model';
 export * from './rarity.model';
 export * from './formation.model';
 export * from './match.model';
+export * from './tournament.model';

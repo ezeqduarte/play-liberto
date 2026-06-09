@@ -15,9 +15,9 @@
       </div>
       <div class="draft__progress">
         <span class="draft__progress-count">
-          {{ slotsFilled() }}/{{ squad().length }}
+          {{ slotsFilled() }}/{{ totalSlots() }}
         </span>
-        <span class="draft__progress-label">jugadores</span>
+        <span class="draft__progress-label">selecciones</span>
       </div>
     </header>
 
@@ -70,8 +70,19 @@
       <aside class="panel">
         @if (isComplete()) {
           <div class="panel__done">
-            <h2>¡11 completo!</h2>
-            <p>Tu equipo está listo para entrar a la Libertadores.</p>
+            <h2>¡Equipo completo!</h2>
+            <p>11 jugadores + DT listos para la Libertadores.</p>
+            @if (coachEntry().coach; as coach) {
+              <div class="panel__done-coach">
+                <span
+                  class="coach-card__rating rarity-bg-{{ coach.rarity }}"
+                >{{ coach.rating }}</span>
+                <span>
+                  <strong>{{ coach.name }}</strong>
+                  <span class="panel__done-coach-tag">DT</span>
+                </span>
+              </div>
+            }
             <button type="button" class="btn" (click)="startTournament()">
               Arrancar torneo
             </button>
@@ -126,6 +137,36 @@
               </button>
             </div>
           </div>
+
+          @if (currentCoach(); as coach) {
+            <div class="panel__coach">
+              <span class="panel__coach-label">Director técnico</span>
+              <button
+                type="button"
+                class="coach-card"
+                [class.coach-card--picked]="isCoachPicked()"
+                [disabled]="isCoachPicked()"
+                (click)="selectCoach()"
+              >
+                <span
+                  class="coach-card__rating rarity-bg-{{ coach.rarity }}"
+                >
+                  {{ coach.rating }}
+                </span>
+                <span class="coach-card__body">
+                  <span class="coach-card__name">{{ coach.name }}</span>
+                  <span class="coach-card__sublabel">DT</span>
+                </span>
+                @if (isCoachPicked()) {
+                  <span class="coach-card__tag">Ya elegiste DT</span>
+                } @else {
+                  <span class="coach-card__rarity rarity-{{ coach.rarity }}">
+                    {{ coach.rarity }}
+                  </span>
+                }
+              </button>
+            </div>
+          }
 
           <div class="panel__roster">
             <h3>Roster · {{ roster().length }} jugadores</h3>

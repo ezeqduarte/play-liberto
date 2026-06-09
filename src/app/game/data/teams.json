@@ -98,7 +98,12 @@
           "CDM"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Roberto Scarone",
+      "rating": 84,
+      "rarity": "common"
+    }
   },
   {
     "name": "Santos",
@@ -197,7 +202,12 @@
           "LB"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Lula",
+      "rating": 86,
+      "rarity": "common"
+    }
   },
   {
     "name": "Independiente",
@@ -292,7 +302,12 @@
           "LW"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Manuel Giúdice",
+      "rating": 83,
+      "rarity": "common"
+    }
   },
   {
     "name": "Estudiantes",
@@ -388,7 +403,12 @@
           "RW"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Osvaldo Zubeldía",
+      "rating": 90,
+      "rarity": "common"
+    }
   },
   {
     "name": "Independiente",
@@ -485,7 +505,12 @@
           "ST"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Roberto Ferreiro",
+      "rating": 84,
+      "rarity": "common"
+    }
   },
   {
     "name": "Olimpia",
@@ -579,7 +604,12 @@
           "CAM"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Luis Cubilla",
+      "rating": 86,
+      "rarity": "common"
+    }
   },
   {
     "name": "Flamengo",
@@ -675,7 +705,12 @@
           "LW"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Paulo César Carpegiani",
+      "rating": 86,
+      "rarity": "common"
+    }
   },
   {
     "name": "Grêmio",
@@ -770,7 +805,12 @@
           "ST"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Valdir Espinosa",
+      "rating": 84,
+      "rarity": "common"
+    }
   },
   {
     "name": "Independiente",
@@ -865,7 +905,12 @@
           "ST"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "José Omar Pastoriza",
+      "rating": 86,
+      "rarity": "common"
+    }
   },
   {
     "name": "River Plate",
@@ -978,7 +1023,12 @@
           "LB"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Héctor Veira",
+      "rating": 85,
+      "rarity": "common"
+    }
   },
   {
     "name": "Atlético Nacional",
@@ -1072,7 +1122,12 @@
           "LW"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Francisco Maturana",
+      "rating": 88,
+      "rarity": "common"
+    }
   },
   {
     "name": "São Paulo",
@@ -1168,7 +1223,12 @@
           "LW"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Telê Santana",
+      "rating": 91,
+      "rarity": "common"
+    }
   },
   {
     "name": "São Paulo",
@@ -1280,7 +1340,12 @@
           "CM"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Telê Santana",
+      "rating": 91,
+      "rarity": "common"
+    }
   },
   {
     "name": "Vélez Sarsfield",
@@ -1375,7 +1440,12 @@
           "ST"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Carlos Bianchi",
+      "rating": 89,
+      "rarity": "common"
+    }
   },
   {
     "name": "Cruzeiro",
@@ -1488,7 +1558,12 @@
           "RW"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Paulo Autuori",
+      "rating": 85,
+      "rarity": "common"
+    }
   },
   {
     "name": "Palmeiras",
@@ -1600,7 +1675,12 @@
           "RB"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Luiz Felipe Scolari",
+      "rating": 88,
+      "rarity": "common"
+    }
   },
   {
     "name": "Boca Juniors",
@@ -1713,7 +1793,12 @@
           "CDM"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Carlos Bianchi",
+      "rating": 90,
+      "rarity": "common"
+    }
   },
   {
     "name": "Olimpia",
@@ -1807,7 +1892,12 @@
           "CF"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Nery Pumpido",
+      "rating": 81,
+      "rarity": "common"
+    }
   },
   {
     "name": "Boca Juniors",
@@ -1902,7 +1992,12 @@
           "ST"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Carlos Bianchi",
+      "rating": 91,
+      "rarity": "common"
+    }
   },
   {
     "name": "Once Caldas",
@@ -2013,7 +2108,12 @@
           "CB"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Luis Fernando Montoya",
+      "rating": 85,
+      "rarity": "common"
+    }
   },
   {
     "name": "São Paulo",
@@ -2125,7 +2225,12 @@
           "RW"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Paulo Autuori",
+      "rating": 86,
+      "rarity": "common"
+    }
   },
   {
     "name": "Internacional",
@@ -2219,7 +2324,12 @@
           "ST"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Abel Braga",
+      "rating": 84,
+      "rarity": "common"
+    }
   },
   {
     "name": "Boca Juniors",
@@ -2314,7 +2424,12 @@
           "LW"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Miguel Ángel Russo",
+      "rating": 86,
+      "rarity": "common"
+    }
   },
   {
     "name": "Estudiantes",
@@ -2427,7 +2542,12 @@
           "CB"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Alejandro Sabella",
+      "rating": 88,
+      "rarity": "common"
+    }
   },
   {
     "name": "Santos",
@@ -2523,7 +2643,12 @@
           "ST"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Muricy Ramalho",
+      "rating": 85,
+      "rarity": "common"
+    }
   },
   {
     "name": "Corinthians",
@@ -2635,7 +2760,12 @@
           "LM"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Tite",
+      "rating": 88,
+      "rarity": "common"
+    }
   },
   {
     "name": "Atlético Mineiro",
@@ -2747,7 +2877,12 @@
           "LB"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Cuca",
+      "rating": 85,
+      "rarity": "common"
+    }
   },
   {
     "name": "River Plate",
@@ -2860,7 +2995,12 @@
           "CAM"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Marcelo Gallardo",
+      "rating": 90,
+      "rarity": "common"
+    }
   },
   {
     "name": "River Plate",
@@ -2972,7 +3112,12 @@
           "LW"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Marcelo Gallardo",
+      "rating": 91,
+      "rarity": "common"
+    }
   },
   {
     "name": "Flamengo",
@@ -3066,7 +3211,12 @@
           "ST"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Jorge Jesus",
+      "rating": 89,
+      "rarity": "common"
+    }
   },
   {
     "name": "LDU Quito",
@@ -3160,7 +3310,12 @@
           "ST"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Edgardo Bauza",
+      "rating": 86,
+      "rarity": "common"
+    }
   },
   {
     "name": "Nacional",
@@ -3274,7 +3429,12 @@
           "LW"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Roberto Fleitas",
+      "rating": 82,
+      "rarity": "common"
+    }
   },
   {
     "name": "Peñarol",
@@ -3372,7 +3532,12 @@
           "ST"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Roque Máspoli",
+      "rating": 85,
+      "rarity": "common"
+    }
   },
   {
     "name": "Peñarol",
@@ -3467,7 +3632,12 @@
           "CAM"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Óscar Tabárez",
+      "rating": 87,
+      "rarity": "common"
+    }
   },
   {
     "name": "Santos",
@@ -3566,7 +3736,12 @@
           "LB"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Lula",
+      "rating": 86,
+      "rarity": "common"
+    }
   },
   {
     "name": "Independiente",
@@ -3662,7 +3837,12 @@
           "CM"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Pedro Dellacha",
+      "rating": 83,
+      "rarity": "common"
+    }
   },
   {
     "name": "Independiente",
@@ -3759,7 +3939,12 @@
           "ST"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Roberto Ferreiro",
+      "rating": 84,
+      "rarity": "common"
+    }
   },
   {
     "name": "River Plate",
@@ -3874,7 +4059,12 @@
           "LM"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Ramón Díaz",
+      "rating": 86,
+      "rarity": "common"
+    }
   },
   {
     "name": "Boca Juniors",
@@ -3987,7 +4177,12 @@
           "LW"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Carlos Bianchi",
+      "rating": 90,
+      "rarity": "common"
+    }
   },
   {
     "name": "Grêmio",
@@ -4101,7 +4296,12 @@
           "RM"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Renato Portaluppi",
+      "rating": 86,
+      "rarity": "common"
+    }
   },
   {
     "name": "Internacional",
@@ -4197,7 +4397,12 @@
           "ST"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Jorge Fossati",
+      "rating": 83,
+      "rarity": "common"
+    }
   },
   {
     "name": "Atlético Nacional",
@@ -4292,7 +4497,12 @@
           "LW"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Reinaldo Rueda",
+      "rating": 84,
+      "rarity": "common"
+    }
   },
   {
     "name": "Palmeiras",
@@ -4406,7 +4616,12 @@
           "RW"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Abel Ferreira",
+      "rating": 87,
+      "rarity": "common"
+    }
   },
   {
     "name": "Palmeiras",
@@ -4501,7 +4716,12 @@
           "ST"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Abel Ferreira",
+      "rating": 88,
+      "rarity": "common"
+    }
   },
   {
     "name": "Independiente",
@@ -4610,7 +4830,12 @@
           "CM"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Manuel Giúdice",
+      "rating": 83,
+      "rarity": "common"
+    }
   },
   {
     "name": "Argentinos Juniors",
@@ -4716,7 +4941,12 @@
           "ST"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "José Yudica",
+      "rating": 84,
+      "rarity": "common"
+    }
   },
   {
     "name": "Cruzeiro",
@@ -4824,7 +5054,12 @@
           "CF"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Zé Duarte",
+      "rating": 82,
+      "rarity": "common"
+    }
   },
   {
     "name": "Vasco da Gama",
@@ -4933,7 +5168,12 @@
           "CM"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Antônio Lopes",
+      "rating": 84,
+      "rarity": "common"
+    }
   },
   {
     "name": "Olimpia",
@@ -5040,7 +5280,12 @@
           "CM"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Luis Cubilla",
+      "rating": 86,
+      "rarity": "common"
+    }
   },
   {
     "name": "Nacional",
@@ -5147,7 +5392,12 @@
           "CM"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Juan Martín Mujica",
+      "rating": 82,
+      "rarity": "common"
+    }
   },
   {
     "name": "Vélez Sarsfield",
@@ -5254,7 +5504,12 @@
           "CF"
         ]
       }
-    ]
+    ],
+    "coach": {
+      "name": "Osvaldo Piñero",
+      "rating": 80,
+      "rarity": "common"
+    }
   },
   {
     "name": "Colo-Colo",

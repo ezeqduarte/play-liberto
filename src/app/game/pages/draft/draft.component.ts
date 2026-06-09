@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, effect, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { DraftService, SquadEntry } from '../../services/draft.service';
-import { Player } from '../../models';
+import { Coach, Player } from '../../models';
 import { PageNavComponent } from '../../components/page-nav/page-nav.component';
 
 @Component({
@@ -17,13 +17,22 @@ export class DraftComponent {
 
   readonly formation = this.draft.formation;
   readonly squad = this.draft.squad;
+  readonly coachEntry = this.draft.coachEntry;
   readonly currentTeam = this.draft.currentTeam;
   readonly rollsLeft = this.draft.rollsLeft;
   readonly isComplete = this.draft.isComplete;
   readonly slotsFilled = this.draft.slotsFilled;
+  readonly totalSlots = this.draft.totalSlots;
   readonly selectedPlayer = this.draft.selectedPlayer;
   readonly isSelectingSlot = this.draft.isSelectingSlot;
   readonly eligibleSlotIds = this.draft.eligibleSlotIdsForSelection;
+
+  readonly currentCoach = computed<Coach | null>(() => {
+    this.draft.currentTeam();
+    return this.draft.coachOfCurrentTeam();
+  });
+
+  readonly isCoachPicked = computed(() => this.draft.isCoachPicked());
 
   readonly roster = computed<Player[]>(() => {
     this.draft.currentTeam();
@@ -52,6 +61,10 @@ export class DraftComponent {
 
   selectPlayer(player: Player): void {
     this.draft.selectPlayer(player);
+  }
+
+  selectCoach(): void {
+    this.draft.selectCoach();
   }
 
   cancelSelection(): void {

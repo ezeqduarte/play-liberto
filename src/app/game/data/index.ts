@@ -3,9 +3,9 @@ import { rarityFromRating } from '../utils/rarity';
 import teamsJson from './teams.json';
 
 /**
- * Loads the team pool with rarity recomputed from each player's rating
- * so the visual tier always matches the numeric overall — no matter
- * what the JSON originally tagged.
+ * Loads the team pool with rarity recomputed from each player's and
+ * coach's rating so the visual tier always matches the numeric overall
+ * — no matter what the JSON originally tagged.
  */
 function loadTeams(): Team[] {
   return (teamsJson as Team[]).map((team) => ({
@@ -14,6 +14,10 @@ function loadTeams(): Team[] {
       ...p,
       rarity: rarityFromRating(p.rating),
     })),
+    coach: {
+      ...team.coach,
+      rarity: rarityFromRating(team.coach.rating),
+    },
   }));
 }
 

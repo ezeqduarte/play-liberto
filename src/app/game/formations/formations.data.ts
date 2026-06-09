@@ -155,26 +155,93 @@ const STYLE_MODIFIERS: Record<FormationStyle, FormationModifiers> = {
 };
 
 /**
- * Vertical shift (in pitch %) applied to outfield slots per style.
- * Defensive variants pull every line back toward the own goal; offensive
- * variants push them up toward the opponent. The goalkeeper is pinned.
+ * Per-slot transformation based on the chosen style. Rather than a flat
+ * vertical shift, each role behaves differently:
+ *
+ * - GK / CB: pinned.
+ * - LB / RB: defensive narrows them in and drops them slightly; offensive
+ *   pushes them out into wingback positions.
+ * - CDM: defensive drops it between the CBs (back-3 sweeper); offensive
+ *   pushes it up to CM line.
+ * - CAM: defensive pulls it back to support the CMs; offensive pushes it
+ *   right up behind the strikers.
+ * - LM / RM: defensive narrows them in and drops them; offensive widens
+ *   and pushes them up.
+ * - LW / RW: defensive drops them to wide-mid territory; offensive
+ *   pushes them up to the striker line.
+ * - ST / CF: small forward/back nudge.
  */
-const STYLE_Y_SHIFT: Record<FormationStyle, number> = {
-  defensive: -7,
-  normal: 0,
-  offensive: 7,
-};
-
 function applyStyleShift(
   slots: FormationSlot[],
   style: FormationStyle,
 ): FormationSlot[] {
-  const shift = STYLE_Y_SHIFT[style];
-  if (shift === 0) return slots;
-  return slots.map((slot) => {
-    if (slot.allowed.length === 1 && slot.allowed[0] === 'GK') return slot;
-    return { ...slot, y: clamp(slot.y + shift, 12, 92) };
-  });
+  if (style === 'normal') return slots;
+  return slots.map((s) => transformSlotForStyle(s, style));
+}
+
+function transformSlotForStyle(
+  slot: FormationSlot,
+  style: FormationStyle,
+): FormationSlot {
+  const off = style === 'offensive';
+  switch (slot.label) {
+    case 'GK':
+    case 'CB':
+      return slot;
+
+    case 'LB':
+      return off
+        ? { ...slot, x: 8, y: 45 }
+        : { ...slot, x: Math.min(slot.x + 8, 30), y: Math.max(slot.y - 3, 18) };
+
+    case 'RB':
+      return off
+        ? { ...slot, x: 92, y: 45 }
+        : { ...slot, x: Math.max(slot.x - 8, 70), y: Math.max(slot.y - 3, 18) };
+
+    case 'CDM':
+      return off
+        ? { ...slot, y: Math.min(slot.y + 12, 58) }
+        : { ...slot, y: 28 };
+
+    case 'CM':
+      return off
+        ? { ...slot, y: clamp(slot.y + 5, 50, 70) }
+        : { ...slot, y: clamp(slot.y - 6, 32, 50) };
+
+    case 'CAM':
+      return off
+        ? { ...slot, y: clamp(slot.y + 6, 65, 78) }
+        : { ...slot, y: clamp(slot.y - 10, 48, 60) };
+
+    case 'LM':
+      return off
+        ? { ...slot, x: Math.max(slot.x - 3, 5), y: clamp(slot.y + 6, 58, 78) }
+        : { ...slot, x: Math.min(slot.x + 6, 28), y: clamp(slot.y - 5, 40, 55) };
+
+    case 'RM':
+      return off
+        ? { ...slot, x: Math.min(slot.x + 3, 95), y: clamp(slot.y + 6, 58, 78) }
+        : { ...slot, x: Math.max(slot.x - 6, 72), y: clamp(slot.y - 5, 40, 55) };
+
+    case 'LW':
+      return off
+        ? { ...slot, x: Math.max(slot.x - 3, 8), y: clamp(slot.y + 4, 78, 92) }
+        : { ...slot, x: Math.min(slot.x + 3, 25), y: clamp(slot.y - 14, 55, 70) };
+
+    case 'RW':
+      return off
+        ? { ...slot, x: Math.min(slot.x + 3, 92), y: clamp(slot.y + 4, 78, 92) }
+        : { ...slot, x: Math.max(slot.x - 3, 75), y: clamp(slot.y - 14, 55, 70) };
+
+    case 'ST':
+      return off
+        ? { ...slot, y: clamp(slot.y + 2, 80, 93) }
+        : { ...slot, y: clamp(slot.y - 5, 70, 85) };
+
+    default:
+      return slot;
+  }
 }
 
 function clamp(value: number, min: number, max: number): number {

@@ -1,0 +1,361 @@
+.draft {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 32px 24px;
+  min-height: 100vh;
+
+  &__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 24px;
+
+    h1 {
+      font-size: 28px;
+      margin: 0;
+    }
+  }
+
+  &__subtitle {
+    color: var(--text-secondary);
+    margin: 4px 0 0;
+  }
+
+  &__progress {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  &__progress-count {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  &__progress-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  &__body {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 24px;
+    align-items: start;
+
+    @media (max-width: 960px) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+.pitch {
+  position: relative;
+  aspect-ratio: 2 / 3;
+  background:
+    repeating-linear-gradient(
+      180deg,
+      var(--pitch-grass) 0 10%,
+      var(--pitch-grass-stripe) 10% 20%
+    );
+  border-radius: var(--radius-md);
+  border: 2px solid var(--pitch-line);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+
+  &::before {
+    // Halfway line
+    content: '';
+    position: absolute;
+    left: 5%;
+    right: 5%;
+    top: 50%;
+    height: 2px;
+    background: var(--pitch-line);
+  }
+
+  &::after {
+    // Center circle
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 100px;
+    height: 100px;
+    border: 2px solid var(--pitch-line);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &__slot {
+    position: absolute;
+    transform: translate(-50%, 50%);
+    width: 80px;
+    height: 80px;
+    background: rgba(11, 18, 32, 0.55);
+    border: 2px dashed rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+
+    &--filled {
+      background: var(--surface-panel);
+      border: 2px solid var(--accent);
+      border-style: solid;
+    }
+
+    &--active {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px var(--accent-soft), 0 0 20px var(--accent);
+      animation: pulse 2s ease-in-out infinite;
+    }
+  }
+
+  &__slot-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+  }
+
+  &__player {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 4px;
+    gap: 2px;
+  }
+
+  &__player-rating {
+    font-weight: 800;
+    font-size: 16px;
+    color: #001a09;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__player-name {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.1;
+    max-width: 75px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__player-team {
+    font-size: 9px;
+    color: var(--text-muted);
+    line-height: 1;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 4px var(--accent-soft), 0 0 20px var(--accent);
+  }
+  50% {
+    box-shadow: 0 0 0 8px var(--accent-soft), 0 0 30px var(--accent);
+  }
+}
+
+.panel {
+  background: var(--surface-panel);
+  border: 1px solid var(--surface-hairline);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  position: sticky;
+  top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: calc(100vh - 60px);
+
+  &__done {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+    padding: 24px 12px;
+
+    h2 {
+      margin: 0;
+      font-size: 24px;
+      color: var(--accent);
+    }
+
+    p {
+      margin: 0;
+      color: var(--text-secondary);
+    }
+  }
+
+  &__team {
+    text-align: center;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--surface-hairline);
+  }
+
+  &__team-year {
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+
+  &__team-name {
+    font-size: 24px;
+    margin: 4px 0 0;
+  }
+
+  &__slot-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--surface-elevated);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+
+    span {
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    strong {
+      color: var(--accent);
+      font-size: 16px;
+    }
+  }
+
+  &__rolls {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  &__rolls-count {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  &__rolls-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  &__buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  &__roster {
+    flex: 1;
+    overflow-y: auto;
+    margin-top: 8px;
+    padding-top: 12px;
+    border-top: 1px solid var(--surface-hairline);
+
+    h3 {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin: 0 0 8px;
+    }
+  }
+
+  &__empty {
+    color: var(--text-muted);
+    font-size: 13px;
+    margin: 8px 0;
+
+    strong {
+      color: var(--text-secondary);
+    }
+  }
+}
+
+.player-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.player-card {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  background: var(--surface-elevated);
+  border: 1px solid var(--surface-hairline);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  color: var(--text-primary);
+  text-align: left;
+  transition: all 0.15s ease;
+
+  &:hover {
+    border-color: var(--accent);
+    background: var(--surface-hairline);
+  }
+
+  &__rating {
+    font-weight: 800;
+    font-size: 14px;
+    color: #001a09;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  &__name {
+    font-weight: 600;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__positions {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  &__rarity {
+    font-size: 10px;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+}

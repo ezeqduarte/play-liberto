@@ -2,34 +2,42 @@
 <section class="playoffs">
   <header class="playoffs__head">
     <div>
-      <h1>{{ activeRound()?.label ?? 'Playoffs' }}</h1>
-      <p>
-        @if (rounds().length > 0) {
-          {{ rounds().length === 1 ? 'Mano a mano. Top 16 equipos del torneo.' : '' }}
-        }
-      </p>
+      <h1>{{ currentRound()?.label ?? 'Playoffs' }}</h1>
+      @if (userTie(); as tie) {
+        <p class="playoffs__tie">
+          Tu llave: <strong>{{ tie.teamA.displayName }}</strong> vs
+          <strong>{{ tie.teamB.displayName }}</strong>
+        </p>
+      }
     </div>
-    @if (activeRound() && !currentRoundPlayed()) {
-      <button type="button" class="btn" (click)="simulateRound()">
-        @if (activeRound()?.name === 'F') {
-          Jugar la final
-        } @else {
-          Simular ronda
+
+    @switch (viewState()) {
+      @case ('idle') {
+        <button type="button" class="btn" (click)="playLeg1()">
+          @if (isFinalRound()) { Jugar la final }
+          @else { Jugar la ida }
+        </button>
+      }
+      @case ('between-legs') {
+        <button type="button" class="btn" (click)="playLeg2()">
+          Jugar la vuelta
+        </button>
+      }
+      @case ('round-done') {
+        @if (!isFinalRound()) {
+          <button type="button" class="btn" (click)="finishRound()">
+            Simular el resto y avanzar
+          </button>
         }
-      </button>
-    } @else if (currentRoundPlayed() && activeRound()?.name !== 'F') {
-      <button type="button" class="btn" (click)="simulateRound()">
-        Siguiente ronda
-      </button>
+      }
     }
   </header>
 
-  <!-- All round progress badges -->
   <div class="rounds-strip">
     @for (round of rounds(); track round.name) {
       <span
         class="rounds-strip__item"
-        [class.rounds-strip__item--active]="round.name === activeRound()?.name"
+        [class.rounds-strip__item--active]="round.name === currentRound()?.name"
         [class.rounds-strip__item--done]="round.completed"
       >
         {{ round.label }}
@@ -37,8 +45,28 @@
     }
   </div>
 
-  <!-- Active round bracket -->
-  @if (activeRound(); as round) {
+  @if (viewState() === 'playing-leg1' && leg1Home() && leg1Away()) {
+    <div class="playoffs__live">
+      <app-live-match
+        [home]="leg1Home()!"
+        [away]="leg1Away()!"
+        [isKnockout]="isFinalRound()"
+        (finished)="onMatchFinished($event)"
+      />
+    </div>
+  }
+
+  @if (viewState() === 'playing-leg2' && leg2Home() && leg2Away()) {
+    <div class="playoffs__live">
+      <app-live-match
+        [home]="leg2Home()!"
+        [away]="leg2Away()!"
+        (finished)="onMatchFinished($event)"
+      />
+    </div>
+  }
+
+  @if (currentRound(); as round) {
     <div class="ties" [class.ties--final]="round.name === 'F'">
       @for (tie of round.ties; track tie.id) {
         <article
@@ -52,7 +80,7 @@
             [class.tie__team--loser]="tie.winner && tie.winner.id !== tie.teamA.id"
           >
             <span class="tie__team-name">{{ tie.teamA.displayName }}</span>
-            @if (tie.leg1) {
+            @if (tie.leg1 || tie.leg2) {
               <span class="tie__team-score">{{ tie.aggregateA }}</span>
             }
           </div>
@@ -62,7 +90,7 @@
             [class.tie__team--loser]="tie.winner && tie.winner.id !== tie.teamB.id"
           >
             <span class="tie__team-name">{{ tie.teamB.displayName }}</span>
-            @if (tie.leg1) {
+            @if (tie.leg1 || tie.leg2) {
               <span class="tie__team-score">{{ tie.aggregateB }}</span>
             }
           </div>

@@ -23,6 +23,20 @@
   }
 }
 
+.playoffs__live {
+  margin-bottom: 24px;
+}
+
+.playoffs__tie {
+  margin: 4px 0 0;
+  color: var(--text-secondary);
+  font-size: 14px;
+
+  strong {
+    color: var(--text-primary);
+  }
+}
+
 .rounds-strip {
   display: flex;
   gap: 8px;

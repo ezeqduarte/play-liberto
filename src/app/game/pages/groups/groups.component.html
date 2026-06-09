@@ -3,22 +3,35 @@
   <header class="groups-page__head">
     <div>
       <h1>Fase de grupos</h1>
-      <p>32 equipos · 8 grupos · top 2 avanzan a octavos</p>
+      <p>
+        Jornada {{ currentMatchday() || 1 }} / {{ totalMatchdays }} ·
+        32 equipos · 8 grupos · top 2 avanzan a octavos
+      </p>
     </div>
-    @if (!completed()) {
-      <button type="button" class="btn" (click)="simulate()">
-        Simular fase de grupos
+    @if (viewState() === 'idle' && !completed()) {
+      <button type="button" class="btn" (click)="beginNextMatchday()">
+        Jugar jornada {{ currentMatchday() + 1 }}
       </button>
     } @else if (userAdvanced()) {
       <button type="button" class="btn" (click)="goToBracket()">
         Sortear playoffs
       </button>
-    } @else if (eliminatedAt() === 'group') {
+    } @else if (userEliminated()) {
       <button type="button" class="btn btn-secondary" (click)="goToEliminated()">
         Ver resultado
       </button>
     }
   </header>
+
+  @if (viewState() === 'playing' && currentUserFixture(); as fix) {
+    <div class="groups-page__live">
+      <app-live-match
+        [home]="fix.home"
+        [away]="fix.away"
+        (finished)="onMatchFinished($event)"
+      />
+    </div>
+  }
 
   <div class="groups-grid">
     @for (group of groups(); track group.id) {

@@ -7,12 +7,14 @@ import {
   KnockoutRound,
   KnockoutRoundName,
   KnockoutTie,
+  MatchResult,
   MatchTeam,
 } from '../models';
 import { DraftService } from './draft.service';
 import { MatchService } from './match.service';
 
 const GROUP_IDS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+const TOTAL_MATCHDAYS = 6;
 
 @Injectable({ providedIn: 'root' })
 export class TournamentService {
@@ -21,6 +23,7 @@ export class TournamentService {
 
   private readonly _userTeam = signal<MatchTeam | null>(null);
   private readonly _groups = signal<Group[]>([]);
+  private readonly _currentMatchday = signal(0);
   private readonly _groupsCompleted = signal(false);
   private readonly _rounds = signal<KnockoutRound[]>([]);
   private readonly _bracketDrawn = signal(false);
@@ -29,11 +32,13 @@ export class TournamentService {
 
   readonly userTeam = this._userTeam.asReadonly();
   readonly groups = this._groups.asReadonly();
+  readonly currentMatchday = this._currentMatchday.asReadonly();
   readonly groupsCompleted = this._groupsCompleted.asReadonly();
   readonly rounds = this._rounds.asReadonly();
   readonly bracketDrawn = this._bracketDrawn.asReadonly();
   readonly eliminatedAt = this._eliminatedAt.asReadonly();
   readonly won = this._won.asReadonly();
+  readonly totalMatchdays = TOTAL_MATCHDAYS;
 
   readonly userGroup = computed<Group | null>(() => {
     const user = this._userTeam();
@@ -49,8 +54,38 @@ export class TournamentService {
   });
 
   /**
+   * The user's next unplayed fixture for the active matchday, or null
+   * if the matchday is already played out or the user isn't in any fixture.
+   */
+  readonly userFixtureForCurrentMatchday = computed<GroupFixture | null>(() => {
+    const md = this._currentMatchday();
+    const group = this.userGroup();
+    const user = this._userTeam();
+    if (!group || !user || md === 0) return null;
+    return (
+      group.fixtures.find(
+        (f) =>
+          f.matchday === md &&
+          f.result === null &&
+          (f.home.id === user.id || f.away.id === user.id),
+      ) ?? null
+    );
+  });
+
+  /** The user's current-round tie, with leg state, or null. */
+  readonly userTie = computed<KnockoutTie | null>(() => {
+    const round = this.currentRound();
+    const user = this._userTeam();
+    if (!round || !user) return null;
+    return (
+      round.ties.find((t) => t.teamA.id === user.id || t.teamB.id === user.id) ?? null
+    );
+  });
+
+  /**
    * Initialises the tournament: builds the user MatchTeam from the draft,
-   * adds 31 random historic teams, and distributes all 32 into 8 groups.
+   * picks 31 random historic teams, distributes all 32 into 8 groups,
+   * and schedules round-robin matchdays.
    */
   start(): void {
     const formation = this.draft.formation();
@@ -62,11 +97,9 @@ export class TournamentService {
     const userTeam = this.matches.buildUserTeam(squad, formation);
     this._userTeam.set(userTeam);
 
-    // Pick 31 random historic teams.
     const shuffledTeams = shuffle([...TEAMS]).slice(0, 31);
     const opponents = shuffledTeams.map((t) => this.matches.buildHistoricTeam(t));
 
-    // Distribute 32 teams into 8 groups of 4. User always in group A first.
     const allTeams = shuffle([userTeam, ...opponents]);
     const groups: Group[] = GROUP_IDS.map((id, gi) => {
       const teams = allTeams.slice(gi * 4, gi * 4 + 4);
@@ -79,6 +112,7 @@ export class TournamentService {
       };
     });
     this._groups.set(groups);
+    this._currentMatchday.set(0);
     this._groupsCompleted.set(false);
     this._rounds.set([]);
     this._bracketDrawn.set(false);
@@ -87,22 +121,52 @@ export class TournamentService {
   }
 
   /**
-   * Simulates every fixture in every group. Updates standings and marks
-   * the group stage as complete. Sets eliminatedAt='group' if the user
-   * doesn't finish top 2 of their group.
+   * Advances to the next matchday. Returns the user's fixture for that
+   * matchday (or null if user is not playing this matchday).
+   *
+   * Does NOT simulate yet — the page calls applyUserMatchResult once the
+   * live match finishes.
    */
-  simulateGroupStage(): void {
-    const groups = this._groups().map((g) => this.simulateGroup(g));
-    this._groups.set(groups);
-    this._groupsCompleted.set(true);
+  beginNextMatchday(): GroupFixture | null {
+    const md = this._currentMatchday() + 1;
+    if (md > TOTAL_MATCHDAYS) return null;
+    this._currentMatchday.set(md);
+    return this.userFixtureForCurrentMatchday();
+  }
 
-    const user = this._userTeam();
-    if (!user) return;
-    const userGroup = groups.find((g) => g.teams.some((t) => t.id === user.id));
-    if (!userGroup) return;
-    const userPos = userGroup.standings.findIndex((s) => s.team.id === user.id);
-    if (userPos > 1) {
-      this._eliminatedAt.set('group');
+  /**
+   * Apply the user's live-match result, then auto-simulate every other
+   * fixture in the current matchday and rebuild standings.
+   */
+  finishCurrentMatchday(userResult: MatchResult | null): void {
+    const md = this._currentMatchday();
+    if (md === 0) return;
+    const groups = this._groups().map((g) => {
+      const fixtures = g.fixtures.map((f) => {
+        if (f.matchday !== md) return f;
+        if (f.result) return f;
+        if (userResult && fixtureInvolves(f, userResult.home, userResult.away)) {
+          return { ...f, result: userResult };
+        }
+        return { ...f, result: this.matches.simulate(f.home, f.away) };
+      });
+      return {
+        ...g,
+        fixtures,
+        standings: computeStandings(g.teams, fixtures),
+        completed: fixtures.every((f) => f.result !== null),
+      };
+    });
+    this._groups.set(groups);
+
+    if (md === TOTAL_MATCHDAYS) {
+      this._groupsCompleted.set(true);
+      const user = this._userTeam();
+      if (user) {
+        const userGroup = groups.find((g) => g.teams.some((t) => t.id === user.id));
+        const pos = userGroup?.standings.findIndex((s) => s.team.id === user.id) ?? -1;
+        if (pos > 1) this._eliminatedAt.set('group');
+      }
     }
   }
 
@@ -139,39 +203,59 @@ export class TournamentService {
   }
 
   /**
-   * Simulates the current (incomplete) round. If the user is in this
-   * round and loses, marks them eliminated. Otherwise queues the next
-   * round with the winners.
+   * Apply a finished leg of the user's tie. legNumber 1 or 2.
+   * Returns the updated tie.
    */
-  simulateCurrentRound(): void {
+  applyUserLeg(legNumber: 1 | 2, result: MatchResult): KnockoutTie | null {
+    const rounds = [...this._rounds()];
+    const round = rounds.find((r) => !r.completed);
+    if (!round) return null;
+    const user = this._userTeam();
+    if (!user) return null;
+
+    const updatedTies = round.ties.map((t) => {
+      if (t.teamA.id !== user.id && t.teamB.id !== user.id) return t;
+      if (legNumber === 1) return { ...t, leg1: result };
+      return { ...t, leg2: result };
+    });
+    const updatedRound = { ...round, ties: updatedTies };
+    const idx = rounds.indexOf(round);
+    rounds[idx] = updatedRound;
+    this._rounds.set(rounds);
+    return updatedTies.find((t) => t.teamA.id === user.id || t.teamB.id === user.id) ?? null;
+  }
+
+  /**
+   * Resolve the user's tie aggregate + simulate every other tie in the
+   * current round. Sets up the next round (or victory / elimination).
+   */
+  finishCurrentRound(): void {
     const rounds = [...this._rounds()];
     const round = rounds.find((r) => !r.completed);
     if (!round) return;
+    const user = this._userTeam();
 
-    const playedTies = round.ties.map((tie) => this.playTie(tie));
+    const playedTies = round.ties.map((tie) => {
+      if (user && (tie.teamA.id === user.id || tie.teamB.id === user.id)) {
+        return resolveUserTie(tie);
+      }
+      return this.simulateTie(tie);
+    });
     const completedRound: KnockoutRound = { ...round, ties: playedTies, completed: true };
-
-    // Replace the in-progress round.
     const idx = rounds.indexOf(round);
     rounds[idx] = completedRound;
 
-    // Check user elimination.
-    const user = this._userTeam();
-    const userTie = playedTies.find(
-      (t) => t.teamA.id === user?.id || t.teamB.id === user?.id,
-    );
+    const userTie = playedTies.find((t) => t.teamA.id === user?.id || t.teamB.id === user?.id);
     if (user && userTie && userTie.winner && userTie.winner.id !== user.id) {
       this._eliminatedAt.set(round.name);
       this._rounds.set(rounds);
       return;
     }
 
-    // Build the next round, unless this was the final.
     const next = nextRoundFromWinners(playedTies, round.name);
     if (next) {
       rounds.push(next);
     } else {
-      // It was the final — check winner.
       const finalTie = playedTies[0];
       if (user && finalTie.winner?.id === user.id) {
         this._won.set(true);
@@ -185,6 +269,7 @@ export class TournamentService {
   reset(): void {
     this._userTeam.set(null);
     this._groups.set([]);
+    this._currentMatchday.set(0);
     this._groupsCompleted.set(false);
     this._rounds.set([]);
     this._bracketDrawn.set(false);
@@ -194,16 +279,7 @@ export class TournamentService {
 
   // ─────────────────────────── internals ───────────────────────────
 
-  private simulateGroup(group: Group): Group {
-    const fixtures: GroupFixture[] = group.fixtures.map((f) => ({
-      ...f,
-      result: this.matches.simulate(f.home, f.away),
-    }));
-    const standings = computeStandings(group.teams, fixtures);
-    return { ...group, fixtures, standings, completed: true };
-  }
-
-  private playTie(tie: KnockoutTie): KnockoutTie {
+  private simulateTie(tie: KnockoutTie): KnockoutTie {
     if (tie.isFinal) {
       const result = this.matches.simulateKnockout(tie.teamA, tie.teamB);
       const winner = result.winner === 'home' ? tie.teamA : tie.teamB;
@@ -215,34 +291,50 @@ export class TournamentService {
         aggregateB: result.awayGoals,
       };
     }
-
     const leg1 = this.matches.simulate(tie.teamA, tie.teamB);
     const leg2 = this.matches.simulate(tie.teamB, tie.teamA);
-    const aggregateA = leg1.homeGoals + leg2.awayGoals;
-    const aggregateB = leg1.awayGoals + leg2.homeGoals;
-
-    let winner: MatchTeam;
-    if (aggregateA > aggregateB) winner = tie.teamA;
-    else if (aggregateB > aggregateA) winner = tie.teamB;
-    else {
-      // Aggregate tie → penalty shoot-out weighted by overall.
-      const aRoll = tie.teamA.strength.overall + Math.random() * 8;
-      const bRoll = tie.teamB.strength.overall + Math.random() * 8;
-      winner = aRoll >= bRoll ? tie.teamA : tie.teamB;
-    }
-
-    return { ...tie, leg1, leg2, winner, aggregateA, aggregateB };
+    return resolveTieFromLegs(tie, leg1, leg2);
   }
 }
 
 // ─────────────────────────── module-level helpers ───────────────────────────
 
+function fixtureInvolves(f: GroupFixture, a: MatchTeam, b: MatchTeam): boolean {
+  return (
+    (f.home.id === a.id && f.away.id === b.id) ||
+    (f.home.id === b.id && f.away.id === a.id)
+  );
+}
+
+/**
+ * Round-robin schedule for a group of 4: 6 matchdays total.
+ * Days 1-3 first leg, days 4-6 reverse legs.
+ */
+const ROUND_ROBIN_PAIRINGS: [number, number][][] = [
+  [
+    [0, 1],
+    [2, 3],
+  ],
+  [
+    [0, 2],
+    [3, 1],
+  ],
+  [
+    [0, 3],
+    [1, 2],
+  ],
+];
+
 function buildGroupFixtures(teams: MatchTeam[]): GroupFixture[] {
   const fixtures: GroupFixture[] = [];
-  for (let i = 0; i < teams.length; i++) {
-    for (let j = 0; j < teams.length; j++) {
-      if (i === j) continue;
-      fixtures.push({ home: teams[i], away: teams[j], result: null });
+  for (let day = 0; day < 3; day++) {
+    for (const [h, a] of ROUND_ROBIN_PAIRINGS[day]) {
+      fixtures.push({ matchday: day + 1, home: teams[h], away: teams[a], result: null });
+    }
+  }
+  for (let day = 0; day < 3; day++) {
+    for (const [h, a] of ROUND_ROBIN_PAIRINGS[day]) {
+      fixtures.push({ matchday: day + 4, home: teams[a], away: teams[h], result: null });
     }
   }
   return fixtures;
@@ -277,7 +369,6 @@ function computeStandings(teams: MatchTeam[], fixtures: GroupFixture[]): GroupSt
       points: 0,
     });
   }
-
   for (const fixture of fixtures) {
     if (!fixture.result) continue;
     const home = map.get(fixture.home.id)!;
@@ -288,7 +379,6 @@ function computeStandings(teams: MatchTeam[], fixtures: GroupFixture[]): GroupSt
     home.goalsAgainst += fixture.result.awayGoals;
     away.goalsFor += fixture.result.awayGoals;
     away.goalsAgainst += fixture.result.homeGoals;
-
     if (fixture.result.winner === 'home') {
       home.won++;
       away.lost++;
@@ -304,11 +394,9 @@ function computeStandings(teams: MatchTeam[], fixtures: GroupFixture[]): GroupSt
       away.points++;
     }
   }
-
   for (const s of map.values()) {
     s.goalDifference = s.goalsFor - s.goalsAgainst;
   }
-
   return [...map.values()].sort(
     (a, b) =>
       b.points - a.points ||
@@ -329,6 +417,34 @@ function buildTie(id: string, teamA: MatchTeam, teamB: MatchTeam, isFinal: boole
     aggregateA: 0,
     aggregateB: 0,
   };
+}
+
+function resolveUserTie(tie: KnockoutTie): KnockoutTie {
+  if (tie.isFinal) {
+    const result = tie.leg1!;
+    const winner = result.winner === 'home' ? tie.teamA : tie.teamB;
+    return {
+      ...tie,
+      winner,
+      aggregateA: result.homeGoals,
+      aggregateB: result.awayGoals,
+    };
+  }
+  return resolveTieFromLegs(tie, tie.leg1!, tie.leg2!);
+}
+
+function resolveTieFromLegs(tie: KnockoutTie, leg1: MatchResult, leg2: MatchResult): KnockoutTie {
+  const aggregateA = leg1.homeGoals + leg2.awayGoals;
+  const aggregateB = leg1.awayGoals + leg2.homeGoals;
+  let winner: MatchTeam;
+  if (aggregateA > aggregateB) winner = tie.teamA;
+  else if (aggregateB > aggregateA) winner = tie.teamB;
+  else {
+    const aRoll = tie.teamA.strength.overall + Math.random() * 8;
+    const bRoll = tie.teamB.strength.overall + Math.random() * 8;
+    winner = aRoll >= bRoll ? tie.teamA : tie.teamB;
+  }
+  return { ...tie, leg1, leg2, winner, aggregateA, aggregateB };
 }
 
 function nextRoundFromWinners(

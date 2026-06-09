@@ -23,6 +23,10 @@
   }
 }
 
+.groups-page__live {
+  margin-bottom: 24px;
+}
+
 .groups-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));

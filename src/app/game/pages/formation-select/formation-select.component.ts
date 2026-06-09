@@ -2,9 +2,11 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { Router } from '@angular/router';
 import { DraftService } from '../../services/draft.service';
 import { Formation, FormationShape, FormationStyle } from '../../models';
+import { PageNavComponent } from '../../components/page-nav/page-nav.component';
 
 @Component({
   selector: 'app-formation-select',
+  imports: [PageNavComponent],
   templateUrl: './formation-select.component.html',
   styleUrl: './formation-select.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

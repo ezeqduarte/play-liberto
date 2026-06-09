@@ -9,9 +9,11 @@ import { Router } from '@angular/router';
 import confetti from 'canvas-confetti';
 import { TournamentService } from '../../services/tournament.service';
 import { DraftService } from '../../services/draft.service';
+import { PageNavComponent } from '../../components/page-nav/page-nav.component';
 
 @Component({
   selector: 'app-victory',
+  imports: [PageNavComponent],
   templateUrl: './victory.component.html',
   styleUrl: './victory.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

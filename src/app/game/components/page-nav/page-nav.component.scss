@@ -1,0 +1,29 @@
+.page-nav {
+  padding: 16px 24px 0;
+  max-width: 1400px;
+  margin: 0 auto;
+
+  &__back {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--surface-hairline);
+    border-radius: var(--radius-pill);
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.15s ease;
+
+    &:hover {
+      color: var(--text-primary);
+      border-color: var(--text-secondary);
+    }
+  }
+
+  &__arrow {
+    font-size: 16px;
+    line-height: 1;
+  }
+}

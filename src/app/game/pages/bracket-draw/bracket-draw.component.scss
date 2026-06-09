@@ -1,7 +1,8 @@
 .draw {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 24px 24px 40px;
+  // Top padding clears the floating page-nav chip in the corner.
+  padding: 52px 24px 40px;
 
   &__head {
     display: flex;

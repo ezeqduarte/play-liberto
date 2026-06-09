@@ -1,6 +1,30 @@
-<nav class="page-nav">
-  <button type="button" class="page-nav__back" (click)="goHome()">
-    <span class="page-nav__arrow" aria-hidden="true">←</span>
-    Inicio
-  </button>
-</nav>
+<button type="button" class="page-nav__back" (click)="onBackClick()">
+  <span class="page-nav__arrow" aria-hidden="true">←</span>
+  Inicio
+</button>
+
+@if (showModal()) {
+  <div
+    class="modal-backdrop"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="page-nav-modal-title"
+    (click)="cancel()"
+  >
+    <div class="modal" (click)="$event.stopPropagation()">
+      <h2 id="page-nav-modal-title" class="modal__title">Volver al inicio</h2>
+      <p class="modal__body">
+        Vas a perder tu progreso actual. ¿Querés volver a la pantalla
+        inicial?
+      </p>
+      <div class="modal__actions">
+        <button type="button" class="btn btn-secondary" (click)="cancel()">
+          Cancelar
+        </button>
+        <button type="button" class="btn modal__confirm" (click)="confirmGoHome()">
+          Salir y reiniciar
+        </button>
+      </div>
+    </div>
+  </div>
+}

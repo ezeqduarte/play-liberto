@@ -173,7 +173,7 @@
     "name": "Atlético Nacional",
     "year": 1989,
     "players": [
-      { "name": "René Higuita", "rarity": "legendary", "rating": 88, "positions": ["GK"] },
+      { "name": "René Higuita", "rarity": "legendary", "rating": 89, "positions": ["GK"] },
       { "name": "Andrés Escobar", "rarity": "epic", "rating": 85, "positions": ["CB"] },
       { "name": "Luis Carlos Perea", "rarity": "rare", "rating": 80, "positions": ["CB"] },
       { "name": "Gildardo Gómez", "rarity": "rare", "rating": 79, "positions": ["RB"] },
@@ -191,7 +191,7 @@
     "year": 1992,
     "players": [
       { "name": "Zetti", "rarity": "epic", "rating": 85, "positions": ["GK"] },
-      { "name": "Cafu", "rarity": "legendary", "rating": 90, "positions": ["RB"] },
+      { "name": "Cafu", "rarity": "legendary", "rating": 91, "positions": ["RB"] },
       { "name": "Adílson", "rarity": "rare", "rating": 80, "positions": ["CB"] },
       { "name": "Ronaldão", "rarity": "rare", "rating": 81, "positions": ["CB"] },
       { "name": "Ivan Zamorano", "rarity": "common", "rating": 75, "positions": ["LB"] },
@@ -208,7 +208,7 @@
     "year": 1993,
     "players": [
       { "name": "Zetti", "rarity": "epic", "rating": 85, "positions": ["GK"] },
-      { "name": "Cafu", "rarity": "legendary", "rating": 90, "positions": ["RB"] },
+      { "name": "Cafu", "rarity": "legendary", "rating": 91, "positions": ["RB"] },
       { "name": "Adílson", "rarity": "rare", "rating": 80, "positions": ["CB"] },
       { "name": "Válber", "rarity": "rare", "rating": 80, "positions": ["CB"] },
       { "name": "Ronaldão", "rarity": "rare", "rating": 81, "positions": ["LB"] },
@@ -487,9 +487,9 @@
       { "name": "Leonardo Ponzio", "rarity": "epic", "rating": 83, "positions": ["CDM"] },
       { "name": "Enzo Pérez", "rarity": "epic", "rating": 85, "positions": ["CM"] },
       { "name": "Gonzalo Martínez", "rarity": "epic", "rating": 85, "positions": ["CAM"] },
-      { "name": "Juan Fernando Quintero", "rarity": "epic", "rating": 86, "positions": ["CAM"] },
+      { "name": "Juan Fernando Quintero", "rarity": "epic", "rating": 88, "positions": ["CAM"] },
       { "name": "Lucas Pratto", "rarity": "epic", "rating": 84, "positions": ["ST"] },
-      { "name": "Rafael Santos Borré", "rarity": "epic", "rating": 83, "positions": ["CF"] }
+      { "name": "Rafael Santos Borré", "rarity": "epic", "rating": 85, "positions": ["CF"] }
     ]
   },
   {
@@ -500,13 +500,13 @@
       { "name": "Rafinha", "rarity": "epic", "rating": 84, "positions": ["RB"] },
       { "name": "Rodrigo Caio", "rarity": "epic", "rating": 84, "positions": ["CB"] },
       { "name": "Pablo Marí", "rarity": "epic", "rating": 83, "positions": ["CB"] },
-      { "name": "Filipe Luís", "rarity": "epic", "rating": 86, "positions": ["LB"] },
+      { "name": "Filipe Luís", "rarity": "epic", "rating": 87, "positions": ["LB"] },
       { "name": "Willian Arão", "rarity": "epic", "rating": 84, "positions": ["CDM"] },
       { "name": "Gerson", "rarity": "epic", "rating": 85, "positions": ["CM"] },
       { "name": "Giorgian de Arrascaeta", "rarity": "legendary", "rating": 87, "positions": ["CAM"] },
       { "name": "Éverton Ribeiro", "rarity": "epic", "rating": 85, "positions": ["RW"] },
       { "name": "Bruno Henrique", "rarity": "epic", "rating": 85, "positions": ["LW"] },
-      { "name": "Gabriel Barbosa", "rarity": "legendary", "rating": 87, "positions": ["ST"] }
+      { "name": "Gabriel Barbosa", "rarity": "legendary", "rating": 89, "positions": ["ST"] }
     ]
   },
   {

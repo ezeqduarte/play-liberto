@@ -5255,5 +5255,3357 @@
         ]
       }
     ]
+  },
+  {
+    "name": "Colo-Colo",
+    "year": 1973,
+    "coach": {
+      "name": "Luis Álamos",
+      "rating": 84,
+      "rarity": "common"
+    },
+    "players": [
+      {
+        "name": "Adolfo Nef",
+        "rarity": "common",
+        "rating": 83,
+        "positions": [
+          "GK"
+        ]
+      },
+      {
+        "name": "Mario Galindo",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "RB"
+        ]
+      },
+      {
+        "name": "Alberto Quintano",
+        "rarity": "common",
+        "rating": 84,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Juan Bernardino",
+        "rarity": "common",
+        "rating": 79,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Hugo Solís",
+        "rarity": "common",
+        "rating": 79,
+        "positions": [
+          "LB"
+        ]
+      },
+      {
+        "name": "Francisco Valdés",
+        "rarity": "common",
+        "rating": 86,
+        "positions": [
+          "CAM",
+          "CM"
+        ]
+      },
+      {
+        "name": "Carlos Caszely",
+        "rarity": "common",
+        "rating": 89,
+        "positions": [
+          "ST",
+          "CF"
+        ]
+      },
+      {
+        "name": "Leonardo Veliz",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "RW",
+          "RM"
+        ]
+      },
+      {
+        "name": "Sergio Messen",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "ST"
+        ]
+      },
+      {
+        "name": "Guillermo Páez",
+        "rarity": "common",
+        "rating": 79,
+        "positions": [
+          "CDM",
+          "CM"
+        ]
+      },
+      {
+        "name": "Sergio Ahumada",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "LW",
+          "LM"
+        ]
+      },
+      {
+        "name": "Daniel Cunninghame",
+        "rarity": "common",
+        "rating": 78,
+        "positions": [
+          "CM"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Colo-Colo",
+    "year": 1991,
+    "coach": {
+      "name": "Mirko Jozić",
+      "rating": 89,
+      "rarity": "common"
+    },
+    "players": [
+      {
+        "name": "Daniel Morón",
+        "rarity": "common",
+        "rating": 86,
+        "positions": [
+          "GK"
+        ]
+      },
+      {
+        "name": "Eduardo Vilches",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "LB"
+        ]
+      },
+      {
+        "name": "Lizardo Garrido",
+        "rarity": "common",
+        "rating": 84,
+        "positions": [
+          "CDM"
+        ]
+      },
+      {
+        "name": "Javier Margas",
+        "rarity": "common",
+        "rating": 84,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Miguel Ramírez",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Patricio Galaz",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "RB"
+        ]
+      },
+      {
+        "name": "Rubén Espinoza",
+        "rarity": "common",
+        "rating": 84,
+        "positions": [
+          "CAM",
+          "CM"
+        ]
+      },
+      {
+        "name": "Marcelo Barticciotto",
+        "rarity": "common",
+        "rating": 86,
+        "positions": [
+          "LW",
+          "LM"
+        ]
+      },
+      {
+        "name": "Luis Pérez",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "CM"
+        ]
+      },
+      {
+        "name": "Leonel Herrera",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Rubén Martínez",
+        "rarity": "common",
+        "rating": 83,
+        "positions": [
+          "ST"
+        ]
+      },
+      {
+        "name": "Raúl Ormeño",
+        "rarity": "common",
+        "rating": 79,
+        "positions": [
+          "RW",
+          "ST"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Colo-Colo",
+    "year": 2006,
+    "coach": {
+      "name": "Claudio Borghi",
+      "rating": 86,
+      "rarity": "common"
+    },
+    "players": [
+      {
+        "name": "Cristóbal Toselli",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "GK"
+        ]
+      },
+      {
+        "name": "Gonzalo Fierro",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "RW",
+          "RM"
+        ]
+      },
+      {
+        "name": "Miguel Riffo",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Pedro Henrique",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "RB"
+        ]
+      },
+      {
+        "name": "Arturo Sanhueza",
+        "rarity": "common",
+        "rating": 83,
+        "positions": [
+          "CDM",
+          "CM"
+        ]
+      },
+      {
+        "name": "Cristóbal Jorquera",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "CM"
+        ]
+      },
+      {
+        "name": "Jorge Valdivia",
+        "rarity": "common",
+        "rating": 87,
+        "positions": [
+          "CAM"
+        ]
+      },
+      {
+        "name": "Matías Fernández",
+        "rarity": "common",
+        "rating": 88,
+        "positions": [
+          "CAM",
+          "RW"
+        ]
+      },
+      {
+        "name": "Alexis Sánchez",
+        "rarity": "common",
+        "rating": 84,
+        "positions": [
+          "RW",
+          "LW"
+        ]
+      },
+      {
+        "name": "Humberto Suazo",
+        "rarity": "common",
+        "rating": 86,
+        "positions": [
+          "ST"
+        ]
+      },
+      {
+        "name": "Reinaldo Navia",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "ST",
+          "CF"
+        ]
+      },
+      {
+        "name": "Rodrigo Meléndez",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "CB",
+          "CDM"
+        ]
+      },
+      {
+        "name": "Manuel Iturra",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "LB",
+          "CDM"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "San Lorenzo",
+    "year": 1972,
+    "coach": {
+      "name": "Juan Carlos Lorenzo",
+      "rating": 86,
+      "rarity": "common"
+    },
+    "players": [
+      {
+        "name": "Agustín Irusta",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "GK"
+        ]
+      },
+      {
+        "name": "Héctor Cocco",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "RB"
+        ]
+      },
+      {
+        "name": "Rubén Glaria",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "César Albrecht",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Pedro González",
+        "rarity": "common",
+        "rating": 79,
+        "positions": [
+          "LB"
+        ]
+      },
+      {
+        "name": "Roberto Telch",
+        "rarity": "common",
+        "rating": 84,
+        "positions": [
+          "CM",
+          "CDM"
+        ]
+      },
+      {
+        "name": "Aldo Beltrán",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "CM"
+        ]
+      },
+      {
+        "name": "Roberto Madurga",
+        "rarity": "common",
+        "rating": 83,
+        "positions": [
+          "CAM"
+        ]
+      },
+      {
+        "name": "Enrique Pellegrini",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "RW"
+        ]
+      },
+      {
+        "name": "Carlos Veglio",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "LW",
+          "LM"
+        ]
+      },
+      {
+        "name": "Héctor Areán",
+        "rarity": "common",
+        "rating": 84,
+        "positions": [
+          "ST",
+          "CF"
+        ]
+      },
+      {
+        "name": "Tito Cué",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "ST"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "San Lorenzo",
+    "year": 1995,
+    "coach": {
+      "name": "Pedro Troglio",
+      "rating": 79,
+      "rarity": "common"
+    },
+    "players": [
+      {
+        "name": "Sergio Goycochea",
+        "rarity": "common",
+        "rating": 85,
+        "positions": [
+          "GK"
+        ]
+      },
+      {
+        "name": "Pablo Paz",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Daniel Garnero",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Joaquín Irigoyen",
+        "rarity": "common",
+        "rating": 79,
+        "positions": [
+          "LB"
+        ]
+      },
+      {
+        "name": "Mauricio Gallego",
+        "rarity": "common",
+        "rating": 79,
+        "positions": [
+          "RB"
+        ]
+      },
+      {
+        "name": "José Basualdo",
+        "rarity": "common",
+        "rating": 84,
+        "positions": [
+          "CM"
+        ]
+      },
+      {
+        "name": "Néstor Gorosito",
+        "rarity": "common",
+        "rating": 84,
+        "positions": [
+          "CAM"
+        ]
+      },
+      {
+        "name": "Christian Domizzi",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "CM",
+          "CDM"
+        ]
+      },
+      {
+        "name": "Christian Lucchetti",
+        "rarity": "common",
+        "rating": 78,
+        "positions": [
+          "LM",
+          "LW"
+        ]
+      },
+      {
+        "name": "Sergio Berti",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "RW",
+          "RM"
+        ]
+      },
+      {
+        "name": "Gustavo Bartelt",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "ST"
+        ]
+      },
+      {
+        "name": "Hugo Romeo Guerra",
+        "rarity": "common",
+        "rating": 79,
+        "positions": [
+          "ST",
+          "CF"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "San Lorenzo",
+    "year": 2014,
+    "coach": {
+      "name": "Edgardo Bauza",
+      "rating": 87,
+      "rarity": "common"
+    },
+    "players": [
+      {
+        "name": "Sebastián Torrico",
+        "rarity": "common",
+        "rating": 84,
+        "positions": [
+          "GK"
+        ]
+      },
+      {
+        "name": "Julio Buffarini",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "RB"
+        ]
+      },
+      {
+        "name": "Walter Kannemann",
+        "rarity": "common",
+        "rating": 83,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Mauro Cetto",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Emmanuel Mas",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "LB"
+        ]
+      },
+      {
+        "name": "Néstor Ortigoza",
+        "rarity": "common",
+        "rating": 85,
+        "positions": [
+          "CDM"
+        ]
+      },
+      {
+        "name": "Juan Mercier",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "CM"
+        ]
+      },
+      {
+        "name": "Pablo Barrientos",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "CM",
+          "CAM"
+        ]
+      },
+      {
+        "name": "Leandro Romagnoli",
+        "rarity": "common",
+        "rating": 84,
+        "positions": [
+          "CAM"
+        ]
+      },
+      {
+        "name": "Ángel Correa",
+        "rarity": "common",
+        "rating": 84,
+        "positions": [
+          "RW",
+          "ST"
+        ]
+      },
+      {
+        "name": "Mauro Matos",
+        "rarity": "common",
+        "rating": 83,
+        "positions": [
+          "ST"
+        ]
+      },
+      {
+        "name": "Ignacio Piatti",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "LW",
+          "LM"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "América de Cali",
+    "year": 1985,
+    "coach": {
+      "name": "Gabriel Ochoa Uribe",
+      "rating": 85,
+      "rarity": "common"
+    },
+    "players": [
+      {
+        "name": "Julio César Falcioni",
+        "rarity": "common",
+        "rating": 84,
+        "positions": [
+          "GK"
+        ]
+      },
+      {
+        "name": "Pedro Sarmiento",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Diego Edison Umaña",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Hugo Galeano",
+        "rarity": "common",
+        "rating": 79,
+        "positions": [
+          "LB"
+        ]
+      },
+      {
+        "name": "Juan Manuel Battaglia",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "RB"
+        ]
+      },
+      {
+        "name": "Ricardo Gareca",
+        "rarity": "common",
+        "rating": 84,
+        "positions": [
+          "ST",
+          "CAM"
+        ]
+      },
+      {
+        "name": "Antonio Strada",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "CAM",
+          "CM"
+        ]
+      },
+      {
+        "name": "Willington Ortiz",
+        "rarity": "common",
+        "rating": 86,
+        "positions": [
+          "LW",
+          "CAM"
+        ]
+      },
+      {
+        "name": "Anthony de Ávila",
+        "rarity": "common",
+        "rating": 85,
+        "positions": [
+          "RW",
+          "ST"
+        ]
+      },
+      {
+        "name": "Carlos Castro",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "CM"
+        ]
+      },
+      {
+        "name": "Bernardo Redín",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "CM",
+          "CAM"
+        ]
+      },
+      {
+        "name": "Roberto Cabañas",
+        "rarity": "common",
+        "rating": 84,
+        "positions": [
+          "ST",
+          "CF"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "América de Cali",
+    "year": 1986,
+    "coach": {
+      "name": "Gabriel Ochoa Uribe",
+      "rating": 86,
+      "rarity": "common"
+    },
+    "players": [
+      {
+        "name": "Julio César Falcioni",
+        "rarity": "common",
+        "rating": 85,
+        "positions": [
+          "GK"
+        ]
+      },
+      {
+        "name": "Pedro Sarmiento",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Carlos Mario Hoyos",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Hugo Galeano",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "LB"
+        ]
+      },
+      {
+        "name": "Juan Manuel Battaglia",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "RB"
+        ]
+      },
+      {
+        "name": "Antonio Strada",
+        "rarity": "common",
+        "rating": 83,
+        "positions": [
+          "CAM"
+        ]
+      },
+      {
+        "name": "Roberto Cabañas",
+        "rarity": "common",
+        "rating": 85,
+        "positions": [
+          "ST",
+          "CF"
+        ]
+      },
+      {
+        "name": "Ricardo Gareca",
+        "rarity": "common",
+        "rating": 84,
+        "positions": [
+          "ST"
+        ]
+      },
+      {
+        "name": "Willington Ortiz",
+        "rarity": "common",
+        "rating": 86,
+        "positions": [
+          "LW"
+        ]
+      },
+      {
+        "name": "Anthony de Ávila",
+        "rarity": "common",
+        "rating": 86,
+        "positions": [
+          "RW"
+        ]
+      },
+      {
+        "name": "Carlos Castro",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "CM"
+        ]
+      },
+      {
+        "name": "Bernardo Redín",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "CM"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "América de Cali",
+    "year": 1996,
+    "coach": {
+      "name": "Diego Edison Umaña",
+      "rating": 82,
+      "rarity": "common"
+    },
+    "players": [
+      {
+        "name": "Óscar Córdoba",
+        "rarity": "common",
+        "rating": 86,
+        "positions": [
+          "GK"
+        ]
+      },
+      {
+        "name": "Wilmer Cabrera",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "LB"
+        ]
+      },
+      {
+        "name": "Alexis Mendoza",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Andrés Estrada",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Mario de Jesús Ramírez",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "RB"
+        ]
+      },
+      {
+        "name": "Mauricio Chicho Serna",
+        "rarity": "common",
+        "rating": 84,
+        "positions": [
+          "CDM"
+        ]
+      },
+      {
+        "name": "Eduardo Pimentel",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "CAM",
+          "CM"
+        ]
+      },
+      {
+        "name": "Adolfo Valencia",
+        "rarity": "common",
+        "rating": 85,
+        "positions": [
+          "ST",
+          "CF"
+        ]
+      },
+      {
+        "name": "Faustino Asprilla",
+        "rarity": "common",
+        "rating": 88,
+        "positions": [
+          "ST",
+          "CAM"
+        ]
+      },
+      {
+        "name": "Anthony de Ávila",
+        "rarity": "common",
+        "rating": 84,
+        "positions": [
+          "RW",
+          "CAM"
+        ]
+      },
+      {
+        "name": "Albeiro Usuriaga",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "LW",
+          "ST"
+        ]
+      },
+      {
+        "name": "Diego Edison Umaña",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "CM"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Newell's Old Boys",
+    "year": 1988,
+    "coach": {
+      "name": "José Yudica",
+      "rating": 83,
+      "rarity": "common"
+    },
+    "players": [
+      {
+        "name": "Norberto Scoponi",
+        "rarity": "common",
+        "rating": 84,
+        "positions": [
+          "GK"
+        ]
+      },
+      {
+        "name": "Mauricio Pochettino",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Roberto Sensini",
+        "rarity": "common",
+        "rating": 84,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Eduardo Berizzo",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "CB",
+          "LB"
+        ]
+      },
+      {
+        "name": "Fabián Garfagnoli",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "RB"
+        ]
+      },
+      {
+        "name": "Juan Manuel Llop",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "CDM",
+          "CM"
+        ]
+      },
+      {
+        "name": "Mario Zanabria",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "CM"
+        ]
+      },
+      {
+        "name": "Gabriel Calderón",
+        "rarity": "common",
+        "rating": 85,
+        "positions": [
+          "CAM"
+        ]
+      },
+      {
+        "name": "Luis Carlos Acosta",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "LW",
+          "LM"
+        ]
+      },
+      {
+        "name": "Hugo Gottardi",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "ST",
+          "RW"
+        ]
+      },
+      {
+        "name": "Ramón Maddoni",
+        "rarity": "common",
+        "rating": 79,
+        "positions": [
+          "RW",
+          "RM"
+        ]
+      },
+      {
+        "name": "Beto Acosta",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "ST"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Newell's Old Boys",
+    "year": 1992,
+    "coach": {
+      "name": "Marcelo Bielsa",
+      "rating": 90,
+      "rarity": "common"
+    },
+    "players": [
+      {
+        "name": "Norberto Scoponi",
+        "rarity": "common",
+        "rating": 85,
+        "positions": [
+          "GK"
+        ]
+      },
+      {
+        "name": "Mauricio Pochettino",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Fernando Gamboa",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Eduardo Berizzo",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "LB",
+          "CB"
+        ]
+      },
+      {
+        "name": "Ricardo Lunari",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "RB"
+        ]
+      },
+      {
+        "name": "Juan Manuel Llop",
+        "rarity": "common",
+        "rating": 83,
+        "positions": [
+          "CDM"
+        ]
+      },
+      {
+        "name": "Gerardo Martino",
+        "rarity": "common",
+        "rating": 85,
+        "positions": [
+          "CM",
+          "CAM"
+        ]
+      },
+      {
+        "name": "Cristian Domizzi",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "CAM",
+          "ST"
+        ]
+      },
+      {
+        "name": "Alfredo Mendoza",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "LW",
+          "LM"
+        ]
+      },
+      {
+        "name": "Eduardo Berizzo",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "LM"
+        ]
+      },
+      {
+        "name": "Diego Cagna",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "CM",
+          "CAM"
+        ]
+      },
+      {
+        "name": "Norberto Solano",
+        "rarity": "common",
+        "rating": 79,
+        "positions": [
+          "RW"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Newell's Old Boys",
+    "year": 2013,
+    "coach": {
+      "name": "Gerardo Martino",
+      "rating": 87,
+      "rarity": "common"
+    },
+    "players": [
+      {
+        "name": "Nahuel Guzmán",
+        "rarity": "common",
+        "rating": 85,
+        "positions": [
+          "GK"
+        ]
+      },
+      {
+        "name": "Lucas Bernardi",
+        "rarity": "common",
+        "rating": 83,
+        "positions": [
+          "CDM"
+        ]
+      },
+      {
+        "name": "Gabriel Heinze",
+        "rarity": "common",
+        "rating": 84,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Diego Mateo",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Milton Casco",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "LB"
+        ]
+      },
+      {
+        "name": "Marcos Cáceres",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "RB"
+        ]
+      },
+      {
+        "name": "Maxi Rodríguez",
+        "rarity": "common",
+        "rating": 85,
+        "positions": [
+          "RW",
+          "CAM"
+        ]
+      },
+      {
+        "name": "Pablo Pérez",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "CM"
+        ]
+      },
+      {
+        "name": "Mauro Formica",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "CM",
+          "CAM"
+        ]
+      },
+      {
+        "name": "Ignacio Scocco",
+        "rarity": "common",
+        "rating": 86,
+        "positions": [
+          "ST",
+          "CF"
+        ]
+      },
+      {
+        "name": "Gabriel Hauche",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "LW",
+          "LM"
+        ]
+      },
+      {
+        "name": "Rolando Schiavi",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "CB"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Cerro Porteño",
+    "year": 1999,
+    "coach": {
+      "name": "Sergio Markarián",
+      "rating": 84,
+      "rarity": "common"
+    },
+    "players": [
+      {
+        "name": "Justo Jacquet",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "GK"
+        ]
+      },
+      {
+        "name": "Carlos Bonet",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Sergio Bareiro",
+        "rarity": "common",
+        "rating": 79,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Aristides Rojas",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "LB"
+        ]
+      },
+      {
+        "name": "Aldo Pérez",
+        "rarity": "common",
+        "rating": 79,
+        "positions": [
+          "RB"
+        ]
+      },
+      {
+        "name": "Pablo Velázquez",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "CDM",
+          "CM"
+        ]
+      },
+      {
+        "name": "Julio César Cáceres",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "CM",
+          "CDM"
+        ]
+      },
+      {
+        "name": "Daniel Garnero",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "CAM"
+        ]
+      },
+      {
+        "name": "Edgar Aguilera",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "LW",
+          "LM"
+        ]
+      },
+      {
+        "name": "Jorge Campos",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "RW",
+          "RM"
+        ]
+      },
+      {
+        "name": "Ricardo Rojas",
+        "rarity": "common",
+        "rating": 83,
+        "positions": [
+          "ST",
+          "CF"
+        ]
+      },
+      {
+        "name": "José Cardozo",
+        "rarity": "common",
+        "rating": 84,
+        "positions": [
+          "ST"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Cerro Porteño",
+    "year": 2011,
+    "coach": {
+      "name": "Leonardo Astrada",
+      "rating": 82,
+      "rarity": "common"
+    },
+    "players": [
+      {
+        "name": "Aldo Bobadilla",
+        "rarity": "common",
+        "rating": 83,
+        "positions": [
+          "GK"
+        ]
+      },
+      {
+        "name": "Marcos Cáceres",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "RB"
+        ]
+      },
+      {
+        "name": "Pablo Velázquez",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Jorge Núñez",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Wálter Fretes",
+        "rarity": "common",
+        "rating": 79,
+        "positions": [
+          "LB"
+        ]
+      },
+      {
+        "name": "Adalberto Román",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "CDM"
+        ]
+      },
+      {
+        "name": "Rodolfo Gamarra",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "CM"
+        ]
+      },
+      {
+        "name": "Édgar Benítez",
+        "rarity": "common",
+        "rating": 84,
+        "positions": [
+          "CAM",
+          "RW"
+        ]
+      },
+      {
+        "name": "Cristian Riveros",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "CM",
+          "CDM"
+        ]
+      },
+      {
+        "name": "Lucas Barrios",
+        "rarity": "common",
+        "rating": 84,
+        "positions": [
+          "ST"
+        ]
+      },
+      {
+        "name": "Edgar Aguilera",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "LW"
+        ]
+      },
+      {
+        "name": "Federico Santander",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "ST",
+          "CF"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Cerro Porteño",
+    "year": 2017,
+    "coach": {
+      "name": "Fernando Jubero",
+      "rating": 80,
+      "rarity": "common"
+    },
+    "players": [
+      {
+        "name": "Jean Fernandes",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "GK"
+        ]
+      },
+      {
+        "name": "Marcos Cáceres",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "RB",
+          "CB"
+        ]
+      },
+      {
+        "name": "Iván Torres",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Tomás Cardona",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Hugo Martínez",
+        "rarity": "common",
+        "rating": 79,
+        "positions": [
+          "LB"
+        ]
+      },
+      {
+        "name": "Néstor Camacho",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "CDM"
+        ]
+      },
+      {
+        "name": "Sergio Aquino",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "CM"
+        ]
+      },
+      {
+        "name": "Marcelo Palau",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "CAM"
+        ]
+      },
+      {
+        "name": "Diego Churín",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "ST"
+        ]
+      },
+      {
+        "name": "Cecilio Domínguez",
+        "rarity": "common",
+        "rating": 84,
+        "positions": [
+          "LW",
+          "ST"
+        ]
+      },
+      {
+        "name": "Mauro Caballero",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "RW",
+          "ST"
+        ]
+      },
+      {
+        "name": "Fernando Amorebieta",
+        "rarity": "common",
+        "rating": 79,
+        "positions": [
+          "CB"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Universidad de Chile",
+    "year": 1996,
+    "coach": {
+      "name": "Jorge Socías",
+      "rating": 81,
+      "rarity": "common"
+    },
+    "players": [
+      {
+        "name": "Sergio Vargas",
+        "rarity": "common",
+        "rating": 84,
+        "positions": [
+          "GK"
+        ]
+      },
+      {
+        "name": "Pedro González",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Cristián Castañeda",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "LB"
+        ]
+      },
+      {
+        "name": "Ronald Fuentes",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Patricio Mardones",
+        "rarity": "common",
+        "rating": 79,
+        "positions": [
+          "RB"
+        ]
+      },
+      {
+        "name": "Marcelo Vega",
+        "rarity": "common",
+        "rating": 83,
+        "positions": [
+          "CAM",
+          "CM"
+        ]
+      },
+      {
+        "name": "Esteban Valencia",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "CM"
+        ]
+      },
+      {
+        "name": "Sergio Hernán Gutiérrez",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "CDM"
+        ]
+      },
+      {
+        "name": "Marcelo Salas",
+        "rarity": "common",
+        "rating": 88,
+        "positions": [
+          "ST",
+          "CF"
+        ]
+      },
+      {
+        "name": "Ariel Pizarro",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "RW",
+          "CAM"
+        ]
+      },
+      {
+        "name": "Cristián Mora",
+        "rarity": "common",
+        "rating": 79,
+        "positions": [
+          "LW",
+          "LM"
+        ]
+      },
+      {
+        "name": "Patricio Yáñez",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "RW"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Universidad de Chile",
+    "year": 2010,
+    "coach": {
+      "name": "Gerardo Pelusso",
+      "rating": 82,
+      "rarity": "common"
+    },
+    "players": [
+      {
+        "name": "Miguel Pinto",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "GK"
+        ]
+      },
+      {
+        "name": "Marcos González",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Osvaldo González",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "José Rojas",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "LB"
+        ]
+      },
+      {
+        "name": "Rodrigo Goldberg",
+        "rarity": "common",
+        "rating": 79,
+        "positions": [
+          "RB"
+        ]
+      },
+      {
+        "name": "Mauricio Pinilla",
+        "rarity": "common",
+        "rating": 84,
+        "positions": [
+          "ST",
+          "CF"
+        ]
+      },
+      {
+        "name": "Marcelo Cañete",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "CAM"
+        ]
+      },
+      {
+        "name": "Walter Montillo",
+        "rarity": "common",
+        "rating": 85,
+        "positions": [
+          "CAM",
+          "CM"
+        ]
+      },
+      {
+        "name": "Manuel Iturra",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "CDM",
+          "CM"
+        ]
+      },
+      {
+        "name": "Felipe Seymour",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "CM"
+        ]
+      },
+      {
+        "name": "Eduardo Vargas",
+        "rarity": "common",
+        "rating": 84,
+        "positions": [
+          "RW",
+          "ST"
+        ]
+      },
+      {
+        "name": "Gustavo Lorenzetti",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "LW",
+          "LM"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Universidad de Chile",
+    "year": 2012,
+    "coach": {
+      "name": "Jorge Sampaoli",
+      "rating": 88,
+      "rarity": "common"
+    },
+    "players": [
+      {
+        "name": "Johnny Herrera",
+        "rarity": "common",
+        "rating": 84,
+        "positions": [
+          "GK"
+        ]
+      },
+      {
+        "name": "Eugenio Mena",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "LB"
+        ]
+      },
+      {
+        "name": "Marcos González",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Osvaldo González",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Jean Beausejour",
+        "rarity": "common",
+        "rating": 83,
+        "positions": [
+          "RB",
+          "LM"
+        ]
+      },
+      {
+        "name": "Marcelo Díaz",
+        "rarity": "common",
+        "rating": 85,
+        "positions": [
+          "CDM",
+          "CM"
+        ]
+      },
+      {
+        "name": "Charles Aránguiz",
+        "rarity": "common",
+        "rating": 85,
+        "positions": [
+          "CM",
+          "CDM"
+        ]
+      },
+      {
+        "name": "Guillermo Marino",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "CAM"
+        ]
+      },
+      {
+        "name": "Eduardo Vargas",
+        "rarity": "common",
+        "rating": 86,
+        "positions": [
+          "ST",
+          "RW"
+        ]
+      },
+      {
+        "name": "Junior Fernandes",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "LW",
+          "ST"
+        ]
+      },
+      {
+        "name": "Gustavo Canales",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "ST"
+        ]
+      },
+      {
+        "name": "Ramón Fernández",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "CAM"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Cobreloa",
+    "year": 1981,
+    "coach": {
+      "name": "Vicente Cantatore",
+      "rating": 84,
+      "rarity": "common"
+    },
+    "players": [
+      {
+        "name": "Mario Soto",
+        "rarity": "common",
+        "rating": 83,
+        "positions": [
+          "GK"
+        ]
+      },
+      {
+        "name": "Eduardo Jiménez",
+        "rarity": "common",
+        "rating": 79,
+        "positions": [
+          "RB"
+        ]
+      },
+      {
+        "name": "Mario Tabilo",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Vladimir Bigorra",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Jaime Vera",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "LB"
+        ]
+      },
+      {
+        "name": "Carlos Rivas",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "CDM"
+        ]
+      },
+      {
+        "name": "Juan Carlos Letelier",
+        "rarity": "common",
+        "rating": 84,
+        "positions": [
+          "ST",
+          "CF"
+        ]
+      },
+      {
+        "name": "Vicente Pérez",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "CM",
+          "CAM"
+        ]
+      },
+      {
+        "name": "Patricio Yáñez",
+        "rarity": "common",
+        "rating": 84,
+        "positions": [
+          "RW",
+          "CAM"
+        ]
+      },
+      {
+        "name": "Víctor Merello",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "LW",
+          "LM"
+        ]
+      },
+      {
+        "name": "Mario Salinas",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "CM"
+        ]
+      },
+      {
+        "name": "Atilio Marchioni",
+        "rarity": "common",
+        "rating": 79,
+        "positions": [
+          "CB"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Cobreloa",
+    "year": 1982,
+    "coach": {
+      "name": "Vicente Cantatore",
+      "rating": 85,
+      "rarity": "common"
+    },
+    "players": [
+      {
+        "name": "Mario Soto",
+        "rarity": "common",
+        "rating": 84,
+        "positions": [
+          "GK"
+        ]
+      },
+      {
+        "name": "Eduardo Jiménez",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "RB"
+        ]
+      },
+      {
+        "name": "Mario Tabilo",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Vladimir Bigorra",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Jaime Vera",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "LB"
+        ]
+      },
+      {
+        "name": "Carlos Rivas",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "CDM"
+        ]
+      },
+      {
+        "name": "Juan Carlos Letelier",
+        "rarity": "common",
+        "rating": 85,
+        "positions": [
+          "ST",
+          "CF"
+        ]
+      },
+      {
+        "name": "Vicente Pérez",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "CAM",
+          "CM"
+        ]
+      },
+      {
+        "name": "Patricio Yáñez",
+        "rarity": "common",
+        "rating": 85,
+        "positions": [
+          "RW"
+        ]
+      },
+      {
+        "name": "Víctor Merello",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "LW",
+          "LM"
+        ]
+      },
+      {
+        "name": "Mario Salinas",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "CM"
+        ]
+      },
+      {
+        "name": "Adolfo Nef",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "GK"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Cobreloa",
+    "year": 1986,
+    "coach": {
+      "name": "Hernán Godoy",
+      "rating": 81,
+      "rarity": "common"
+    },
+    "players": [
+      {
+        "name": "Marco Cornez",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "GK"
+        ]
+      },
+      {
+        "name": "Patricio Mardones",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "RB"
+        ]
+      },
+      {
+        "name": "Vladimir Bigorra",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Raúl Gormaz",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Manuel Rojas",
+        "rarity": "common",
+        "rating": 79,
+        "positions": [
+          "LB"
+        ]
+      },
+      {
+        "name": "Patricio Yáñez",
+        "rarity": "common",
+        "rating": 86,
+        "positions": [
+          "RW"
+        ]
+      },
+      {
+        "name": "Juan Carlos Letelier",
+        "rarity": "common",
+        "rating": 86,
+        "positions": [
+          "ST"
+        ]
+      },
+      {
+        "name": "Erick Rodríguez",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "CM",
+          "CAM"
+        ]
+      },
+      {
+        "name": "Atilio Marchioni",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "CDM"
+        ]
+      },
+      {
+        "name": "Mario Salinas",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "CM"
+        ]
+      },
+      {
+        "name": "Pedro Reyes",
+        "rarity": "common",
+        "rating": 79,
+        "positions": [
+          "LW",
+          "LM"
+        ]
+      },
+      {
+        "name": "Eduardo Valencia",
+        "rarity": "common",
+        "rating": 79,
+        "positions": [
+          "CF"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Sporting Cristal",
+    "year": 1994,
+    "coach": {
+      "name": "Juan Carlos Oblitas",
+      "rating": 82,
+      "rarity": "common"
+    },
+    "players": [
+      {
+        "name": "Luis Bonnet",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "GK"
+        ]
+      },
+      {
+        "name": "Roberto Martínez",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "RB"
+        ]
+      },
+      {
+        "name": "Edinson Chávez",
+        "rarity": "common",
+        "rating": 79,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Percy Olivares",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "José Soto",
+        "rarity": "common",
+        "rating": 79,
+        "positions": [
+          "LB"
+        ]
+      },
+      {
+        "name": "Luis Reyna",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "CDM"
+        ]
+      },
+      {
+        "name": "Jorge Soto",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "CM",
+          "CAM"
+        ]
+      },
+      {
+        "name": "Eduardo Esidio",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "ST"
+        ]
+      },
+      {
+        "name": "Roberto Palacios",
+        "rarity": "common",
+        "rating": 84,
+        "positions": [
+          "CAM",
+          "RW"
+        ]
+      },
+      {
+        "name": "Julio César Antón",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "LW",
+          "LM"
+        ]
+      },
+      {
+        "name": "José Carranza",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "CM"
+        ]
+      },
+      {
+        "name": "Cesar Charún",
+        "rarity": "common",
+        "rating": 79,
+        "positions": [
+          "ST",
+          "CF"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Sporting Cristal",
+    "year": 1997,
+    "coach": {
+      "name": "Sergio Markarián",
+      "rating": 86,
+      "rarity": "common"
+    },
+    "players": [
+      {
+        "name": "Julinho",
+        "rarity": "common",
+        "rating": 83,
+        "positions": [
+          "GK"
+        ]
+      },
+      {
+        "name": "Roberto Martínez",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "RB"
+        ]
+      },
+      {
+        "name": "José Pereda",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Percy Olivares",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "José Soto",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "LB"
+        ]
+      },
+      {
+        "name": "Luis Reyna",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "CDM"
+        ]
+      },
+      {
+        "name": "Jorge Soto",
+        "rarity": "common",
+        "rating": 83,
+        "positions": [
+          "CM",
+          "CAM"
+        ]
+      },
+      {
+        "name": "Roberto Palacios",
+        "rarity": "common",
+        "rating": 85,
+        "positions": [
+          "CAM"
+        ]
+      },
+      {
+        "name": "Carlos Galván",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Cesar Charún",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "ST"
+        ]
+      },
+      {
+        "name": "Pablo Zegarra",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "LW",
+          "LM"
+        ]
+      },
+      {
+        "name": "Luis Antonio Hernández",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "RW",
+          "RM"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Sporting Cristal",
+    "year": 2003,
+    "coach": {
+      "name": "Roberto Mosquera",
+      "rating": 79,
+      "rarity": "common"
+    },
+    "players": [
+      {
+        "name": "Erick Delgado",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "GK"
+        ]
+      },
+      {
+        "name": "William Chiroque",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "LB",
+          "LM"
+        ]
+      },
+      {
+        "name": "Marko Ciurlizza",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "CDM"
+        ]
+      },
+      {
+        "name": "Julio César Uribe",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "CAM",
+          "CM"
+        ]
+      },
+      {
+        "name": "Cristian Cabrera",
+        "rarity": "common",
+        "rating": 79,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Renzo Sheput",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "CAM"
+        ]
+      },
+      {
+        "name": "Roberto Palacios",
+        "rarity": "common",
+        "rating": 84,
+        "positions": [
+          "CAM",
+          "RW"
+        ]
+      },
+      {
+        "name": "Jefferson Farfán",
+        "rarity": "common",
+        "rating": 84,
+        "positions": [
+          "RW",
+          "ST"
+        ]
+      },
+      {
+        "name": "Ysrael Zúñiga",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "ST"
+        ]
+      },
+      {
+        "name": "Sandro Baylón",
+        "rarity": "common",
+        "rating": 78,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Edgar Villamarín",
+        "rarity": "common",
+        "rating": 78,
+        "positions": [
+          "RB"
+        ]
+      },
+      {
+        "name": "Roberto Holsen",
+        "rarity": "common",
+        "rating": 78,
+        "positions": [
+          "LW",
+          "LM"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Universitario",
+    "year": 1972,
+    "coach": {
+      "name": "Marcos Calderón",
+      "rating": 85,
+      "rarity": "common"
+    },
+    "players": [
+      {
+        "name": "Luis Rubiños",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "GK"
+        ]
+      },
+      {
+        "name": "Héctor Chumpitaz",
+        "rarity": "common",
+        "rating": 86,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Eleazar Soria",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Pedro Pablo León",
+        "rarity": "common",
+        "rating": 84,
+        "positions": [
+          "CAM",
+          "ST"
+        ]
+      },
+      {
+        "name": "Roberto Chale",
+        "rarity": "common",
+        "rating": 84,
+        "positions": [
+          "CM",
+          "CAM"
+        ]
+      },
+      {
+        "name": "Hugo Sotil",
+        "rarity": "common",
+        "rating": 87,
+        "positions": [
+          "CAM",
+          "ST"
+        ]
+      },
+      {
+        "name": "Teófilo Cubillas",
+        "rarity": "common",
+        "rating": 89,
+        "positions": [
+          "CAM",
+          "CF"
+        ]
+      },
+      {
+        "name": "Percy Rojas",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "LW",
+          "CAM"
+        ]
+      },
+      {
+        "name": "Oswaldo Ramírez",
+        "rarity": "common",
+        "rating": 84,
+        "positions": [
+          "ST",
+          "CF"
+        ]
+      },
+      {
+        "name": "Juan José Muñante",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "RW"
+        ]
+      },
+      {
+        "name": "Ramón Mifflin",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "LB",
+          "LM"
+        ]
+      },
+      {
+        "name": "Eladio Reyes",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "RB"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Universitario",
+    "year": 1990,
+    "coach": {
+      "name": "Hugo Sotil",
+      "rating": 80,
+      "rarity": "common"
+    },
+    "players": [
+      {
+        "name": "Roberto Drago",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "GK"
+        ]
+      },
+      {
+        "name": "Pedro Sanz",
+        "rarity": "common",
+        "rating": 79,
+        "positions": [
+          "RB"
+        ]
+      },
+      {
+        "name": "Carlos Galván",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Pedro Requena",
+        "rarity": "common",
+        "rating": 79,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Andrés González",
+        "rarity": "common",
+        "rating": 78,
+        "positions": [
+          "LB"
+        ]
+      },
+      {
+        "name": "Mario Tejada",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "CM",
+          "CDM"
+        ]
+      },
+      {
+        "name": "Juan Reynoso",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "CDM",
+          "CB"
+        ]
+      },
+      {
+        "name": "César Manco",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "CAM"
+        ]
+      },
+      {
+        "name": "Pedro Garay",
+        "rarity": "common",
+        "rating": 79,
+        "positions": [
+          "LW",
+          "LM"
+        ]
+      },
+      {
+        "name": "Eduardo Esidio",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "ST"
+        ]
+      },
+      {
+        "name": "Carlos Olivares",
+        "rarity": "common",
+        "rating": 79,
+        "positions": [
+          "RW",
+          "RM"
+        ]
+      },
+      {
+        "name": "José del Solar",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "CM"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Universitario",
+    "year": 2010,
+    "coach": {
+      "name": "Juan Reynoso",
+      "rating": 83,
+      "rarity": "common"
+    },
+    "players": [
+      {
+        "name": "Raúl Fernández",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "GK"
+        ]
+      },
+      {
+        "name": "Luis Trujillo",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "RB"
+        ]
+      },
+      {
+        "name": "Aurelio Saco-Vértiz",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "John Galliquio",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Yordy Reyna",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "LW",
+          "ST"
+        ]
+      },
+      {
+        "name": "Carlos Galván",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "CDM",
+          "CB"
+        ]
+      },
+      {
+        "name": "Piero Alva",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "CAM"
+        ]
+      },
+      {
+        "name": "Rinaldo Cruzado",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "CM"
+        ]
+      },
+      {
+        "name": "Johnnier Montaño",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "CAM",
+          "LW"
+        ]
+      },
+      {
+        "name": "Johan Fano",
+        "rarity": "common",
+        "rating": 83,
+        "positions": [
+          "ST",
+          "CF"
+        ]
+      },
+      {
+        "name": "Edison Chávez",
+        "rarity": "common",
+        "rating": 79,
+        "positions": [
+          "LB",
+          "LM"
+        ]
+      },
+      {
+        "name": "Henry Quinteros",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "CM"
+        ]
+      },
+      {
+        "name": "Carlos Olivares",
+        "rarity": "common",
+        "rating": 79,
+        "positions": [
+          "RW",
+          "RM"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Independiente del Valle",
+    "year": 2016,
+    "coach": {
+      "name": "Pablo Repetto",
+      "rating": 85,
+      "rarity": "common"
+    },
+    "players": [
+      {
+        "name": "Jorge Pinos",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "GK"
+        ]
+      },
+      {
+        "name": "Cristian Pellerano",
+        "rarity": "common",
+        "rating": 83,
+        "positions": [
+          "CDM"
+        ]
+      },
+      {
+        "name": "Arturo Mina",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Luis Caicedo",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Carlos Garcés",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "LB"
+        ]
+      },
+      {
+        "name": "Efrén Mera",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "RB"
+        ]
+      },
+      {
+        "name": "Jefferson Orejuela",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "CM"
+        ]
+      },
+      {
+        "name": "Junior Sornoza",
+        "rarity": "common",
+        "rating": 84,
+        "positions": [
+          "CAM",
+          "CM"
+        ]
+      },
+      {
+        "name": "Ángel Mena",
+        "rarity": "common",
+        "rating": 84,
+        "positions": [
+          "LW",
+          "CAM"
+        ]
+      },
+      {
+        "name": "Bryan Cabezas",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "RW",
+          "LW"
+        ]
+      },
+      {
+        "name": "Jhon Cifuente",
+        "rarity": "common",
+        "rating": 83,
+        "positions": [
+          "ST"
+        ]
+      },
+      {
+        "name": "Christian Ramírez",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "ST",
+          "CF"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Independiente del Valle",
+    "year": 2020,
+    "coach": {
+      "name": "Miguel Ángel Ramírez",
+      "rating": 84,
+      "rarity": "common"
+    },
+    "players": [
+      {
+        "name": "Moisés Ramírez",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "GK"
+        ]
+      },
+      {
+        "name": "Beder Caicedo",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "LB"
+        ]
+      },
+      {
+        "name": "Richard Schunke",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Mateo Carabajal",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Christian Cueva",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "CDM"
+        ]
+      },
+      {
+        "name": "Cristian Pellerano",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "CDM"
+        ]
+      },
+      {
+        "name": "Lorenzo Faravelli",
+        "rarity": "common",
+        "rating": 83,
+        "positions": [
+          "CM",
+          "CAM"
+        ]
+      },
+      {
+        "name": "Jhon Sánchez",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "CAM"
+        ]
+      },
+      {
+        "name": "Cristian Dájome",
+        "rarity": "common",
+        "rating": 83,
+        "positions": [
+          "LW",
+          "RW"
+        ]
+      },
+      {
+        "name": "Gabriel Torres",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "ST",
+          "CF"
+        ]
+      },
+      {
+        "name": "Lautaro Díaz",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "ST"
+        ]
+      },
+      {
+        "name": "Hólger Matamoros",
+        "rarity": "common",
+        "rating": 79,
+        "positions": [
+          "RB"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Independiente del Valle",
+    "year": 2023,
+    "coach": {
+      "name": "Martín Anselmi",
+      "rating": 84,
+      "rarity": "common"
+    },
+    "players": [
+      {
+        "name": "Hernán Galíndez",
+        "rarity": "common",
+        "rating": 83,
+        "positions": [
+          "GK"
+        ]
+      },
+      {
+        "name": "Beder Caicedo",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "LB"
+        ]
+      },
+      {
+        "name": "Richard Schunke",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Luis Segovia",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "CB"
+        ]
+      },
+      {
+        "name": "Patrik Mercado",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "CM",
+          "CDM"
+        ]
+      },
+      {
+        "name": "Lorenzo Faravelli",
+        "rarity": "common",
+        "rating": 84,
+        "positions": [
+          "CAM",
+          "CM"
+        ]
+      },
+      {
+        "name": "Junior Sornoza",
+        "rarity": "common",
+        "rating": 83,
+        "positions": [
+          "CAM"
+        ]
+      },
+      {
+        "name": "Lautaro Díaz",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "ST"
+        ]
+      },
+      {
+        "name": "Cristian Dájome",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "LW"
+        ]
+      },
+      {
+        "name": "Michael Hoyos",
+        "rarity": "common",
+        "rating": 81,
+        "positions": [
+          "RW",
+          "CAM"
+        ]
+      },
+      {
+        "name": "Yaimar Medina",
+        "rarity": "common",
+        "rating": 82,
+        "positions": [
+          "LW",
+          "LM"
+        ]
+      },
+      {
+        "name": "Mauricio Alonso",
+        "rarity": "common",
+        "rating": 80,
+        "positions": [
+          "RB",
+          "RM"
+        ]
+      }
+    ]
   }
 ]

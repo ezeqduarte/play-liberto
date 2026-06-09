@@ -32,6 +32,7 @@ export class DraftService {
   private readonly _rollsLeft = signal(ROLLS_PER_PICK);
   private readonly _pickedNames = signal<Set<string>>(new Set());
   private readonly _selectedPlayer = signal<Player | null>(null);
+  private readonly _selectedCoach = signal<Coach | null>(null);
 
   readonly formation = this._formation.asReadonly();
   readonly squad = this._squad.asReadonly();
@@ -39,6 +40,7 @@ export class DraftService {
   readonly currentTeam = this._currentTeam.asReadonly();
   readonly rollsLeft = this._rollsLeft.asReadonly();
   readonly selectedPlayer = this._selectedPlayer.asReadonly();
+  readonly selectedCoach = this._selectedCoach.asReadonly();
   readonly availableFormations = FORMATIONS;
 
   /** Total slots = 11 player slots + 1 coach slot. */
@@ -70,6 +72,9 @@ export class DraftService {
   /** Whether the user is currently in slot-selection mode for a chosen player. */
   readonly isSelectingSlot = computed(() => this._selectedPlayer() !== null);
 
+  /** Whether the user is currently confirming a coach into the DT slot. */
+  readonly isSelectingCoachSlot = computed(() => this._selectedCoach() !== null);
+
   /**
    * Slots that the selected player could fill (must be empty AND match
    * one of the player's positions). Returns an empty array when no
@@ -100,6 +105,7 @@ export class DraftService {
     this._coachEntry.set({ coach: null, fromTeam: null });
     this._pickedNames.set(new Set());
     this._selectedPlayer.set(null);
+    this._selectedCoach.set(null);
     this._rollsLeft.set(ROLLS_PER_PICK);
     this._currentTeam.set(this.randomTeam());
   }
@@ -116,6 +122,7 @@ export class DraftService {
     );
     this._currentTeam.set(this.pickRandom(candidates));
     this._selectedPlayer.set(null);
+    this._selectedCoach.set(null);
     this._rollsLeft.update((r) => r - 1);
   }
 
@@ -133,6 +140,7 @@ export class DraftService {
     if (candidates.length === 0) return;
     this._currentTeam.set(this.pickRandom(candidates));
     this._selectedPlayer.set(null);
+    this._selectedCoach.set(null);
     this._rollsLeft.update((r) => r - 1);
   }
 
@@ -161,19 +169,38 @@ export class DraftService {
   }
 
   /**
-   * Picks the current team's coach into the coach slot and advances the
-   * draft cycle. Cancels any in-flight player selection.
+   * Step 1 of the coach pick: marks the rolled team's coach as the
+   * pending candidate. The pitch's DT slot pulses; the user has to
+   * click it to confirm. Cancels any in-flight player selection.
    */
   selectCoach(): void {
     const team = this._currentTeam();
     if (!team) return;
     if (this.isCoachPicked()) return;
-    this._coachEntry.set({ coach: team.coach, fromTeam: team });
+    this._selectedCoach.set(team.coach);
     this._selectedPlayer.set(null);
+  }
+
+  /**
+   * Step 2: confirms the pending coach candidate into the DT slot and
+   * advances the draft cycle (fresh team + refilled rolls).
+   */
+  confirmCoachToSlot(): void {
+    const coach = this._selectedCoach();
+    const team = this._currentTeam();
+    if (!coach || !team) return;
+    if (this.isCoachPicked()) return;
+    this._coachEntry.set({ coach, fromTeam: team });
+    this._selectedCoach.set(null);
     if (!this.isComplete()) {
       this._rollsLeft.set(ROLLS_PER_PICK);
       this._currentTeam.set(this.randomTeam());
     }
+  }
+
+  /** Drops the pending coach candidate without picking. */
+  cancelCoachSelection(): void {
+    this._selectedCoach.set(null);
   }
 
   /**
@@ -185,6 +212,8 @@ export class DraftService {
     if (this._pickedNames().has(player.name)) return;
     if (!this.hasEligibleSlot(player)) return;
     this._selectedPlayer.set(player);
+    // Selecting a player cancels any pending coach candidate.
+    this._selectedCoach.set(null);
   }
 
   cancelSelection(): void {
@@ -246,6 +275,7 @@ export class DraftService {
     this._rollsLeft.set(ROLLS_PER_PICK);
     this._pickedNames.set(new Set());
     this._selectedPlayer.set(null);
+    this._selectedCoach.set(null);
   }
 
   /**

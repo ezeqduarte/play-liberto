@@ -24,7 +24,9 @@ export class DraftComponent {
   readonly slotsFilled = this.draft.slotsFilled;
   readonly totalSlots = this.draft.totalSlots;
   readonly selectedPlayer = this.draft.selectedPlayer;
+  readonly selectedCoach = this.draft.selectedCoach;
   readonly isSelectingSlot = this.draft.isSelectingSlot;
+  readonly isSelectingCoachSlot = this.draft.isSelectingCoachSlot;
   readonly eligibleSlotIds = this.draft.eligibleSlotIdsForSelection;
 
   readonly currentCoach = computed<Coach | null>(() => {
@@ -67,6 +69,14 @@ export class DraftComponent {
     this.draft.selectCoach();
   }
 
+  confirmCoachToSlot(): void {
+    this.draft.confirmCoachToSlot();
+  }
+
+  cancelCoachSelection(): void {
+    this.draft.cancelCoachSelection();
+  }
+
   cancelSelection(): void {
     this.draft.cancelSelection();
   }
@@ -97,5 +107,11 @@ export class DraftComponent {
 
   isPlayerSelected(player: Player): boolean {
     return this.selectedPlayer()?.name === player.name;
+  }
+
+  isCurrentCoachSelected(): boolean {
+    const coach = this.currentCoach();
+    const sel = this.selectedCoach();
+    return !!coach && !!sel && coach.name === sel.name;
   }
 }

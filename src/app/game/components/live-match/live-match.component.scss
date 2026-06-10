@@ -9,6 +9,11 @@
   max-width: 720px;
   margin: 0 auto;
 
+  @media (max-width: 640px) {
+    padding: 14px;
+    gap: 12px;
+  }
+
   &__venue {
     display: flex;
     align-items: center;
@@ -84,6 +89,11 @@
   align-items: center;
   gap: 10px;
   transition: transform 0.2s ease;
+  min-width: 0;
+
+  @media (max-width: 640px) {
+    gap: 6px;
+  }
 
   &--home {
     justify-content: flex-end;
@@ -116,6 +126,13 @@
     font-weight: 700;
     font-size: 18px;
     line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    @media (max-width: 640px) {
+      font-size: 13px;
+    }
   }
 
   &__rating {
@@ -136,6 +153,10 @@
     font-size: 38px;
     font-weight: 800;
     line-height: 1;
+
+    @media (max-width: 640px) {
+      font-size: 28px;
+    }
   }
 
   &__sep {

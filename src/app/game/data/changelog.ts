@@ -16,6 +16,17 @@ export interface ChangelogEntry {
 
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: '1.2.0',
+    date: '2026-06-10',
+    changes: [
+      'Ya no podés tener al mismo nombre como técnico y como jugador en tu equipo. El que esté primero bloquea al otro con un tag "Ya en tu 11" o "Ya es tu DT".',
+      'Más espaciado entre la tabla de goleadores/asistidores y la grilla de grupos / cartas de playoffs.',
+      'Tanda de penales simulada uno por uno con controles de velocidad (Lento/Normal/Rápido/Saltar). En cada llave que se define por penales ahora aparece el marcador final ej. "Penales 4-3".',
+      'Nombres corregidos: Carlos Pisculichi → Leonardo Pisculichi.',
+      'Pasada de responsive en mobile: chips de Inicio y Mute más chicos, headers, cancha del draft, scoreboard de partido, cartas de llave (cada ida/vuelta apila al equipo visitante debajo) y trofeo de victoria — todo se adapta a 320-640px sin romperse.',
+    ],
+  },
+  {
     version: '1.1.0',
     date: '2026-06-10',
     changes: [

@@ -23,6 +23,11 @@
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+
+    @media (max-width: 640px) {
+      font-size: 64px;
+      letter-spacing: -2px;
+    }
   }
 
   &__subtitle {
@@ -30,6 +35,11 @@
     color: var(--text-secondary);
     max-width: 520px;
     margin: 16px 0 40px;
+
+    @media (max-width: 640px) {
+      font-size: 15px;
+      margin: 12px 0 32px;
+    }
   }
 
   &__cta {

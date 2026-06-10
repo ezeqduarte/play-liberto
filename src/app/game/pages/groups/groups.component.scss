@@ -4,6 +4,10 @@
   // Top padding clears the floating page-nav chip in the corner.
   padding: 52px 24px 24px;
 
+  @media (max-width: 640px) {
+    padding: 44px 14px 24px;
+  }
+
   &__head {
     display: flex;
     justify-content: space-between;
@@ -12,9 +16,18 @@
     flex-wrap: wrap;
     gap: 16px;
 
+    @media (max-width: 640px) {
+      margin-bottom: 20px;
+      gap: 10px;
+    }
+
     h1 {
       font-size: 28px;
       margin: 0;
+
+      @media (max-width: 640px) {
+        font-size: 22px;
+      }
     }
 
     p {

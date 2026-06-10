@@ -1,0 +1,56 @@
+<article class="shootout">
+  <header class="shootout__head">
+    <span class="shootout__title">Tanda de penales</span>
+    <div class="shootout__teams">
+      <div class="team">
+        <app-team-crest [clubName]="home().clubName" [isUser]="home().isUser" size="md" />
+        <span class="team__name">{{ home().displayName }}</span>
+        <span class="team__score">{{ homeScore() }}</span>
+      </div>
+      <span class="shootout__sep">–</span>
+      <div class="team team--away">
+        <span class="team__score">{{ awayScore() }}</span>
+        <span class="team__name">{{ away().displayName }}</span>
+        <app-team-crest [clubName]="away().clubName" [isUser]="away().isUser" size="md" />
+      </div>
+    </div>
+  </header>
+
+  <div class="shootout__controls">
+    @for (s of speeds; track s) {
+      <button
+        type="button"
+        class="speed-btn"
+        [class.speed-btn--active]="speed() === s"
+        [disabled]="isFinished()"
+        (click)="setSpeed(s)"
+      >
+        {{ speedLabels[s] }}
+      </button>
+    }
+  </div>
+
+  <ul class="shootout__kicks">
+    @for (k of displayedKicks(); track $index) {
+      <li
+        class="kick"
+        [class.kick--home]="k.side === 'home'"
+        [class.kick--away]="k.side === 'away'"
+        [class.kick--scored]="k.scored"
+        [class.kick--missed]="!k.scored"
+      >
+        <span class="kick__round">{{ k.round }}</span>
+        <span class="kick__taker">{{ k.taker.name }}</span>
+        <span class="kick__result">
+          {{ k.scored ? '⚽ Gol' : '❌ Atajado' }}
+        </span>
+      </li>
+    }
+  </ul>
+
+  @if (isFinished()) {
+    <div class="shootout__final">
+      Definición {{ homeScore() }}-{{ awayScore() }}
+    </div>
+  }
+</article>

@@ -9,6 +9,40 @@
   max-width: 720px;
   margin: 0 auto;
 
+  &__venue {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--surface-hairline);
+    font-size: 12px;
+    color: var(--text-secondary);
+    flex-wrap: wrap;
+  }
+
+  &__venue-icon {
+    font-size: 16px;
+  }
+
+  &__venue-name {
+    font-weight: 700;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  &__venue-cap {
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 11px;
+    &::before {
+      content: '·';
+      margin-right: 6px;
+    }
+  }
+
   &__scoreboard {
     display: grid;
     grid-template-columns: 1fr auto 1fr;

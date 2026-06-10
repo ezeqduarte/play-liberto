@@ -111,20 +111,11 @@ export class PlayoffsComponent {
   }
 
   /**
-   * Called by LiveMatchComponent.finished. The result minutes apply to
-   * the current leg. For finals we resolve the tie immediately (no other
-   * ties to wait for). For non-finals, we wait for the user to play
-   * both legs and then press "Simular el resto".
+   * Called by LiveMatchComponent.finished. Each tie (including the
+   * final) is two legs — leg 1 records the result and moves to
+   * between-legs; leg 2 records and moves to user-tie-done.
    */
   onMatchFinished(result: MatchResult): void {
-    if (this.isFinalRound()) {
-      this.tournament.applyUserLeg(1, result);
-      // The final has only one tie. Resolve it so the won / eliminated
-      // signal fires and the page can route to victory or eliminated.
-      this.tournament.simulateRemainingTies();
-      this.viewState.set('round-resolved');
-      return;
-    }
     if (this.viewState() === 'playing-leg1') {
       this.tournament.applyUserLeg(1, result);
       this.viewState.set('between-legs');

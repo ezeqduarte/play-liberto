@@ -15,8 +15,7 @@
       @case ('idle') {
         @if (userInCurrentRound()) {
           <button type="button" class="btn" (click)="playLeg1()">
-            @if (isFinalRound()) { Jugar la final }
-            @else { Jugar la ida }
+            Jugar la ida
           </button>
         } @else {
           <!-- Ghost mode: user is out, just sim the round -->
@@ -75,7 +74,6 @@
       <app-live-match
         [home]="leg1Home()!"
         [away]="leg1Away()!"
-        [isKnockout]="isFinalRound()"
         (finished)="onMatchFinished($event)"
       />
     </div>
@@ -119,25 +117,17 @@
               <span class="tie__team-score">{{ tie.aggregateB }}</span>
             }
           </div>
-          @if (tie.leg1 && !tie.isFinal) {
+          @if (tie.leg1) {
             <div class="tie__legs">
               <span>Ida {{ tie.leg1.homeGoals }}-{{ tie.leg1.awayGoals }}</span>
               @if (tie.leg2) {
                 <span>Vuelta {{ tie.leg2.homeGoals }}-{{ tie.leg2.awayGoals }}</span>
               }
             </div>
-          } @else if (tie.leg1 && tie.isFinal) {
-            <div class="tie__legs">
-              <span>Final {{ tie.leg1.homeGoals }}-{{ tie.leg1.awayGoals }}</span>
-            </div>
           }
-          @if (tie.tieBreaker) {
-            <span
-              class="tie__tiebreaker"
-              [class.tie__tiebreaker--pen]="tie.tieBreaker === 'penalties'"
-            >
-              @if (tie.tieBreaker === 'away-goals') { Avanza por gol de visitante }
-              @else { Avanza por penales }
+          @if (tie.tieBreaker === 'penalties') {
+            <span class="tie__tiebreaker tie__tiebreaker--pen">
+              Avanza por penales
             </span>
           }
         </article>

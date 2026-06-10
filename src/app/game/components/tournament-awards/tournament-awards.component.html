@@ -1,0 +1,82 @@
+@if (hasAnyAward()) {
+  <div class="awards">
+    <h2 class="awards__title">Premios de la copa</h2>
+    <div class="awards__grid">
+      @if (topScorer(); as row) {
+        <article class="award award--scorer">
+          <span class="award__icon" aria-hidden="true">⚽</span>
+          <span class="award__title">Goleador de la copa</span>
+          <div class="award__body">
+            <app-team-crest
+              [clubName]="row.team.clubName"
+              [isUser]="row.team.isUser"
+              size="md"
+            />
+            <div class="award__player">
+              <strong>{{ row.player.name }}</strong>
+              <span class="award__team">{{ row.team.displayName }}</span>
+            </div>
+            <span class="award__count">{{ row.count }} goles</span>
+          </div>
+        </article>
+      }
+
+      @if (topAssister(); as row) {
+        <article class="award award--assister">
+          <span class="award__icon" aria-hidden="true">🎯</span>
+          <span class="award__title">Asistidor de la copa</span>
+          <div class="award__body">
+            <app-team-crest
+              [clubName]="row.team.clubName"
+              [isUser]="row.team.isUser"
+              size="md"
+            />
+            <div class="award__player">
+              <strong>{{ row.player.name }}</strong>
+              <span class="award__team">{{ row.team.displayName }}</span>
+            </div>
+            <span class="award__count">{{ row.count }} asistencias</span>
+          </div>
+        </article>
+      }
+
+      @if (mvp(); as row) {
+        <article class="award award--mvp">
+          <span class="award__icon" aria-hidden="true">⭐</span>
+          <span class="award__title">Mejor jugador de la copa</span>
+          <div class="award__body">
+            <app-team-crest
+              [clubName]="row.team.clubName"
+              [isUser]="row.team.isUser"
+              size="md"
+            />
+            <div class="award__player">
+              <strong>{{ row.player.name }}</strong>
+              <span class="award__team">{{ row.team.displayName }}</span>
+            </div>
+            <span class="award__count">G+A {{ row.count }}</span>
+          </div>
+        </article>
+      }
+
+      @if (bestGK(); as row) {
+        <article class="award award--gk">
+          <span class="award__icon" aria-hidden="true">🧤</span>
+          <span class="award__title">Mejor arquero de la copa</span>
+          <div class="award__body">
+            <app-team-crest
+              [clubName]="row.team.clubName"
+              [isUser]="row.team.isUser"
+              size="md"
+            />
+            <div class="award__player">
+              <strong>{{ row.player.name }}</strong>
+              <span class="award__team">{{ row.team.displayName }}</span>
+            </div>
+            <span class="award__count">{{ row.count }} vallas invictas</span>
+          </div>
+        </article>
+      }
+    </div>
+  </div>
+}

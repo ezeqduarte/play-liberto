@@ -305,46 +305,86 @@ export class TournamentService {
   }
 
   /**
-   * Resolve the user's tie aggregate + simulate every other tie in the
-   * current round. The round is marked completed but the next round is
-   * NOT yet created — the user gets a chance to see the results before
-   * pressing "Siguiente ronda" (advanceToNextRound).
-   *
-   * Sets eliminatedAt / won where applicable so the UI can react.
+   * Plays leg 1 of every non-user tie in the current round. Leaves the
+   * round incomplete — leg 2s still need to be played.
    */
-  simulateRemainingTies(): void {
+  simulateOthersLeg(legNum: 1 | 2): void {
     const rounds = [...this._rounds()];
     const round = rounds.find((r) => !r.completed);
     if (!round) return;
     const user = this._userTeam();
 
     const playedTies = round.ties.map((tie) => {
+      // Skip the user's tie — that one is driven by applyUserLeg().
       if (user && (tie.teamA.id === user.id || tie.teamB.id === user.id)) {
+        return tie;
+      }
+      if (legNum === 1) {
+        if (tie.leg1) return tie;
+        const leg1 = this.matches.simulate(tie.teamA, tie.teamB);
+        return { ...tie, leg1 };
+      }
+      // legNum === 2 → also resolve aggregate.
+      if (tie.leg2) return tie;
+      const leg1 = tie.leg1 ?? this.matches.simulate(tie.teamA, tie.teamB);
+      const leg2 = this.matches.simulate(tie.teamB, tie.teamA);
+      return resolveTieFromLegs({ ...tie, leg1 }, leg1, leg2);
+    });
+
+    const idx = rounds.indexOf(round);
+    rounds[idx] = { ...round, ties: playedTies };
+    this._rounds.set(rounds);
+  }
+
+  /**
+   * Marks the current round complete and updates eliminated / won /
+   * champion based on the user's tie outcome.
+   */
+  finalizeRound(): void {
+    const rounds = [...this._rounds()];
+    const round = rounds.find((r) => !r.completed);
+    if (!round) return;
+    const user = this._userTeam();
+
+    // Resolve user's own tie (leg 1 + leg 2 must already be applied).
+    const playedTies = round.ties.map((tie) => {
+      if (user && (tie.teamA.id === user.id || tie.teamB.id === user.id) && !tie.winner) {
         return resolveUserTie(tie);
       }
-      return this.simulateTie(tie);
+      return tie;
     });
+
     const completedRound: KnockoutRound = { ...round, ties: playedTies, completed: true };
     const idx = rounds.indexOf(round);
     rounds[idx] = completedRound;
     this._rounds.set(rounds);
 
-    const userTie = playedTies.find((t) => t.teamA.id === user?.id || t.teamB.id === user?.id);
+    const userTie = playedTies.find(
+      (t) => t.teamA.id === user?.id || t.teamB.id === user?.id,
+    );
     if (user && userTie && userTie.winner && userTie.winner.id !== user.id) {
       this._eliminatedAt.set(round.name);
     }
 
     if (round.name === 'F') {
       const finalTie = playedTies[0];
-      if (finalTie.winner) {
-        this._champion.set(finalTie.winner);
-      }
+      if (finalTie.winner) this._champion.set(finalTie.winner);
       if (user && finalTie.winner?.id === user.id) {
         this._won.set(true);
       } else if (user && finalTie.winner && !this._eliminatedAt()) {
         this._eliminatedAt.set('F');
       }
     }
+  }
+
+  /**
+   * Ghost-mode shortcut for rounds the user isn't in: sim both legs of
+   * every tie and finalize the round in one shot.
+   */
+  simulateGhostRound(): void {
+    this.simulateOthersLeg(1);
+    this.simulateOthersLeg(2);
+    this.finalizeRound();
   }
 
   /**

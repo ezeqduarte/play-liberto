@@ -29,19 +29,14 @@
           Jugar la vuelta
         </button>
       }
-      @case ('user-tie-done') {
-        <button type="button" class="btn" (click)="simulateRest()">
-          Simular el resto de la ronda
-        </button>
-      }
       @case ('round-resolved') {
-        @if (!isFinalRound()) {
-          <button type="button" class="btn" (click)="advanceToNextRound()">
-            Siguiente ronda
+        @if (isFinalRound()) {
+          <button type="button" class="btn" (click)="viewResults()">
+            Ver resultados
           </button>
-        } @else if (userEliminated() && champion()) {
-          <button type="button" class="btn" (click)="viewSummary()">
-            Ver resumen final
+        } @else {
+          <button type="button" class="btn" (click)="advanceToNextRound()">
+            Avanzar a siguiente fase
           </button>
         }
       }
@@ -58,14 +53,26 @@
   }
 
   <div class="rounds-strip">
-    @for (round of rounds(); track round.name) {
-      <span
+    @for (round of rounds(); track round.name; let i = $index) {
+      <button
+        type="button"
         class="rounds-strip__item"
-        [class.rounds-strip__item--active]="round.name === currentRound()?.name"
+        [class.rounds-strip__item--active]="round.name === currentRound()?.name && !isViewingPast()"
         [class.rounds-strip__item--done]="round.completed"
+        [class.rounds-strip__item--viewing]="round.name === viewedRound()?.name && isViewingPast()"
+        (click)="viewRoundByIndex(i)"
       >
         {{ round.label }}
-      </span>
+      </button>
+    }
+    @if (isViewingPast()) {
+      <button
+        type="button"
+        class="rounds-strip__back"
+        (click)="backToCurrentRound()"
+      >
+        ↩ Volver a la ronda actual
+      </button>
     }
   </div>
 
@@ -91,7 +98,7 @@
 
   <app-stats-leaderboard [limit]="8" />
 
-  @if (currentRound(); as round) {
+  @if (viewedRound(); as round) {
     <div class="ties" [class.ties--final]="round.name === 'F'">
       @for (tie of round.ties; track tie.id) {
         <article

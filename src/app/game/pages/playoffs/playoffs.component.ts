@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, effect, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { TournamentService } from '../../services/tournament.service';
-import { KnockoutTie, MatchResult, MatchTeam } from '../../models';
+import { KnockoutRound, KnockoutTie, MatchResult, MatchTeam } from '../../models';
 import { PageNavComponent } from '../../components/page-nav/page-nav.component';
 import { LiveMatchComponent } from '../../components/live-match/live-match.component';
 import { TeamCrestComponent } from '../../components/team-crest/team-crest.component';
@@ -10,9 +10,8 @@ import { StatsLeaderboardComponent } from '../../components/stats-leaderboard/st
 type PlayoffsViewState =
   | 'idle'             // round started, user can play their leg
   | 'playing-leg1'     // live leg 1
-  | 'between-legs'     // leg 1 done, user can play leg 2
+  | 'between-legs'     // leg 1 done (user + others), wait for user to start leg 2
   | 'playing-leg2'     // live leg 2
-  | 'user-tie-done'    // user's tie complete, other ties not yet sim'd
   | 'round-resolved';  // every tie in the round resolved, ready to advance
 
 @Component({
@@ -40,6 +39,25 @@ export class PlayoffsComponent {
   readonly champion = this.tournament.champion;
 
   readonly viewState = signal<PlayoffsViewState>('idle');
+
+  /** Index into `rounds()` the user is currently inspecting. Null
+   *  means "follow the active round". Lets the user click a past
+   *  round in the strip and review its ties. */
+  readonly viewingRoundIndex = signal<number | null>(null);
+
+  /** The round the page actually renders in the tie grid — defaults
+   *  to the active round unless the user picked a past one. */
+  readonly viewedRound = computed<KnockoutRound | null>(() => {
+    const i = this.viewingRoundIndex();
+    if (i === null) return this.currentRound();
+    return this.rounds()[i] ?? this.currentRound();
+  });
+
+  /** True when the user is reviewing a past round (not the active one). */
+  readonly isViewingPast = computed(() => {
+    const viewing = this.viewedRound();
+    return viewing !== null && viewing !== this.currentRound();
+  });
 
   /**
    * Whether the user is still alive in the bracket — i.e., they have
@@ -118,32 +136,25 @@ export class PlayoffsComponent {
   }
 
   /**
-   * Called by LiveMatchComponent.finished. Each tie (including the
-   * final) is two legs — leg 1 records the result and moves to
-   * between-legs; leg 2 records and moves to user-tie-done.
+   * Called by LiveMatchComponent.finished. After the user's leg, the
+   * other ties' SAME leg is auto-simulated so the bracket shows a full
+   * picture for that leg before moving on.
    */
   onMatchFinished(result: MatchResult): void {
     if (this.viewState() === 'playing-leg1') {
       this.tournament.applyUserLeg(1, result);
+      this.tournament.simulateOthersLeg(1);
       this.viewState.set('between-legs');
     } else if (this.viewState() === 'playing-leg2') {
       this.tournament.applyUserLeg(2, result);
-      this.viewState.set('user-tie-done');
+      this.tournament.simulateOthersLeg(2);
+      this.tournament.finalizeRound();
+      this.viewState.set('round-resolved');
     }
   }
 
   /**
-   * Step 1 of resolving the round: simulate every non-user tie. The user
-   * stays on the same page so they can scan all the results before
-   * pressing "Siguiente ronda".
-   */
-  simulateRest(): void {
-    this.tournament.simulateRemainingTies();
-    this.viewState.set('round-resolved');
-  }
-
-  /**
-   * Step 2: build the next round from the winners and switch into it.
+   * Builds the next round from the winners and switches into it.
    * The effect picks up the new round and resets viewState to 'idle'.
    */
   advanceToNextRound(): void {
@@ -152,16 +163,31 @@ export class PlayoffsComponent {
 
   /**
    * Ghost-mode path: the user is already out, so they hit one button
-   * per round to fast-forward the simulation until the final.
+   * per round to fast-forward the entire round.
    */
   simulateThisRound(): void {
-    this.simulateRest();
+    this.tournament.simulateGhostRound();
+    this.viewState.set('round-resolved');
   }
 
   /**
-   * From the eliminated final-state screen, navigate to the summary.
+   * Final round done → tournament results. If the user won, the won()
+   * effect already routes them to /tournament/victory; otherwise they
+   * land on /tournament/eliminated where the awards live.
    */
-  viewSummary(): void {
-    this.router.navigate(['/tournament/eliminated']);
+  viewResults(): void {
+    if (this.tournament.won()) {
+      this.router.navigate(['/tournament/victory']);
+    } else {
+      this.router.navigate(['/tournament/eliminated']);
+    }
+  }
+
+  viewRoundByIndex(index: number): void {
+    this.viewingRoundIndex.set(index);
+  }
+
+  backToCurrentRound(): void {
+    this.viewingRoundIndex.set(null);
   }
 }

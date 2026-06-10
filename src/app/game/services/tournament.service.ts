@@ -1,6 +1,7 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { TEAMS } from '../data';
 import {
+  GoalEvent,
   Group,
   GroupFixture,
   GroupStanding,
@@ -9,6 +10,7 @@ import {
   KnockoutTie,
   MatchResult,
   MatchTeam,
+  Player,
 } from '../models';
 import { DraftService } from './draft.service';
 import { MatchService } from './match.service';
@@ -55,6 +57,59 @@ export class TournamentService {
     const incomplete = rounds.find((r) => !r.completed);
     return incomplete ?? rounds[rounds.length - 1];
   });
+
+  /**
+   * Flat list of every goal ever scored in the tournament, paired with
+   * the team that scored. Drives both the live scorer/assister tables
+   * and the end-of-tournament awards.
+   */
+  readonly allGoalEvents = computed<TournamentGoal[]>(() => {
+    const out: TournamentGoal[] = [];
+    for (const group of this._groups()) {
+      for (const fix of group.fixtures) {
+        if (!fix.result) continue;
+        for (const goal of fix.result.goalEvents) {
+          out.push({
+            goal,
+            team: goal.side === 'home' ? fix.home : fix.away,
+            opponent: goal.side === 'home' ? fix.away : fix.home,
+          });
+        }
+      }
+    }
+    for (const round of this._rounds()) {
+      for (const tie of round.ties) {
+        if (tie.leg1) {
+          for (const goal of tie.leg1.goalEvents) {
+            // Leg 1: teamA is home, teamB is away.
+            out.push({
+              goal,
+              team: goal.side === 'home' ? tie.teamA : tie.teamB,
+              opponent: goal.side === 'home' ? tie.teamB : tie.teamA,
+            });
+          }
+        }
+        if (tie.leg2) {
+          for (const goal of tie.leg2.goalEvents) {
+            // Leg 2: teamB hosts, teamA visits.
+            out.push({
+              goal,
+              team: goal.side === 'home' ? tie.teamB : tie.teamA,
+              opponent: goal.side === 'home' ? tie.teamA : tie.teamB,
+            });
+          }
+        }
+      }
+    }
+    return out;
+  });
+
+  readonly topScorers = computed<PlayerLeaderboardEntry[]>(() =>
+    aggregateScorers(this.allGoalEvents()),
+  );
+  readonly topAssisters = computed<PlayerLeaderboardEntry[]>(() =>
+    aggregateAssisters(this.allGoalEvents()),
+  );
 
   /**
    * The user's next unplayed fixture for the active matchday, or null
@@ -330,6 +385,49 @@ export class TournamentService {
     const leg2 = this.matches.simulate(tie.teamB, tie.teamA);
     return resolveTieFromLegs(tie, leg1, leg2);
   }
+}
+
+// ─────────────────────────── leaderboard helpers ───────────────────────────
+
+export interface TournamentGoal {
+  goal: GoalEvent;
+  team: MatchTeam;
+  opponent: MatchTeam;
+}
+
+export interface PlayerLeaderboardEntry {
+  player: Player;
+  team: MatchTeam;
+  count: number;
+}
+
+function aggregateScorers(events: TournamentGoal[]): PlayerLeaderboardEntry[] {
+  const map = new Map<string, PlayerLeaderboardEntry>();
+  for (const e of events) {
+    const key = `${e.goal.scorer.name}|${e.team.id}`;
+    const existing = map.get(key);
+    if (existing) {
+      existing.count++;
+    } else {
+      map.set(key, { player: e.goal.scorer, team: e.team, count: 1 });
+    }
+  }
+  return [...map.values()].sort((a, b) => b.count - a.count);
+}
+
+function aggregateAssisters(events: TournamentGoal[]): PlayerLeaderboardEntry[] {
+  const map = new Map<string, PlayerLeaderboardEntry>();
+  for (const e of events) {
+    if (!e.goal.assister) continue;
+    const key = `${e.goal.assister.name}|${e.team.id}`;
+    const existing = map.get(key);
+    if (existing) {
+      existing.count++;
+    } else {
+      map.set(key, { player: e.goal.assister, team: e.team, count: 1 });
+    }
+  }
+  return [...map.values()].sort((a, b) => b.count - a.count);
 }
 
 // ─────────────────────────── module-level helpers ───────────────────────────

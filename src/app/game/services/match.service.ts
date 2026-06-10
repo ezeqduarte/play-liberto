@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {
   Formation,
+  GoalEvent,
   MatchResult,
   MatchTeam,
   Player,
@@ -89,7 +90,10 @@ export class MatchService {
   /**
    * Simulates a single match between two MatchTeams.
    * Goals are sampled per "minute" with a probability derived from
-   * effective attack vs opponent's effective defense.
+   * effective attack vs opponent's effective defense. Each goal is
+   * decorated with a scorer (weighted by attacker ratings) and an
+   * assister (weighted by midfield + attacker ratings), so the rest of
+   * the app can show tournament-wide scorer / assist tables.
    */
   simulate(home: MatchTeam, away: MatchTeam): MatchResult {
     const homeAttack = effectiveAttack(home.strength) + HOME_BOOST;
@@ -103,7 +107,9 @@ export class MatchService {
     const winner: MatchResult['winner'] =
       homeGoals > awayGoals ? 'home' : awayGoals > homeGoals ? 'away' : 'draw';
 
-    return { home, away, homeGoals, awayGoals, winner };
+    const goalEvents = buildGoalEvents(home, away, homeGoals, awayGoals);
+
+    return { home, away, homeGoals, awayGoals, winner, goalEvents };
   }
 
   /**
@@ -115,8 +121,6 @@ export class MatchService {
     let result = this.simulate(home, away);
     let safety = 0;
     while (result.winner === 'draw' && safety < 10) {
-      // Extra time + penalties: one extra goal goes to the stronger side,
-      // with random noise to keep upsets possible.
       const homeRoll = home.strength.overall + Math.random() * 8;
       const awayRoll = away.strength.overall + Math.random() * 8;
       if (homeRoll >= awayRoll) {
@@ -124,12 +128,20 @@ export class MatchService {
           ...result,
           homeGoals: result.homeGoals + 1,
           winner: 'home',
+          goalEvents: [
+            ...result.goalEvents,
+            buildExtraGoal(home, 'home', result.goalEvents.length),
+          ],
         };
       } else {
         result = {
           ...result,
           awayGoals: result.awayGoals + 1,
           winner: 'away',
+          goalEvents: [
+            ...result.goalEvents,
+            buildExtraGoal(away, 'away', result.goalEvents.length),
+          ],
         };
       }
       safety++;
@@ -177,4 +189,81 @@ function slug(s: string): string {
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
+}
+
+const ATTACKER_POSITIONS: Position[] = ['ST', 'CF', 'LW', 'RW', 'CAM'];
+const CREATOR_POSITIONS: Position[] = ['CAM', 'CM', 'LM', 'RM', 'LW', 'RW'];
+
+function buildGoalEvents(
+  home: MatchTeam,
+  away: MatchTeam,
+  homeGoals: number,
+  awayGoals: number,
+): GoalEvent[] {
+  const events: GoalEvent[] = [];
+  const used = new Set<number>();
+  for (let i = 0; i < homeGoals; i++) {
+    events.push(makeGoal(home, 'home', used));
+  }
+  for (let i = 0; i < awayGoals; i++) {
+    events.push(makeGoal(away, 'away', used));
+  }
+  events.sort((a, b) => a.minute - b.minute);
+  return events;
+}
+
+function makeGoal(
+  team: MatchTeam,
+  side: 'home' | 'away',
+  usedMinutes: Set<number>,
+): GoalEvent {
+  let minute = randomMinute();
+  let safety = 0;
+  while (usedMinutes.has(minute) && safety < 12) {
+    minute = randomMinute();
+    safety++;
+  }
+  usedMinutes.add(minute);
+  const scorer = pickScorer(team);
+  const assister = Math.random() < 0.7 ? pickAssister(team, scorer) : null;
+  return { minute, side, scorer, assister };
+}
+
+function buildExtraGoal(team: MatchTeam, side: 'home' | 'away', _offset: number): GoalEvent {
+  const scorer = pickScorer(team);
+  const assister = Math.random() < 0.5 ? pickAssister(team, scorer) : null;
+  return { minute: 91 + Math.floor(Math.random() * 30), side, scorer, assister };
+}
+
+function pickScorer(team: MatchTeam): Player {
+  const attackers = team.lineup.filter((p) =>
+    p.positions.some((pos) => ATTACKER_POSITIONS.includes(pos)),
+  );
+  const pool = attackers.length > 0 ? attackers : team.lineup;
+  return weightedPickByRating(pool);
+}
+
+function pickAssister(team: MatchTeam, exclude: Player): Player {
+  const creators = team.lineup.filter(
+    (p) =>
+      p.name !== exclude.name &&
+      p.positions.some((pos) => CREATOR_POSITIONS.includes(pos)),
+  );
+  const fallback = team.lineup.filter((p) => p.name !== exclude.name);
+  const pool = creators.length > 0 ? creators : fallback;
+  return weightedPickByRating(pool);
+}
+
+function weightedPickByRating(pool: Player[]): Player {
+  if (pool.length === 0) {
+    throw new Error('Empty pool for weighted pick.');
+  }
+  const weighted = pool.flatMap((p) => Array(Math.max(1, p.rating - 65)).fill(p));
+  return weighted[Math.floor(Math.random() * weighted.length)];
+}
+
+function randomMinute(): number {
+  let minute = 1 + Math.floor(Math.random() * 89);
+  if (minute === 45) minute = 44;
+  return minute;
 }

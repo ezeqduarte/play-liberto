@@ -33,6 +33,8 @@
     </div>
   }
 
+  <app-stats-leaderboard [limit]="8" />
+
   <div class="groups-grid">
     @for (group of groups(); track group.id) {
       <article

@@ -5,13 +5,19 @@ import { DraftService } from '../../services/draft.service';
 import { PageNavComponent } from '../../components/page-nav/page-nav.component';
 import { LiveMatchComponent } from '../../components/live-match/live-match.component';
 import { TeamCrestComponent } from '../../components/team-crest/team-crest.component';
+import { StatsLeaderboardComponent } from '../../components/stats-leaderboard/stats-leaderboard.component';
 import { GroupFixture, MatchResult } from '../../models';
 
 type GroupsViewState = 'idle' | 'playing' | 'done';
 
 @Component({
   selector: 'app-groups',
-  imports: [PageNavComponent, LiveMatchComponent, TeamCrestComponent],
+  imports: [
+    PageNavComponent,
+    LiveMatchComponent,
+    TeamCrestComponent,
+    StatsLeaderboardComponent,
+  ],
   templateUrl: './groups.component.html',
   styleUrl: './groups.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

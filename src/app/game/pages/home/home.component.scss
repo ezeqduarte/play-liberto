@@ -38,4 +38,31 @@
     padding: 14px 32px;
     display: inline-block;
   }
+
+  &__changelog {
+    position: fixed;
+    bottom: 18px;
+    left: 18px;
+    z-index: 30;
+
+    background: rgba(19, 28, 46, 0.85);
+    backdrop-filter: blur(6px);
+    color: var(--text-secondary);
+    border: 1px solid var(--surface-hairline);
+    border-radius: var(--radius-pill);
+    padding: 7px 14px;
+    font-size: 12px;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.15s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+    &:hover {
+      color: var(--text-primary);
+      border-color: var(--accent);
+    }
+  }
 }

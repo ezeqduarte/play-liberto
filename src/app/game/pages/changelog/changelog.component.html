@@ -1,0 +1,25 @@
+<app-page-nav [requiresConfirmation]="false" />
+<section class="changelog">
+  <header class="changelog__head">
+    <h1>Últimas actualizaciones</h1>
+    <p>Cada versión recoge un batch de cambios pedidos.</p>
+  </header>
+
+  <ol class="changelog__list">
+    @for (entry of entries; track entry.version) {
+      <li class="release">
+        <div class="release__head">
+          <span class="release__version">v{{ entry.version }}</span>
+          <time class="release__date" [attr.datetime]="entry.date">
+            {{ entry.date }}
+          </time>
+        </div>
+        <ul class="release__changes">
+          @for (change of entry.changes; track $index) {
+            <li>{{ change }}</li>
+          }
+        </ul>
+      </li>
+    }
+  </ol>
+</section>

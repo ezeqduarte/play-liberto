@@ -96,6 +96,19 @@
     </div>
   }
 
+  @if (viewState() === 'penalty-shootout' && userTie(); as tie) {
+    @if (tie.penaltyShootout) {
+      <div class="playoffs__live">
+        <app-penalty-shootout
+          [home]="tie.teamA"
+          [away]="tie.teamB"
+          [shootout]="tie.penaltyShootout"
+          (finished)="onShootoutFinished()"
+        />
+      </div>
+    }
+  }
+
   <div class="playoffs__stats">
     <app-stats-leaderboard [limit]="8" />
   </div>
@@ -173,9 +186,9 @@
               }
             </div>
           }
-          @if (tie.tieBreaker === 'penalties') {
+          @if (tie.tieBreaker === 'penalties' && tie.penaltyShootout) {
             <span class="tie__tiebreaker tie__tiebreaker--pen">
-              Avanza por penales
+              Penales {{ tie.penaltyShootout.homeScore }}-{{ tie.penaltyShootout.awayScore }}
             </span>
           }
         </article>

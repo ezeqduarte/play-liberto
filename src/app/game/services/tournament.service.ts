@@ -10,6 +10,8 @@ import {
   KnockoutTie,
   MatchResult,
   MatchTeam,
+  PenaltyKick,
+  PenaltyShootout,
   Player,
 } from '../models';
 import { DraftService } from './draft.service';
@@ -697,6 +699,7 @@ function buildTie(id: string, teamA: MatchTeam, teamB: MatchTeam, isFinal: boole
     aggregateA: 0,
     aggregateB: 0,
     tieBreaker: null,
+    penaltyShootout: null,
   };
 }
 
@@ -710,21 +713,122 @@ function resolveTieFromLegs(tie: KnockoutTie, leg1: MatchResult, leg2: MatchResu
   const aggregateB = leg1.awayGoals + leg2.homeGoals;
   let winner: MatchTeam;
   let tieBreaker: KnockoutTie['tieBreaker'] = null;
+  let penaltyShootout: PenaltyShootout | null = null;
 
   if (aggregateA > aggregateB) {
     winner = tie.teamA;
   } else if (aggregateB > aggregateA) {
     winner = tie.teamB;
   } else {
-    // Aggregate level → straight to penalties (current Libertadores
-    // rule since 2022 — no away-goals tiebreaker).
-    const aRoll = tie.teamA.strength.overall + Math.random() * 8;
-    const bRoll = tie.teamB.strength.overall + Math.random() * 8;
-    winner = aRoll >= bRoll ? tie.teamA : tie.teamB;
+    // Aggregate level → penalty shoot-out, kick-by-kick.
+    const result = simulatePenaltyShootout(tie.teamA, tie.teamB);
+    penaltyShootout = result.shootout;
+    winner = result.winnerSide === 'home' ? tie.teamA : tie.teamB;
     tieBreaker = 'penalties';
   }
 
-  return { ...tie, leg1, leg2, winner, aggregateA, aggregateB, tieBreaker };
+  return {
+    ...tie,
+    leg1,
+    leg2,
+    winner,
+    aggregateA,
+    aggregateB,
+    tieBreaker,
+    penaltyShootout,
+  };
+}
+
+// ─────────────────────────── penalty shoot-out ───────────────────────────
+
+function simulatePenaltyShootout(
+  home: MatchTeam,
+  away: MatchTeam,
+): { shootout: PenaltyShootout; winnerSide: 'home' | 'away' } {
+  const homeKickers = selectKickers(home, 12);
+  const awayKickers = selectKickers(away, 12);
+  const homeGK = findGK(home);
+  const awayGK = findGK(away);
+
+  const kicks: PenaltyKick[] = [];
+  let homeScore = 0;
+  let awayScore = 0;
+  let homeIdx = 0;
+  let awayIdx = 0;
+
+  for (let round = 1; round <= 5; round++) {
+    // home kick
+    const homeTaker = homeKickers[homeIdx++ % homeKickers.length];
+    const homeMade = simulateKick(homeTaker, awayGK);
+    if (homeMade) homeScore++;
+    kicks.push({ side: 'home', taker: homeTaker, scored: homeMade, round });
+    if (isShootoutDecided(homeScore, awayScore, round, round - 1)) break;
+
+    // away kick
+    const awayTaker = awayKickers[awayIdx++ % awayKickers.length];
+    const awayMade = simulateKick(awayTaker, homeGK);
+    if (awayMade) awayScore++;
+    kicks.push({ side: 'away', taker: awayTaker, scored: awayMade, round });
+    if (isShootoutDecided(homeScore, awayScore, round, round)) break;
+  }
+
+  // Sudden death — one full round each until somebody breaks the tie.
+  let round = 6;
+  while (homeScore === awayScore) {
+    const homeTaker = homeKickers[homeIdx++ % homeKickers.length];
+    const homeMade = simulateKick(homeTaker, awayGK);
+    if (homeMade) homeScore++;
+    kicks.push({ side: 'home', taker: homeTaker, scored: homeMade, round });
+
+    const awayTaker = awayKickers[awayIdx++ % awayKickers.length];
+    const awayMade = simulateKick(awayTaker, homeGK);
+    if (awayMade) awayScore++;
+    kicks.push({ side: 'away', taker: awayTaker, scored: awayMade, round });
+
+    round++;
+    if (round > 20) break; // safety
+  }
+
+  return {
+    shootout: { homeScore, awayScore, kicks },
+    winnerSide: homeScore >= awayScore ? 'home' : 'away',
+  };
+}
+
+function selectKickers(team: MatchTeam, count: number): Player[] {
+  return [...team.lineup]
+    .filter((p) => !p.positions.includes('GK'))
+    .sort((a, b) => b.rating - a.rating)
+    .slice(0, count);
+}
+
+function findGK(team: MatchTeam): Player | null {
+  return team.lineup.find((p) => p.positions.includes('GK')) ?? null;
+}
+
+function simulateKick(taker: Player, keeper: Player | null): boolean {
+  const keeperRating = keeper?.rating ?? 75;
+  const base = 0.75;
+  const adj = (taker.rating - keeperRating) * 0.005;
+  const prob = Math.min(0.92, Math.max(0.55, base + adj));
+  return Math.random() < prob;
+}
+
+/**
+ * True when no remaining kicks in the standard round can change the
+ * outcome. homeKicks / awayKicks count completed kicks so far.
+ */
+function isShootoutDecided(
+  homeScore: number,
+  awayScore: number,
+  homeKicks: number,
+  awayKicks: number,
+): boolean {
+  const homeRemaining = 5 - homeKicks;
+  const awayRemaining = 5 - awayKicks;
+  if (homeScore > awayScore + awayRemaining) return true;
+  if (awayScore > homeScore + homeRemaining) return true;
+  return false;
 }
 
 function nextRoundFromWinners(

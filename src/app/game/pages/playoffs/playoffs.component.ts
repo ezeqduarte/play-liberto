@@ -6,12 +6,14 @@ import { PageNavComponent } from '../../components/page-nav/page-nav.component';
 import { LiveMatchComponent } from '../../components/live-match/live-match.component';
 import { TeamCrestComponent } from '../../components/team-crest/team-crest.component';
 import { StatsLeaderboardComponent } from '../../components/stats-leaderboard/stats-leaderboard.component';
+import { PenaltyShootoutComponent } from '../../components/penalty-shootout/penalty-shootout.component';
 
 type PlayoffsViewState =
   | 'idle'             // round started, user can play their leg
   | 'playing-leg1'     // live leg 1
   | 'between-legs'     // leg 1 done (user + others), wait for user to start leg 2
   | 'playing-leg2'     // live leg 2
+  | 'penalty-shootout' // user's tie went to penalties after leg 2
   | 'round-resolved';  // every tie in the round resolved, ready to advance
 
 @Component({
@@ -21,6 +23,7 @@ type PlayoffsViewState =
     LiveMatchComponent,
     TeamCrestComponent,
     StatsLeaderboardComponent,
+    PenaltyShootoutComponent,
   ],
   templateUrl: './playoffs.component.html',
   styleUrl: './playoffs.component.scss',
@@ -149,8 +152,20 @@ export class PlayoffsComponent {
       this.tournament.applyUserLeg(2, result);
       this.tournament.simulateOthersLeg(2);
       this.tournament.finalizeRound();
-      this.viewState.set('round-resolved');
+      // If the user's tie went to penalties, play the shoot-out before
+      // landing on the round-resolved screen.
+      const ut = this.userTie();
+      if (ut?.tieBreaker === 'penalties' && ut.penaltyShootout) {
+        this.viewState.set('penalty-shootout');
+      } else {
+        this.viewState.set('round-resolved');
+      }
     }
+  }
+
+  /** Called by PenaltyShootoutComponent.finished after the last kick. */
+  onShootoutFinished(): void {
+    this.viewState.set('round-resolved');
   }
 
   /**

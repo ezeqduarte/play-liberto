@@ -31,6 +31,21 @@ export type KnockoutRoundName = 'R16' | 'QF' | 'SF' | 'F';
 
 export type KnockoutTieBreaker = null | 'away-goals' | 'penalties';
 
+export interface PenaltyKick {
+  /** Which team took the kick. 'home' = tie.teamA, 'away' = tie.teamB. */
+  side: 'home' | 'away';
+  taker: import('./player.model').Player;
+  scored: boolean;
+  /** 1-5 standard, 6+ sudden death. */
+  round: number;
+}
+
+export interface PenaltyShootout {
+  homeScore: number;
+  awayScore: number;
+  kicks: PenaltyKick[];
+}
+
 export interface KnockoutTie {
   id: string;
   teamA: MatchTeam;
@@ -44,6 +59,8 @@ export interface KnockoutTie {
   aggregateB: number;
   /** How the winner was decided when the aggregate ended level. */
   tieBreaker: KnockoutTieBreaker;
+  /** Kick-by-kick detail when tieBreaker === 'penalties'. */
+  penaltyShootout: PenaltyShootout | null;
 }
 
 export interface KnockoutRound {

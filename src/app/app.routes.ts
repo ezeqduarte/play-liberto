@@ -56,5 +56,12 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./game/pages/victory/victory.component').then((m) => m.VictoryComponent),
   },
+  {
+    path: 'changelog',
+    loadComponent: () =>
+      import('./game/pages/changelog/changelog.component').then(
+        (m) => m.ChangelogComponent,
+      ),
+  },
   { path: '**', redirectTo: '' },
 ];

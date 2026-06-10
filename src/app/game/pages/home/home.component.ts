@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { CURRENT_VERSION } from '../../data/changelog';
 
 @Component({
   selector: 'app-home',
@@ -8,4 +9,6 @@ import { RouterLink } from '@angular/router';
   styleUrl: './home.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomeComponent {}
+export class HomeComponent {
+  readonly version = CURRENT_VERSION;
+}

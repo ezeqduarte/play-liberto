@@ -1,0 +1,30 @@
+:host {
+  display: contents;
+}
+
+.mute {
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  z-index: 50;
+
+  background: rgba(19, 28, 46, 0.85);
+  backdrop-filter: blur(6px);
+  color: var(--text-secondary);
+  border: 1px solid var(--surface-hairline);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  transition: all 0.15s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+  &:hover {
+    color: var(--text-primary);
+    border-color: var(--text-secondary);
+    background: var(--surface-elevated);
+  }
+}

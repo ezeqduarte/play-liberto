@@ -1,6 +1,7 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { MatchResult, MatchTeam, Player, Position } from '../models';
 import { MatchService } from './match.service';
+import { AudioService } from './audio.service';
 
 export type LiveMatchSpeed = 'slow' | 'normal' | 'fast' | 'instant';
 
@@ -44,6 +45,7 @@ const ATTACK_POSITIONS: Position[] = ['LW', 'RW', 'ST', 'CF', 'CAM'];
 @Injectable({ providedIn: 'root' })
 export class LiveMatchService {
   private readonly matches = inject(MatchService);
+  private readonly audio = inject(AudioService);
 
   private readonly _minute = signal(0);
   private readonly _homeGoals = signal(0);
@@ -123,6 +125,9 @@ export class LiveMatchService {
     this._result.set(null);
     this.cursor = 0;
 
+    // Match starts → swap menu music for stadium ambience.
+    this.audio.playMusic('crowd');
+
     this.tick();
   }
 
@@ -164,6 +169,9 @@ export class LiveMatchService {
     this._away.set(null);
     this._result.set(null);
     this.cursor = 0;
+    // Ensure music returns to the menu loop if the user bails out
+    // before full-time.
+    this.audio.playMusic('anthem');
   }
 
   /**
@@ -203,11 +211,19 @@ export class LiveMatchService {
       if (evt.type === 'goal') {
         if (evt.side === 'home') this._homeGoals.update((g) => g + 1);
         else if (evt.side === 'away') this._awayGoals.update((g) => g + 1);
+        this.audio.playSfx('goal');
+      } else if (evt.type === 'kickoff' || evt.type === 'second-half') {
+        this.audio.playSfx('kickoff');
+      } else if (evt.type === 'half-time') {
+        this.audio.playSfx('halftime');
       }
       if (evt.type === 'full-time') {
+        this.audio.playSfx('fulltime');
         this._isFinished.set(true);
         this._isRunning.set(false);
         this._result.set(this.predictResult());
+        // Match over → back to the menu loop.
+        this.audio.playMusic('anthem');
         return;
       }
       this.cursor++;

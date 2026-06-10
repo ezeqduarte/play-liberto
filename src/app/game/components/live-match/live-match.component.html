@@ -1,4 +1,12 @@
 <article class="live-match">
+  <div class="live-match__venue">
+    <span class="live-match__venue-icon" aria-hidden="true">🏟️</span>
+    <span class="live-match__venue-name">{{ stadium().name }}</span>
+    <span class="live-match__venue-cap">
+      Capacidad {{ capacityFormatted() }}
+    </span>
+  </div>
+
   <header class="live-match__scoreboard">
     <div class="team team--home" [class.team--flash]="flashSide() === 'home'">
       <app-team-crest [clubName]="home().clubName" [isUser]="home().isUser" size="lg" />

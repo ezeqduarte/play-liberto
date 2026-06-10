@@ -11,6 +11,7 @@ import {
 import { LiveMatchService, LiveMatchSpeed } from '../../services/live-match.service';
 import { MatchResult, MatchTeam } from '../../models';
 import { TeamCrestComponent } from '../team-crest/team-crest.component';
+import { getStadium } from '../../data/stadiums';
 
 /**
  * Plays a single match minute-by-minute. Takes the two MatchTeams as
@@ -31,6 +32,16 @@ export class LiveMatchComponent {
   readonly away = input.required<MatchTeam>();
   readonly isKnockout = input(false);
   readonly finished = output<MatchResult>();
+
+  /** Stadium hosting the leg — always the home team's ground. */
+  readonly stadium = computed(() => {
+    const h = this.home();
+    return getStadium(h.clubName, h.isUser);
+  });
+
+  readonly capacityFormatted = computed(() =>
+    this.stadium().capacity.toLocaleString('es-AR'),
+  );
 
   readonly speeds: LiveMatchSpeed[] = ['slow', 'normal', 'fast', 'instant'];
   readonly speedLabels: Record<LiveMatchSpeed, string> = {

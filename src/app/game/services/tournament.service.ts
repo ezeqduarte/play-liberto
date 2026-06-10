@@ -111,6 +111,113 @@ export class TournamentService {
     aggregateAssisters(this.allGoalEvents()),
   );
 
+  /** How far each team got in the tournament (in points: champion 10,
+   *  finalist 5, SF 3, QF 2, R16 1, group stage 0). Used to weight the
+   *  MVP and Best GK awards so winning the cup matters. */
+  readonly progressionByTeam = computed<Map<string, number>>(() => {
+    const map = new Map<string, number>();
+    const setMax = (id: string, points: number) => {
+      const cur = map.get(id) ?? 0;
+      if (points > cur) map.set(id, points);
+    };
+    for (const group of this._groups()) {
+      for (const team of group.teams) setMax(team.id, 0);
+    }
+    const roundPoints: Record<KnockoutRoundName, number> = {
+      R16: 1,
+      QF: 2,
+      SF: 3,
+      F: 5,
+    };
+    for (const round of this._rounds()) {
+      const base = roundPoints[round.name];
+      for (const tie of round.ties) {
+        setMax(tie.teamA.id, base);
+        setMax(tie.teamB.id, base);
+      }
+    }
+    const champ = this._champion();
+    if (champ) setMax(champ.id, 10);
+    return map;
+  });
+
+  /** Clean sheets per goalkeeper across the whole tournament. */
+  readonly cleanSheets = computed<PlayerLeaderboardEntry[]>(() => {
+    const map = new Map<string, PlayerLeaderboardEntry>();
+    const record = (team: MatchTeam) => {
+      const gk = team.lineup.find((p) => p.positions.includes('GK'));
+      if (!gk) return;
+      const key = `${gk.name}|${team.id}`;
+      const existing = map.get(key);
+      if (existing) existing.count++;
+      else map.set(key, { player: gk, team, count: 1 });
+    };
+    for (const group of this._groups()) {
+      for (const fix of group.fixtures) {
+        if (!fix.result) continue;
+        if (fix.result.awayGoals === 0) record(fix.home);
+        if (fix.result.homeGoals === 0) record(fix.away);
+      }
+    }
+    for (const round of this._rounds()) {
+      for (const tie of round.ties) {
+        if (tie.leg1) {
+          if (tie.leg1.awayGoals === 0) record(tie.teamA);
+          if (tie.leg1.homeGoals === 0) record(tie.teamB);
+        }
+        if (tie.leg2) {
+          if (tie.leg2.awayGoals === 0) record(tie.teamB);
+          if (tie.leg2.homeGoals === 0) record(tie.teamA);
+        }
+      }
+    }
+    return [...map.values()].sort((a, b) => b.count - a.count);
+  });
+
+  /** Single-prize accessors for the end-of-tournament awards screen. */
+  readonly awardTopScorer = computed(() => this.topScorers()[0] ?? null);
+  readonly awardTopAssister = computed(() => this.topAssisters()[0] ?? null);
+
+  readonly awardBestGK = computed<PlayerLeaderboardEntry | null>(() => {
+    const sheets = this.cleanSheets();
+    const progression = this.progressionByTeam();
+    if (sheets.length === 0) return null;
+    return [...sheets].sort((a, b) => {
+      const scoreA = a.count * 3 + (progression.get(a.team.id) ?? 0);
+      const scoreB = b.count * 3 + (progression.get(b.team.id) ?? 0);
+      return scoreB - scoreA;
+    })[0];
+  });
+
+  /** MVP — best combined goal + assist contribution, with progression
+   *  bonus so winning the trophy carries weight. */
+  readonly awardMVP = computed<PlayerLeaderboardEntry | null>(() => {
+    const events = this.allGoalEvents();
+    const progression = this.progressionByTeam();
+    if (events.length === 0) return null;
+    const map = new Map<string, { player: Player; team: MatchTeam; goals: number; assists: number }>();
+    for (const e of events) {
+      const sKey = `${e.goal.scorer.name}|${e.team.id}`;
+      const s = map.get(sKey) ?? { player: e.goal.scorer, team: e.team, goals: 0, assists: 0 };
+      s.goals++;
+      map.set(sKey, s);
+      if (e.goal.assister) {
+        const aKey = `${e.goal.assister.name}|${e.team.id}`;
+        const a = map.get(aKey) ?? { player: e.goal.assister, team: e.team, goals: 0, assists: 0 };
+        a.assists++;
+        map.set(aKey, a);
+      }
+    }
+    const ranked = [...map.values()]
+      .map((row) => ({
+        ...row,
+        score: row.goals * 3 + row.assists * 2 + (progression.get(row.team.id) ?? 0),
+      }))
+      .sort((a, b) => b.score - a.score);
+    const top = ranked[0];
+    return { player: top.player, team: top.team, count: top.goals + top.assists };
+  });
+
   /**
    * The user's next unplayed fixture for the active matchday, or null
    * if the matchday is already played out or the user isn't in any fixture.

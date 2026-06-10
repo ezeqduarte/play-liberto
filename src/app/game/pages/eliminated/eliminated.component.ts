@@ -3,10 +3,11 @@ import { Router } from '@angular/router';
 import { TournamentService } from '../../services/tournament.service';
 import { DraftService } from '../../services/draft.service';
 import { PageNavComponent } from '../../components/page-nav/page-nav.component';
+import { TournamentAwardsComponent } from '../../components/tournament-awards/tournament-awards.component';
 
 @Component({
   selector: 'app-eliminated',
-  imports: [PageNavComponent],
+  imports: [PageNavComponent, TournamentAwardsComponent],
   templateUrl: './eliminated.component.html',
   styleUrl: './eliminated.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

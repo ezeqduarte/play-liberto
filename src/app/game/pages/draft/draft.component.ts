@@ -105,6 +105,14 @@ export class DraftComponent {
     return this.draft.hasEligibleSlot(player);
   }
 
+  isPlayerNameTakenByCoach(player: Player): boolean {
+    return this.draft.isPlayerNameTakenByCoach(player);
+  }
+
+  isCoachNameTakenByPlayer(): boolean {
+    return this.draft.isCoachNameTakenByPlayer();
+  }
+
   isPlayerSelected(player: Player): boolean {
     return this.selectedPlayer()?.name === player.name;
   }

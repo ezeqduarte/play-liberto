@@ -16,6 +16,18 @@ export interface ChangelogEntry {
 
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: '1.1.0',
+    date: '2026-06-10',
+    changes: [
+      'Tabla de máximos goleadores y máximos asistidores visible en grupos y en playoffs, actualizada en tiempo real con cada gol simulado.',
+      'Al terminar la copa aparecen 4 premios: goleador, asistidor, mejor jugador (G+A + bonus por avanzar) y mejor arquero (vallas invictas + bonus por avanzar).',
+      'En cada partido en vivo se muestra el estadio anfitrión con su nombre y capacidad. Tu equipo juega en MyTeam Stadium (75.000).',
+      'En playoffs, cuando termina tu ida se simulan automáticamente las idas del resto. Lo mismo con la vuelta. Desaparece el botón "Simular el resto" y queda "Avanzar a siguiente fase" directo.',
+      'Las rondas pasadas en el strip ahora son clickeables: podés estar en semis y revisar octavos sin perder tu posición.',
+      'En la final el botón ya no dice "Simular el resto" sino "Ver resultados", y lleva a la pantalla con los premios de la copa.',
+    ],
+  },
+  {
     version: '1.0.0',
     date: '2026-06-10',
     changes: [

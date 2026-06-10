@@ -4,13 +4,14 @@ import { TournamentService } from '../../services/tournament.service';
 import { DraftService } from '../../services/draft.service';
 import { PageNavComponent } from '../../components/page-nav/page-nav.component';
 import { LiveMatchComponent } from '../../components/live-match/live-match.component';
+import { TeamCrestComponent } from '../../components/team-crest/team-crest.component';
 import { GroupFixture, MatchResult } from '../../models';
 
 type GroupsViewState = 'idle' | 'playing' | 'done';
 
 @Component({
   selector: 'app-groups',
-  imports: [PageNavComponent, LiveMatchComponent],
+  imports: [PageNavComponent, LiveMatchComponent, TeamCrestComponent],
   templateUrl: './groups.component.html',
   styleUrl: './groups.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

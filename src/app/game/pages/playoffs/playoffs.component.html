@@ -97,11 +97,17 @@
           [class.tie--user]="isUserTie(tie)"
           [class.tie--final]="tie.isFinal"
         >
+          <!-- Aggregate header: team A vs team B with crests + aggregate goals -->
           <div
             class="tie__team"
             [class.tie__team--winner]="tie.winner?.id === tie.teamA.id"
             [class.tie__team--loser]="tie.winner && tie.winner.id !== tie.teamA.id"
           >
+            <app-team-crest
+              [clubName]="tie.teamA.clubName"
+              [isUser]="tie.teamA.isUser"
+              size="md"
+            />
             <span class="tie__team-name">{{ tie.teamA.displayName }}</span>
             @if (tie.leg1 || tie.leg2) {
               <span class="tie__team-score">{{ tie.aggregateA }}</span>
@@ -112,16 +118,47 @@
             [class.tie__team--winner]="tie.winner?.id === tie.teamB.id"
             [class.tie__team--loser]="tie.winner && tie.winner.id !== tie.teamB.id"
           >
+            <app-team-crest
+              [clubName]="tie.teamB.clubName"
+              [isUser]="tie.teamB.isUser"
+              size="md"
+            />
             <span class="tie__team-name">{{ tie.teamB.displayName }}</span>
             @if (tie.leg1 || tie.leg2) {
               <span class="tie__team-score">{{ tie.aggregateB }}</span>
             }
           </div>
+
+          <!-- Per-leg detail with explicit home / away labelling -->
           @if (tie.leg1) {
             <div class="tie__legs">
-              <span>Ida {{ tie.leg1.homeGoals }}-{{ tie.leg1.awayGoals }}</span>
+              <div class="leg">
+                <span class="leg__label">Ida</span>
+                <span class="leg__team leg__team--home">
+                  <span class="leg__home-tag" title="Local">🏠</span>
+                  {{ tie.teamA.displayName }}
+                </span>
+                <span class="leg__score">
+                  {{ tie.leg1.homeGoals }} – {{ tie.leg1.awayGoals }}
+                </span>
+                <span class="leg__team leg__team--away">
+                  {{ tie.teamB.displayName }}
+                </span>
+              </div>
               @if (tie.leg2) {
-                <span>Vuelta {{ tie.leg2.homeGoals }}-{{ tie.leg2.awayGoals }}</span>
+                <div class="leg">
+                  <span class="leg__label">Vuelta</span>
+                  <span class="leg__team leg__team--home">
+                    <span class="leg__home-tag" title="Local">🏠</span>
+                    {{ tie.teamB.displayName }}
+                  </span>
+                  <span class="leg__score">
+                    {{ tie.leg2.homeGoals }} – {{ tie.leg2.awayGoals }}
+                  </span>
+                  <span class="leg__team leg__team--away">
+                    {{ tie.teamA.displayName }}
+                  </span>
+                </div>
               }
             </div>
           }

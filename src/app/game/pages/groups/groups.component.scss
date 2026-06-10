@@ -94,6 +94,10 @@
 
     .left {
       text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
     }
 
     tbody tr {
@@ -102,10 +106,17 @@
   }
 
   &__position {
-    display: inline-block;
     width: 18px;
     color: var(--text-muted);
     font-size: 11px;
+    flex-shrink: 0;
+  }
+
+  &__name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
   }
 
   &__row--qualified {

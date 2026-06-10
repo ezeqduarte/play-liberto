@@ -10,8 +10,11 @@ export interface TeamStrength {
 export interface MatchTeam {
   /** Stable identifier — used for keying in groups, brackets, etc. */
   id: string;
-  /** Human-friendly label shown in the UI. */
+  /** Human-friendly label shown in the UI (e.g., "Boca Juniors 2001"). */
   displayName: string;
+  /** Club name without the year suffix — used by the crest component
+   *  to look up country colours and produce stable initials. */
+  clubName: string;
   /** Whether this is the user's custom squad. */
   isUser: boolean;
   strength: TeamStrength;

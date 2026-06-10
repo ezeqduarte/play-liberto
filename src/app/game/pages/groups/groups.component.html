@@ -65,7 +65,12 @@
               >
                 <td class="left">
                   <span class="group-card__position">{{ i + 1 }}</span>
-                  {{ row.team.displayName }}
+                  <app-team-crest
+                    [clubName]="row.team.clubName"
+                    [isUser]="row.team.isUser"
+                    size="sm"
+                  />
+                  <span class="group-card__name">{{ row.team.displayName }}</span>
                 </td>
                 <td>{{ row.played }}</td>
                 <td>{{ row.won }}</td>

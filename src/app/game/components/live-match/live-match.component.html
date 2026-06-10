@@ -1,8 +1,11 @@
 <article class="live-match">
   <header class="live-match__scoreboard">
     <div class="team team--home" [class.team--flash]="flashSide() === 'home'">
-      <span class="team__name">{{ home().displayName }}</span>
-      <span class="team__rating">OVR {{ home().strength.overall }}</span>
+      <app-team-crest [clubName]="home().clubName" [isUser]="home().isUser" size="lg" />
+      <div class="team__text">
+        <span class="team__name">{{ home().displayName }}</span>
+        <span class="team__rating">OVR {{ home().strength.overall }}</span>
+      </div>
     </div>
 
     <div class="score">
@@ -16,8 +19,11 @@
     </div>
 
     <div class="team team--away" [class.team--flash]="flashSide() === 'away'">
-      <span class="team__name">{{ away().displayName }}</span>
-      <span class="team__rating">OVR {{ away().strength.overall }}</span>
+      <div class="team__text">
+        <span class="team__name">{{ away().displayName }}</span>
+        <span class="team__rating">OVR {{ away().strength.overall }}</span>
+      </div>
+      <app-team-crest [clubName]="away().clubName" [isUser]="away().isUser" size="lg" />
     </div>
   </header>
 

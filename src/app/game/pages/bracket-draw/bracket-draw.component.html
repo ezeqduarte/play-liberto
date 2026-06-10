@@ -53,6 +53,7 @@
           [class.tie-card__slot--user]="isUserTeam(row.a.team)"
         >
           @if (row.a.team; as t) {
+            <app-team-crest [clubName]="t.clubName" [isUser]="t.isUser" size="sm" />
             <span class="tie-card__team">{{ t.displayName }}</span>
           } @else {
             <span class="tie-card__placeholder">?</span>
@@ -66,6 +67,7 @@
           [class.tie-card__slot--user]="isUserTeam(row.b.team)"
         >
           @if (row.b.team; as t) {
+            <app-team-crest [clubName]="t.clubName" [isUser]="t.isUser" size="sm" />
             <span class="tie-card__team">{{ t.displayName }}</span>
           } @else {
             <span class="tie-card__placeholder">?</span>

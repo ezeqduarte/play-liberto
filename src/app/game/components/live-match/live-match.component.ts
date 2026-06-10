@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { LiveMatchService, LiveMatchSpeed } from '../../services/live-match.service';
 import { MatchResult, MatchTeam } from '../../models';
+import { TeamCrestComponent } from '../team-crest/team-crest.component';
 
 /**
  * Plays a single match minute-by-minute. Takes the two MatchTeams as
@@ -18,6 +19,7 @@ import { MatchResult, MatchTeam } from '../../models';
  */
 @Component({
   selector: 'app-live-match',
+  imports: [TeamCrestComponent],
   templateUrl: './live-match.component.html',
   styleUrl: './live-match.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

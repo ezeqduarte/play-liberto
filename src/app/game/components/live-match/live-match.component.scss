@@ -47,21 +47,35 @@
 
 .team {
   display: flex;
-  flex-direction: column;
-  text-align: center;
+  align-items: center;
+  gap: 10px;
   transition: transform 0.2s ease;
 
   &--home {
-    text-align: right;
+    justify-content: flex-end;
+
+    .team__text {
+      text-align: right;
+    }
   }
 
   &--away {
-    text-align: left;
+    justify-content: flex-start;
+
+    .team__text {
+      text-align: left;
+    }
   }
 
   &--flash {
     transform: scale(1.05);
     color: var(--accent);
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
   }
 
   &__name {

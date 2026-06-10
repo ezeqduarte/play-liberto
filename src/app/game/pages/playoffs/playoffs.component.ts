@@ -4,6 +4,7 @@ import { TournamentService } from '../../services/tournament.service';
 import { KnockoutTie, MatchResult, MatchTeam } from '../../models';
 import { PageNavComponent } from '../../components/page-nav/page-nav.component';
 import { LiveMatchComponent } from '../../components/live-match/live-match.component';
+import { TeamCrestComponent } from '../../components/team-crest/team-crest.component';
 
 type PlayoffsViewState =
   | 'idle'             // round started, user can play their leg
@@ -15,7 +16,7 @@ type PlayoffsViewState =
 
 @Component({
   selector: 'app-playoffs',
-  imports: [PageNavComponent, LiveMatchComponent],
+  imports: [PageNavComponent, LiveMatchComponent, TeamCrestComponent],
   templateUrl: './playoffs.component.html',
   styleUrl: './playoffs.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

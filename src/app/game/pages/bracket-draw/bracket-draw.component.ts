@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { TournamentService } from '../../services/tournament.service';
 import { KnockoutTie, MatchTeam } from '../../models';
 import { PageNavComponent } from '../../components/page-nav/page-nav.component';
+import { TeamCrestComponent } from '../../components/team-crest/team-crest.component';
 
 export type DrawSpeed = 'slow' | 'normal' | 'fast' | 'instant';
 
@@ -32,7 +33,7 @@ const SPEED_MS: Record<DrawSpeed, number> = {
 
 @Component({
   selector: 'app-bracket-draw',
-  imports: [PageNavComponent],
+  imports: [PageNavComponent, TeamCrestComponent],
   templateUrl: './bracket-draw.component.html',
   styleUrl: './bracket-draw.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -50,6 +50,7 @@ export class MatchService {
     return {
       id: 'user',
       displayName,
+      clubName: displayName,
       isUser: true,
       strength,
       lineup: squad.map((e) => e.player!).filter(Boolean),
@@ -78,6 +79,7 @@ export class MatchService {
     return {
       id: `${slug(team.name)}-${team.year}`,
       displayName: `${team.name} ${team.year}`,
+      clubName: team.name,
       isUser: false,
       strength,
       lineup: team.players,

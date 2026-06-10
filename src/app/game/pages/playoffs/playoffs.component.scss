@@ -70,6 +70,7 @@
   gap: 8px;
   margin-bottom: 24px;
   flex-wrap: wrap;
+  align-items: center;
 
   &__item {
     padding: 6px 14px;
@@ -79,6 +80,13 @@
     font-size: 12px;
     font-weight: 600;
     border: 1px solid var(--surface-hairline);
+    cursor: pointer;
+    transition: all 0.15s ease;
+
+    &:hover {
+      color: var(--text-primary);
+      border-color: var(--text-secondary);
+    }
 
     &--done {
       color: var(--text-secondary);
@@ -88,6 +96,30 @@
       color: var(--accent);
       border-color: var(--accent);
       background: var(--accent-soft);
+    }
+
+    &--viewing {
+      color: var(--text-primary);
+      border-color: var(--text-secondary);
+      background: var(--surface-hairline);
+    }
+  }
+
+  &__back {
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px dashed var(--surface-hairline);
+    border-radius: var(--radius-pill);
+    padding: 6px 14px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-left: 6px;
+    transition: all 0.15s ease;
+
+    &:hover {
+      color: var(--text-primary);
+      border-color: var(--text-secondary);
     }
   }
 }

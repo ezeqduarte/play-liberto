@@ -28,6 +28,11 @@
     animation: bob 3.5s ease-in-out infinite;
     filter: drop-shadow(0 12px 28px rgba(255, 181, 71, 0.4))
       drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
+
+    @media (max-width: 640px) {
+      width: 180px;
+      height: 240px;
+    }
   }
 
   &__trophy-img {
@@ -46,6 +51,11 @@
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+
+    @media (max-width: 640px) {
+      font-size: 36px;
+      letter-spacing: -1px;
+    }
   }
 
   &__subtitle {

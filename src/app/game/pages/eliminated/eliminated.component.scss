@@ -24,6 +24,10 @@
     font-weight: 800;
     margin: 0 0 12px;
     color: var(--danger);
+
+    @media (max-width: 640px) {
+      font-size: 32px;
+    }
   }
 
   &__subtitle {

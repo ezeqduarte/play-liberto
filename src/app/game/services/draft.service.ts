@@ -170,13 +170,14 @@ export class DraftService {
 
   /**
    * Step 1 of the coach pick: marks the rolled team's coach as the
-   * pending candidate. The pitch's DT slot pulses; the user has to
-   * click it to confirm. Cancels any in-flight player selection.
+   * pending candidate. Cannot pick a coach whose name is already in
+   * the squad as a player.
    */
   selectCoach(): void {
     const team = this._currentTeam();
     if (!team) return;
     if (this.isCoachPicked()) return;
+    if (this._pickedNames().has(team.coach.name)) return;
     this._selectedCoach.set(team.coach);
     this._selectedPlayer.set(null);
   }
@@ -205,11 +206,12 @@ export class DraftService {
 
   /**
    * Highlights a player as the candidate the user wants to draft.
-   * Player must not already be picked. If the player has no eligible
-   * empty slots, this is a no-op (UI should disable the click).
+   * Player must not already be picked AND must not share a name with
+   * the already-chosen coach. UI also disables the button accordingly.
    */
   selectPlayer(player: Player): void {
     if (this._pickedNames().has(player.name)) return;
+    if (this._coachEntry().coach?.name === player.name) return;
     if (!this.hasEligibleSlot(player)) return;
     this._selectedPlayer.set(player);
     // Selecting a player cancels any pending coach candidate.
@@ -265,6 +267,21 @@ export class DraftService {
 
   isAlreadyPicked(player: Player): boolean {
     return this._pickedNames().has(player.name);
+  }
+
+  /** True if the rolled coach shares a name with a player already in
+   *  the squad — used to disable the coach card so the same person
+   *  can't appear in both roles. */
+  isCoachNameTakenByPlayer(): boolean {
+    const team = this._currentTeam();
+    if (!team) return false;
+    return this._pickedNames().has(team.coach.name);
+  }
+
+  /** True if a player shares a name with the picked coach — used to
+   *  disable that player's card. */
+  isPlayerNameTakenByCoach(player: Player): boolean {
+    return this._coachEntry().coach?.name === player.name;
   }
 
   reset(): void {

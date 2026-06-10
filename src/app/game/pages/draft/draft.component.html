@@ -183,8 +183,8 @@
                 type="button"
                 class="coach-card"
                 [class.coach-card--selected]="isCurrentCoachSelected()"
-                [class.coach-card--picked]="isCoachPicked()"
-                [disabled]="isCoachPicked()"
+                [class.coach-card--picked]="isCoachPicked() || isCoachNameTakenByPlayer()"
+                [disabled]="isCoachPicked() || isCoachNameTakenByPlayer()"
                 (click)="selectCoach()"
               >
                 <span
@@ -198,6 +198,8 @@
                 </span>
                 @if (isCoachPicked()) {
                   <span class="coach-card__tag">Ya elegiste DT</span>
+                } @else if (isCoachNameTakenByPlayer()) {
+                  <span class="coach-card__tag">Ya en tu 11</span>
                 } @else {
                   <span class="coach-card__rarity rarity-{{ coach.rarity }}">
                     {{ coach.rarity }}
@@ -216,9 +218,9 @@
                     type="button"
                     class="player-card"
                     [class.player-card--selected]="isPlayerSelected(player)"
-                    [class.player-card--picked]="isAlreadyPicked(player)"
-                    [class.player-card--unavailable]="!hasEligibleSlot(player) && !isAlreadyPicked(player)"
-                    [disabled]="isAlreadyPicked(player) || !hasEligibleSlot(player)"
+                    [class.player-card--picked]="isAlreadyPicked(player) || isPlayerNameTakenByCoach(player)"
+                    [class.player-card--unavailable]="!hasEligibleSlot(player) && !isAlreadyPicked(player) && !isPlayerNameTakenByCoach(player)"
+                    [disabled]="isAlreadyPicked(player) || isPlayerNameTakenByCoach(player) || !hasEligibleSlot(player)"
                     (click)="selectPlayer(player)"
                   >
                     <span class="player-card__rating rarity-bg-{{ player.rarity }}">
@@ -232,6 +234,8 @@
                     </span>
                     @if (isAlreadyPicked(player)) {
                       <span class="player-card__tag">Ya en tu 11</span>
+                    } @else if (isPlayerNameTakenByCoach(player)) {
+                      <span class="player-card__tag">Ya es tu DT</span>
                     } @else if (!hasEligibleSlot(player)) {
                       <span class="player-card__tag">Sin slot</span>
                     } @else {

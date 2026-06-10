@@ -33,7 +33,9 @@
     </div>
   }
 
-  <app-stats-leaderboard [limit]="8" />
+  <div class="groups-page__stats">
+    <app-stats-leaderboard [limit]="8" />
+  </div>
 
   <div class="groups-grid">
     @for (group of groups(); track group.id) {

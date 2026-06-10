@@ -14,7 +14,7 @@ const DEFENSE_POSITIONS: Position[] = ['GK', 'CB', 'LB', 'RB'];
 const MIDFIELD_POSITIONS: Position[] = ['CDM', 'CM', 'CAM', 'LM', 'RM'];
 const ATTACK_POSITIONS: Position[] = ['LW', 'RW', 'ST', 'CF'];
 
-const HOME_BOOST = 3;
+const HOME_BOOST = 2;
 
 @Injectable({ providedIn: 'root' })
 export class MatchService {
@@ -146,28 +146,28 @@ function computeOverall({ attack, midfield, defense }: Pick<TeamStrength, 'attac
 }
 
 function effectiveAttack(s: TeamStrength): number {
-  return s.attack + s.midfield * 0.3;
+  return s.attack + s.midfield * 0.25;
 }
 
 function effectiveDefense(s: TeamStrength): number {
-  return s.defense + s.midfield * 0.2;
+  return s.defense + s.midfield * 0.15;
 }
 
 /**
  * Simulates goals scored in 90 minutes given effective attack and defense.
- * Per-minute probability scales with the rating gap. Capped at 7 to avoid
- * absurd scorelines.
+ * Per-minute probability scales with the rating gap. Tightened constants
+ * after calibration feedback: roughly ~1 expected goal per evenly-matched
+ * side, ~2 with a clear +15 gap. Capped at 5 to avoid absurd scorelines.
  */
 function simulateGoals(attack: number, defense: number): number {
   const gap = attack - defense;
-  // Per-90-min expected goals. Roughly: 1.2 if even, ~2.5 with +15 gap.
-  const expected = Math.max(0.1, 1.2 + gap / 12);
+  const expected = Math.max(0.1, 1.0 + gap / 16);
   const perMinute = expected / 90;
   let goals = 0;
   for (let m = 0; m < 90; m++) {
     if (Math.random() < perMinute) goals++;
   }
-  return Math.min(goals, 7);
+  return Math.min(goals, 5);
 }
 
 function slug(s: string): string {

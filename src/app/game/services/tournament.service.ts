@@ -100,8 +100,17 @@ export class TournamentService {
     const userTeam = this.matches.buildUserTeam(squad, formation);
     this._userTeam.set(userTeam);
 
-    const shuffledTeams = shuffle([...TEAMS]).slice(0, 31);
-    const opponents = shuffledTeams.map((t) => this.matches.buildHistoricTeam(t));
+    // Pick 31 opponents — at most one entry per club so the bracket
+    // can never contain Boca '01 AND Boca '03 in the same edition.
+    const shuffled = shuffle([...TEAMS]);
+    const seenClubs = new Set<string>();
+    const opponents: MatchTeam[] = [];
+    for (const t of shuffled) {
+      if (seenClubs.has(t.name)) continue;
+      seenClubs.add(t.name);
+      opponents.push(this.matches.buildHistoricTeam(t));
+      if (opponents.length === 31) break;
+    }
 
     const allTeams = shuffle([userTeam, ...opponents]);
     const groups: Group[] = GROUP_IDS.map((id, gi) => {
@@ -316,17 +325,7 @@ export class TournamentService {
   // ─────────────────────────── internals ───────────────────────────
 
   private simulateTie(tie: KnockoutTie): KnockoutTie {
-    if (tie.isFinal) {
-      const result = this.matches.simulateKnockout(tie.teamA, tie.teamB);
-      const winner = result.winner === 'home' ? tie.teamA : tie.teamB;
-      return {
-        ...tie,
-        leg1: result,
-        winner,
-        aggregateA: result.homeGoals,
-        aggregateB: result.awayGoals,
-      };
-    }
+    // Every round (including the final) is now two-legged.
     const leg1 = this.matches.simulate(tie.teamA, tie.teamB);
     const leg2 = this.matches.simulate(tie.teamB, tie.teamA);
     return resolveTieFromLegs(tie, leg1, leg2);
@@ -457,16 +456,7 @@ function buildTie(id: string, teamA: MatchTeam, teamB: MatchTeam, isFinal: boole
 }
 
 function resolveUserTie(tie: KnockoutTie): KnockoutTie {
-  if (tie.isFinal) {
-    const result = tie.leg1!;
-    const winner = result.winner === 'home' ? tie.teamA : tie.teamB;
-    return {
-      ...tie,
-      winner,
-      aggregateA: result.homeGoals,
-      aggregateB: result.awayGoals,
-    };
-  }
+  // Finals are also two-legged now — same shape as the other rounds.
   return resolveTieFromLegs(tie, tie.leg1!, tie.leg2!);
 }
 
@@ -481,23 +471,12 @@ function resolveTieFromLegs(tie: KnockoutTie, leg1: MatchResult, leg2: MatchResu
   } else if (aggregateB > aggregateA) {
     winner = tie.teamB;
   } else {
-    // Aggregate level → away goals first (classic Libertadores rule).
-    // teamA is away in leg 2; teamB is away in leg 1.
-    const awayA = leg2.awayGoals;
-    const awayB = leg1.awayGoals;
-    if (awayA > awayB) {
-      winner = tie.teamA;
-      tieBreaker = 'away-goals';
-    } else if (awayB > awayA) {
-      winner = tie.teamB;
-      tieBreaker = 'away-goals';
-    } else {
-      // Still level → penalties weighted by overall strength.
-      const aRoll = tie.teamA.strength.overall + Math.random() * 8;
-      const bRoll = tie.teamB.strength.overall + Math.random() * 8;
-      winner = aRoll >= bRoll ? tie.teamA : tie.teamB;
-      tieBreaker = 'penalties';
-    }
+    // Aggregate level → straight to penalties (current Libertadores
+    // rule since 2022 — no away-goals tiebreaker).
+    const aRoll = tie.teamA.strength.overall + Math.random() * 8;
+    const bRoll = tie.teamB.strength.overall + Math.random() * 8;
+    winner = aRoll >= bRoll ? tie.teamA : tie.teamB;
+    tieBreaker = 'penalties';
   }
 
   return { ...tie, leg1, leg2, winner, aggregateA, aggregateB, tieBreaker };

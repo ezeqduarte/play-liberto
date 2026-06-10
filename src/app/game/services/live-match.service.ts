@@ -107,6 +107,7 @@ export class LiveMatchService {
     const result = isKnockout
       ? this.matches.simulateKnockout(home, away)
       : this.matches.simulate(home, away);
+    this._canonicalResult = result;
     const events = generateEvents(result);
     const [finalHome, finalAway] = computeFinalStats(home, away, result, events);
 
@@ -234,15 +235,12 @@ export class LiveMatchService {
   };
 
   private predictResult(): MatchResult {
-    const home = this._home()!;
-    const away = this._away()!;
-    const events = this._events();
-    const homeGoals = events.filter((e) => e.type === 'goal' && e.side === 'home').length;
-    const awayGoals = events.filter((e) => e.type === 'goal' && e.side === 'away').length;
-    const winner: MatchResult['winner'] =
-      homeGoals > awayGoals ? 'home' : awayGoals > homeGoals ? 'away' : 'draw';
-    return { home, away, homeGoals, awayGoals, winner };
+    // Stash the canonical result coming out of MatchService.simulate so
+    // the consumer (TournamentService) sees the same scorers/assisters
+    // that the live feed displayed.
+    return this._canonicalResult!;
   }
+  private _canonicalResult: MatchResult | null = null;
 
   private stopTimer(): void {
     if (this.timer) {
@@ -264,9 +262,19 @@ function generateEvents(result: MatchResult): LiveEvent[] {
     description: 'Pitazo inicial',
   });
 
-  // Distribute goals across realistic minutes.
-  pushGoals(events, result.home, result.homeGoals, 'home');
-  pushGoals(events, result.away, result.awayGoals, 'away');
+  // Use the goals that MatchService.simulate pre-computed so the live
+  // feed names the same scorer + assister that the scorer table tracks.
+  for (const goal of result.goalEvents) {
+    const minute = Math.min(90, Math.max(1, goal.minute));
+    const assistTag = goal.assister ? ` (Asist. ${goal.assister.name})` : '';
+    events.push({
+      minute,
+      type: 'goal',
+      side: goal.side,
+      player: goal.scorer.name,
+      description: `¡GOL de ${goal.scorer.name}!${assistTag}`,
+    });
+  }
 
   // Flavour shots — between 6 and 14 total, biased by team strength.
   const totalShots = 6 + Math.floor(Math.random() * 9);
@@ -340,32 +348,6 @@ function generateEvents(result: MatchResult): LiveEvent[] {
 
   events.sort((a, b) => a.minute - b.minute);
   return events;
-}
-
-function pushGoals(
-  events: LiveEvent[],
-  team: MatchTeam,
-  count: number,
-  side: 'home' | 'away',
-): void {
-  const usedMinutes = new Set<number>();
-  for (let i = 0; i < count; i++) {
-    let minute = randomMinute();
-    let safety = 0;
-    while (usedMinutes.has(minute) && safety < 10) {
-      minute = randomMinute();
-      safety++;
-    }
-    usedMinutes.add(minute);
-    const scorer = pickAttacker(team)?.name ?? team.displayName;
-    events.push({
-      minute,
-      type: 'goal',
-      side,
-      player: scorer,
-      description: `¡GOL de ${scorer}!`,
-    });
-  }
 }
 
 function randomMinute(): number {

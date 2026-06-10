@@ -1,0 +1,55 @@
+@if (hasData()) {
+  <div class="leaderboard">
+    <article class="leaderboard__panel">
+      <header class="leaderboard__head">
+        <span class="leaderboard__icon">⚽</span>
+        <h3>Máximos goleadores</h3>
+      </header>
+      @if (scorers().length === 0) {
+        <p class="leaderboard__empty">Sin goles aún.</p>
+      } @else {
+        <ol class="leaderboard__list">
+          @for (row of scorers(); track $index) {
+            <li>
+              <span class="leaderboard__rank">{{ $index + 1 }}</span>
+              <app-team-crest
+                [clubName]="row.team.clubName"
+                [isUser]="row.team.isUser"
+                size="sm"
+              />
+              <span class="leaderboard__name">{{ row.player.name }}</span>
+              <span class="leaderboard__team">{{ row.team.displayName }}</span>
+              <span class="leaderboard__count">{{ row.count }}</span>
+            </li>
+          }
+        </ol>
+      }
+    </article>
+
+    <article class="leaderboard__panel">
+      <header class="leaderboard__head">
+        <span class="leaderboard__icon">🎯</span>
+        <h3>Máximos asistidores</h3>
+      </header>
+      @if (assisters().length === 0) {
+        <p class="leaderboard__empty">Sin asistencias aún.</p>
+      } @else {
+        <ol class="leaderboard__list">
+          @for (row of assisters(); track $index) {
+            <li>
+              <span class="leaderboard__rank">{{ $index + 1 }}</span>
+              <app-team-crest
+                [clubName]="row.team.clubName"
+                [isUser]="row.team.isUser"
+                size="sm"
+              />
+              <span class="leaderboard__name">{{ row.player.name }}</span>
+              <span class="leaderboard__team">{{ row.team.displayName }}</span>
+              <span class="leaderboard__count">{{ row.count }}</span>
+            </li>
+          }
+        </ol>
+      }
+    </article>
+  </div>
+}

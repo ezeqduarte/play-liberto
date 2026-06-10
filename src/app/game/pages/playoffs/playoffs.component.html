@@ -89,6 +89,8 @@
     </div>
   }
 
+  <app-stats-leaderboard [limit]="8" />
+
   @if (currentRound(); as round) {
     <div class="ties" [class.ties--final]="round.name === 'F'">
       @for (tie of round.ties; track tie.id) {

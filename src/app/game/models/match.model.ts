@@ -7,6 +7,17 @@ export interface TeamStrength {
   overall: number;
 }
 
+/**
+ * A single goal — pre-computed when the match is simulated so the same
+ * scorers/assisters appear whether the user watched live or skipped.
+ */
+export interface GoalEvent {
+  minute: number;
+  side: 'home' | 'away';
+  scorer: Player;
+  assister: Player | null;
+}
+
 export interface MatchTeam {
   /** Stable identifier — used for keying in groups, brackets, etc. */
   id: string;
@@ -28,4 +39,6 @@ export interface MatchResult {
   homeGoals: number;
   awayGoals: number;
   winner: 'home' | 'away' | 'draw';
+  /** Pre-computed scorer + assister + minute for every goal. */
+  goalEvents: GoalEvent[];
 }

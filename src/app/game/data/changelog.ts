@@ -16,6 +16,19 @@ export interface ChangelogEntry {
 
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: '1.3.0',
+    date: '2026-06-22',
+    changes: [
+      'Nueva formación 4-2-3-1 con 3 MCO (en vez de extremos), pensada para cuando te toca rolear muchos enganches.',
+      'Barra de fortaleza del equipo en el draft: ataque, mediocampo, defensa y un global que se va llenando mientras armás el plantel.',
+      'En mobile, al elegir un jugador la página scrollea sola a la cancha para que toques la posición sin scrollear, y vuelve al roster después de asignarlo.',
+      'La tabla de grupos en mobile se simplifica para que la columna de puntos siempre se vea — ganados/empatados/perdidos se ocultan en pantallas chicas.',
+      'Recalibrado el simulador para que la diferencia de rating pese más: equipos claramente superiores ya no se quedan en cero contra rivales muy inferiores, y la varianza de los marcadores bajó.',
+      'Equipos campeones reales de la Libertadores ahora reciben un bonus de +2 en ataque/medio/defensa al simular, así Cobreloa-tier no compite a la par con Boca 2003 o Flamengo 2019.',
+      'Revisión de ratings: River 2015 recupera figuras doradas (Barovero 88, Pity 87, Pisculichi 86), el Beto Alonso duplicado en River 86 se quitó y Norberto Alonso pasa a 88, varios planteles campeones (Estudiantes 2009, Santos 2011, Mineiro 2013, San Lorenzo 2014, Flamengo 2019, Botafogo 2024, Fluminense 2023) tienen sus íconos mejor calibrados, y clubes tipo Cobreloa o Sporting Cristal bajan 1-2 puntos para abrir la brecha.',
+    ],
+  },
+  {
     version: '1.2.0',
     date: '2026-06-10',
     changes: [

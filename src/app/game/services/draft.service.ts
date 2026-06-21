@@ -23,6 +23,17 @@ export interface CoachEntry {
   fromTeam: Team | null;
 }
 
+export interface SquadStrength {
+  defense: number | null;
+  midfield: number | null;
+  attack: number | null;
+  overall: number | null;
+}
+
+function avg(values: number[]): number {
+  return values.reduce((a, b) => a + b, 0) / values.length;
+}
+
 @Injectable({ providedIn: 'root' })
 export class DraftService {
   private readonly _formation = signal<Formation | null>(null);
@@ -67,6 +78,46 @@ export class DraftService {
       squad.every((entry) => entry.player !== null) &&
       this._coachEntry().coach !== null
     );
+  });
+
+  /**
+   * Rolling strength of the squad as it's being assembled. Returns
+   * null for any line with zero players yet. Defense/midfield/attack
+   * are derived from the slot.y bucket of each filled entry; formation
+   * modifiers are added on top, mirroring MatchService.buildUserTeam.
+   *
+   * Overall = (attack + midfield + defense) / 3 rounded — only when
+   * all three lines have at least one player. Otherwise null.
+   */
+  readonly squadStrength = computed<SquadStrength>(() => {
+    const formation = this._formation();
+    const squad = this._squad();
+    if (!formation || squad.length === 0) {
+      return { defense: null, midfield: null, attack: null, overall: null };
+    }
+    const defs: number[] = [];
+    const mids: number[] = [];
+    const atks: number[] = [];
+    for (const entry of squad) {
+      if (!entry.player) continue;
+      if (entry.slot.y <= 35) defs.push(entry.player.rating);
+      else if (entry.slot.y <= 65) mids.push(entry.player.rating);
+      else atks.push(entry.player.rating);
+    }
+    const m = formation.modifiers;
+    const def = defs.length ? avg(defs) + m.defense : null;
+    const mid = mids.length ? avg(mids) + m.midfield : null;
+    const atk = atks.length ? avg(atks) + m.attack : null;
+    const overall =
+      def !== null && mid !== null && atk !== null
+        ? Math.round(atk * 0.33 + mid * 0.34 + def * 0.33)
+        : null;
+    return {
+      defense: def === null ? null : Math.round(def),
+      midfield: mid === null ? null : Math.round(mid),
+      attack: atk === null ? null : Math.round(atk),
+      overall,
+    };
   });
 
   /** Whether the user is currently in slot-selection mode for a chosen player. */

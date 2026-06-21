@@ -51,6 +51,22 @@ const SHAPE_SLOTS: Record<FormationShape, FormationSlot[]> = {
     { id: 'lw', label: 'LW', allowed: ['LW', 'LM'], x: 20, y: 70 },
     { id: 'st', label: 'ST', allowed: ['ST', 'CF'], x: 50, y: 88 },
   ],
+  // Like 4-2-3-1 but no wingers — the three attacking mids are all
+  // CAMs spread across the line behind a lone striker. Useful when
+  // your roll keeps surfacing playmakers instead of wingers.
+  '4-2-3-1-narrow': [
+    { id: 'gk', label: 'GK', allowed: ['GK'], x: 50, y: 5 },
+    { id: 'rb', label: 'RB', allowed: ['RB'], x: 85, y: 25 },
+    { id: 'cb-r', label: 'CB', allowed: ['CB'], x: 60, y: 20 },
+    { id: 'cb-l', label: 'CB', allowed: ['CB'], x: 40, y: 20 },
+    { id: 'lb', label: 'LB', allowed: ['LB'], x: 15, y: 25 },
+    { id: 'cdm-r', label: 'CDM', allowed: ['CDM', 'CM'], x: 62, y: 45 },
+    { id: 'cdm-l', label: 'CDM', allowed: ['CDM', 'CM'], x: 38, y: 45 },
+    { id: 'cam-r', label: 'CAM', allowed: ['CAM', 'CM'], x: 72, y: 68 },
+    { id: 'cam-c', label: 'CAM', allowed: ['CAM', 'CM'], x: 50, y: 70 },
+    { id: 'cam-l', label: 'CAM', allowed: ['CAM', 'CM'], x: 28, y: 68 },
+    { id: 'st', label: 'ST', allowed: ['ST', 'CF'], x: 50, y: 90 },
+  ],
   '3-5-2': [
     { id: 'gk', label: 'GK', allowed: ['GK'], x: 50, y: 5 },
     { id: 'cb-r', label: 'CB', allowed: ['CB'], x: 75, y: 25 },
@@ -252,6 +268,7 @@ const SHAPES: FormationShape[] = [
   '4-4-2',
   '4-3-3',
   '4-2-3-1',
+  '4-2-3-1-narrow',
   '3-5-2',
   '3-4-3',
   '5-3-2',

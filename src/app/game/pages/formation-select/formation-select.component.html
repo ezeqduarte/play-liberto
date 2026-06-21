@@ -20,7 +20,7 @@
           }
         </div>
         <div class="pitch-preview__caption">
-          <strong>{{ f.shape }}</strong> · {{ styleLabel[f.style] }}
+          <strong>{{ displayShape(f.shape) }}</strong> · {{ styleLabel[f.style] }}
         </div>
       }
     </div>
@@ -40,7 +40,7 @@
                 (click)="selectShape(shape)"
               >
                 <span class="bullet__dot"></span>
-                <span class="bullet__label">{{ shape }}</span>
+                <span class="bullet__label">{{ displayShape(shape) }}</span>
               </button>
             </li>
           }

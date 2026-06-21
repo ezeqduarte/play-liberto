@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, effect, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, computed, effect, inject, viewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { DraftService, SquadEntry } from '../../services/draft.service';
 import { Coach, FormationShape, Player } from '../../models';
@@ -14,6 +14,12 @@ import { PageNavComponent } from '../../components/page-nav/page-nav.component';
 export class DraftComponent {
   readonly draft = inject(DraftService);
   private readonly router = inject(Router);
+
+  /** Refs used to auto-scroll between the pitch and the roster on
+   *  narrow viewports (<=960px) so the user doesn't have to scroll
+   *  manually after each player pick. */
+  private readonly pitchArea = viewChild<ElementRef<HTMLElement>>('pitchArea');
+  private readonly rosterAnchor = viewChild<ElementRef<HTMLElement>>('rosterAnchor');
 
   readonly formation = this.draft.formation;
   readonly squad = this.draft.squad;
@@ -64,10 +70,18 @@ export class DraftComponent {
 
   selectPlayer(player: Player): void {
     this.draft.selectPlayer(player);
+    // If the service accepted the selection on a narrow screen, jump
+    // to the pitch so the user can tap a slot without scrolling.
+    if (this.draft.isSelectingSlot()) {
+      this.scrollIfMobile(this.pitchArea());
+    }
   }
 
   selectCoach(): void {
     this.draft.selectCoach();
+    if (this.draft.isSelectingCoachSlot()) {
+      this.scrollIfMobile(this.pitchArea());
+    }
   }
 
   confirmCoachToSlot(): void {
@@ -96,6 +110,25 @@ export class DraftComponent {
     if (entry.player !== null) return;
     if (!this.eligibleSlotIds().has(entry.slot.id)) return;
     this.draft.assignSelectedToSlot(entry.slot.id);
+    // Back to the roster so the user keeps picking without scrolling.
+    this.scrollIfMobile(this.rosterAnchor());
+  }
+
+  confirmCoachAndScroll(): void {
+    this.confirmCoachToSlot();
+    this.scrollIfMobile(this.rosterAnchor());
+  }
+
+  /** Scroll an element into view, but only on narrow viewports where
+   *  the pitch and the roster are stacked vertically. Desktop layout
+   *  keeps both on screen so scrolling would be jarring. */
+  private scrollIfMobile(ref?: ElementRef<HTMLElement>): void {
+    if (!ref) return;
+    if (typeof window === 'undefined') return;
+    if (!window.matchMedia('(max-width: 960px)').matches) return;
+    requestAnimationFrame(() =>
+      ref.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' }),
+    );
   }
 
   startTournament(): void {

@@ -50,7 +50,7 @@
     </div>
 
     <div class="draft__body">
-      <div class="pitch-area">
+      <div class="pitch-area" #pitchArea>
         <button
           type="button"
           class="dt-slot"
@@ -58,7 +58,7 @@
           [class.dt-slot--eligible]="isSelectingCoachSlot()"
           [class.dt-slot--dimmed]="isSelectingSlot()"
           [disabled]="!isSelectingCoachSlot() || coachEntry().coach !== null"
-          (click)="confirmCoachToSlot()"
+          (click)="confirmCoachAndScroll()"
         >
           @if (coachEntry().coach; as coach) {
             <span
@@ -237,7 +237,7 @@
             </div>
           }
 
-          <div class="panel__roster">
+          <div class="panel__roster" #rosterAnchor>
             <h3>Roster · {{ roster().length }} jugadores</h3>
             <ul class="player-list">
               @for (player of roster(); track player.name) {

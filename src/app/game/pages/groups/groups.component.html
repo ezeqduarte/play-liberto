@@ -54,9 +54,9 @@
             <tr>
               <th class="left">Equipo</th>
               <th>PJ</th>
-              <th>G</th>
-              <th>E</th>
-              <th>P</th>
+              <th class="hide-on-mobile">G</th>
+              <th class="hide-on-mobile">E</th>
+              <th class="hide-on-mobile">P</th>
               <th>DG</th>
               <th>Pts</th>
             </tr>
@@ -77,9 +77,9 @@
                   <span class="group-card__name">{{ row.team.displayName }}</span>
                 </td>
                 <td>{{ row.played }}</td>
-                <td>{{ row.won }}</td>
-                <td>{{ row.drawn }}</td>
-                <td>{{ row.lost }}</td>
+                <td class="hide-on-mobile">{{ row.won }}</td>
+                <td class="hide-on-mobile">{{ row.drawn }}</td>
+                <td class="hide-on-mobile">{{ row.lost }}</td>
                 <td>{{ row.goalDifference > 0 ? '+' : '' }}{{ row.goalDifference }}</td>
                 <td><strong>{{ row.points }}</strong></td>
               </tr>

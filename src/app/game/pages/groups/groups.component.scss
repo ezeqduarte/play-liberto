@@ -94,11 +94,18 @@
     width: 100%;
     border-collapse: collapse;
     font-size: 13px;
+    table-layout: fixed;
 
     th,
     td {
       padding: 8px 10px;
       text-align: center;
+    }
+
+    // Compact numeric columns so the team column gets the room.
+    th:not(.left),
+    td:not(.left) {
+      width: 38px;
     }
 
     th {
@@ -115,10 +122,31 @@
       align-items: center;
       gap: 8px;
       min-width: 0;
+      width: auto;
     }
 
     tbody tr {
       border-top: 1px solid var(--surface-hairline);
+    }
+
+    // Hide W/D/L on narrow viewports — the user cares most about PJ,
+    // DG, Pts. Pts has bold styling so it pops as the headline number.
+    @media (max-width: 640px) {
+      font-size: 12px;
+
+      th,
+      td {
+        padding: 6px 6px;
+      }
+
+      .hide-on-mobile {
+        display: none;
+      }
+
+      th:not(.left),
+      td:not(.left) {
+        width: 32px;
+      }
     }
   }
 

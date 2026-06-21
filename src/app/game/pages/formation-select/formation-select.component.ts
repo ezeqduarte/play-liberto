@@ -59,6 +59,16 @@ export class FormationSelectComponent {
     offensive: 'Ofensivo',
   };
 
+  /** Friendly label for shapes whose internal id needs explanation. */
+  readonly shapeLabel: Partial<Record<FormationShape, string>> = {
+    '4-2-3-1-narrow': '4-2-3-1 · 3 MCO',
+  };
+
+  /** Returns the display name (friendly label if any, raw shape otherwise). */
+  displayShape(shape: FormationShape): string {
+    return this.shapeLabel[shape] ?? shape;
+  }
+
   readonly selectedFormation = computed<Formation | undefined>(() =>
     this.draft.availableFormations.find(
       (f) => f.shape === this.selectedShape() && f.style === this.selectedStyle(),

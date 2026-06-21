@@ -5,7 +5,7 @@
       <div>
         <h1>Armá tu 11</h1>
         <p class="draft__subtitle">
-          {{ f.shape }} ·
+          {{ displayShape(f.shape) }} ·
           @switch (f.style) {
             @case ('defensive') { Defensivo }
             @case ('normal') { Equilibrado }
@@ -20,6 +20,34 @@
         <span class="draft__progress-label">selecciones</span>
       </div>
     </header>
+
+    <!-- Rolling squad strength: overall + per-line averages. -->
+    <div class="strength-bar">
+      <div class="strength strength--global">
+        <span class="strength__label">Global</span>
+        <span class="strength__value">
+          {{ squadStrength().overall ?? '—' }}
+        </span>
+      </div>
+      <div class="strength">
+        <span class="strength__label">Ataque</span>
+        <span class="strength__value">
+          {{ squadStrength().attack ?? '—' }}
+        </span>
+      </div>
+      <div class="strength">
+        <span class="strength__label">Medio</span>
+        <span class="strength__value">
+          {{ squadStrength().midfield ?? '—' }}
+        </span>
+      </div>
+      <div class="strength">
+        <span class="strength__label">Defensa</span>
+        <span class="strength__value">
+          {{ squadStrength().defense ?? '—' }}
+        </span>
+      </div>
+    </div>
 
     <div class="draft__body">
       <div class="pitch-area">

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, effect, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { DraftService, SquadEntry } from '../../services/draft.service';
-import { Coach, Player } from '../../models';
+import { Coach, FormationShape, Player } from '../../models';
 import { PageNavComponent } from '../../components/page-nav/page-nav.component';
 
 @Component({
@@ -17,6 +17,7 @@ export class DraftComponent {
 
   readonly formation = this.draft.formation;
   readonly squad = this.draft.squad;
+  readonly squadStrength = this.draft.squadStrength;
   readonly coachEntry = this.draft.coachEntry;
   readonly currentTeam = this.draft.currentTeam;
   readonly rollsLeft = this.draft.rollsLeft;
@@ -79,6 +80,15 @@ export class DraftComponent {
 
   cancelSelection(): void {
     this.draft.cancelSelection();
+  }
+
+  /** Friendly label for shapes whose internal id needs a hint. */
+  private readonly shapeLabel: Partial<Record<FormationShape, string>> = {
+    '4-2-3-1-narrow': '4-2-3-1 · 3 MCO',
+  };
+
+  displayShape(shape: FormationShape): string {
+    return this.shapeLabel[shape] ?? shape;
   }
 
   assignToSlot(entry: SquadEntry): void {

@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "liberto",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["exec", "ng", "serve", "--port=4318"],
+      "port": 4318,
+      "autoPort": false
+    }
+  ]
+}

@@ -17,6 +17,46 @@ const ATTACK_POSITIONS: Position[] = ['LW', 'RW', 'ST', 'CF'];
 
 const HOME_BOOST = 2;
 
+/**
+ * Real-life Libertadores winners get a +2 prestige bump on all three
+ * lines when their MatchTeam is built. Keeps Cobreloa-tier squads from
+ * looking comparable to clear champions like Boca 2003 or Flamengo 2019.
+ * Keyed by `${club}|${year}`.
+ */
+const CHAMPION_TEAM_YEARS = new Set<string>([
+  'Peñarol|1960', 'Peñarol|1966', 'Peñarol|1987',
+  'Santos|1962', 'Santos|1963', 'Santos|2011',
+  'Independiente|1964', 'Independiente|1965',
+  'Independiente|1972', 'Independiente|1973', 'Independiente|1974',
+  'Independiente|1984',
+  'Estudiantes|1968', 'Estudiantes|2009',
+  'Nacional|1980', 'Nacional|1988',
+  'Olimpia|1979', 'Olimpia|1990', 'Olimpia|2002',
+  'Boca Juniors|2000', 'Boca Juniors|2001', 'Boca Juniors|2003', 'Boca Juniors|2007',
+  'Flamengo|1981', 'Flamengo|2019',
+  'Grêmio|1983', 'Grêmio|2017',
+  'River Plate|1986', 'River Plate|1996', 'River Plate|2015', 'River Plate|2018',
+  'Atlético Nacional|1989', 'Atlético Nacional|2016',
+  'São Paulo|1992', 'São Paulo|1993', 'São Paulo|2005',
+  'Vélez Sarsfield|1994',
+  'Cruzeiro|1976', 'Cruzeiro|1997',
+  'Palmeiras|1999', 'Palmeiras|2020', 'Palmeiras|2021',
+  'Once Caldas|2004',
+  'Internacional|2006', 'Internacional|2010',
+  'Corinthians|2012',
+  'Atlético Mineiro|2013',
+  'LDU Quito|2008',
+  'San Lorenzo|2014',
+  'Racing Club|1967',
+  'Argentinos Juniors|1985',
+  'Colo-Colo|1991',
+  'Vasco da Gama|1998',
+  'Botafogo|2024',
+  'Fluminense|2023',
+]);
+
+const PRESTIGE_BONUS = 2;
+
 @Injectable({ providedIn: 'root' })
 export class MatchService {
   /**
@@ -69,10 +109,14 @@ export class MatchService {
     const mids = team.players.filter((p) => p.positions.some((pos) => MIDFIELD_POSITIONS.includes(pos)));
     const atks = team.players.filter((p) => p.positions.some((pos) => ATTACK_POSITIONS.includes(pos)));
 
+    const prestige = CHAMPION_TEAM_YEARS.has(`${team.name}|${team.year}`)
+      ? PRESTIGE_BONUS
+      : 0;
+
     const strength: TeamStrength = {
-      attack: avg(atks.map((p) => p.rating)),
-      midfield: avg(mids.map((p) => p.rating)),
-      defense: avg(defs.map((p) => p.rating)),
+      attack: avg(atks.map((p) => p.rating)) + prestige,
+      midfield: avg(mids.map((p) => p.rating)) + prestige,
+      defense: avg(defs.map((p) => p.rating)) + prestige,
       overall: 0,
     };
     strength.overall = computeOverall(strength);
@@ -169,19 +213,33 @@ function effectiveDefense(s: TeamStrength): number {
 
 /**
  * Simulates goals scored in 90 minutes given effective attack and defense.
- * Per-minute probability scales with the rating gap. Tightened constants
- * after calibration feedback: roughly ~1 expected goal per evenly-matched
- * side, ~2 with a clear +15 gap. Capped at 5 to avoid absurd scorelines.
+ * Reworked after feedback that stacked squads were losing to inferior
+ * teams more often than felt right.
+ *
+ * - Lower baseline (0.8 for evenly matched), steeper gap response
+ *   (divisor 10 instead of 16) so a +10 rating advantage already lifts
+ *   expected by 1 goal.
+ * - Once the gap drops below -7 the underdog's expected goals are
+ *   multiplied by 0.55, modelling getting overwhelmed.
+ * - Goals are split between a deterministic floor (the part the stronger
+ *   team can essentially count on) and a Bernoulli-per-minute remainder.
+ *   This collapses the variance that used to let strong teams get shut
+ *   out 15% of the time.
+ *
+ * Capped at 6 to avoid absurd scorelines.
  */
 function simulateGoals(attack: number, defense: number): number {
   const gap = attack - defense;
-  const expected = Math.max(0.1, 1.0 + gap / 16);
-  const perMinute = expected / 90;
-  let goals = 0;
+  let expected = Math.max(0.05, 0.8 + gap / 10);
+  if (gap < -7) expected *= 0.55;
+  const baseline = Math.floor(expected);
+  const fractional = Math.max(0, expected - baseline);
+  const perMinute = fractional / 90;
+  let extras = 0;
   for (let m = 0; m < 90; m++) {
-    if (Math.random() < perMinute) goals++;
+    if (Math.random() < perMinute) extras++;
   }
-  return Math.min(goals, 5);
+  return Math.min(baseline + extras, 6);
 }
 
 function slug(s: string): string {

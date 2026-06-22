@@ -4,8 +4,20 @@
     "frontend-design": {
       "source": "anthropics/skills",
       "sourceType": "github",
-      "skillPath": "skills/frontend-design/SKILL.md",
+      "skillPath": ".claude/.agents/skills/frontend-design/SKILL.md",
       "computedHash": "516bd2154eb843a8240e43d5b285229129853114ad7075a5e141e1c08e408c84"
+    },
+    "seo": {
+      "source": "affaan-m/ECC",
+      "sourceType": "github",
+      "skillPath": ".claude/.agents/skills/seo/SKILL.md",
+      "computedHash": "b5f49f4c1884a2a208c2c80790f821c10c40c7ebd0cb39583fdf3a9f2fc2ede1"
+    },
+    "ui-ux-pro-max": {
+      "source": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceType": "github",
+      "skillPath": ".claude/.agents/skills/ui-ux-pro-max/SKILL.md",
+      "computedHash": "c7ddcc95cc869b281b766df85bef629acf655bfb516cb32647d5b8215cab2f4e"
     }
   }
 }

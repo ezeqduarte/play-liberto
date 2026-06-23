@@ -4,7 +4,7 @@ Guía para Claude Code cuando trabaja en este repositorio. Densa por
 diseño — leerlo entero al arrancar una sesión nueva. Actualizalo
 cuando algo importante cambie.
 
-**Última versión productiva: `v1.4.0`** (leer `CURRENT_VERSION` en
+**Última versión productiva: `v1.4.1`** (leer `CURRENT_VERSION` en
 `src/app/game/data/changelog.ts` para la fuente de verdad).
 
 ---
@@ -16,9 +16,10 @@ usuario:
 
 1. Elige formación (10 dibujos × 3 estilos = 30 variantes, hay una
    variante extra `4-2-3-1-narrow` con 3 MCO en vez de extremos).
-2. Drafteá 11 jugadores + 1 DT rolleando team-years con 5 rerolls
-   de equipo + 5 rerolls de año por pick (presupuestos separados).
-   Cada team trae sus jugadores históricos y su técnico.
+2. Drafteá 11 jugadores + 1 DT rolleando team-years. Tenés 5 rerolls
+   de equipo + 5 rerolls de año para *todo el draft* (presupuestos
+   separados, no se refillean entre picks). Cada team trae sus
+   jugadores históricos y su técnico.
 3. Jugás un torneo: 8 grupos de 4, R16/QF/SF/F con ida y vuelta. La
    final también es ida y vuelta.
 4. Partido a partido minuto a minuto, con eventos (gol, tiro, tarjeta),
@@ -218,6 +219,8 @@ Histórico hasta hoy:
 - v1.4.0: rerolls de equipo y año divididos en 5+5 + barra de rerolls
   fija al fondo en mobile + a11y pass del botón (touch 48px, focus
   visible, reduced-motion, safe-area).
+- v1.4.1: los rerolls 5+5 son un presupuesto para todo el draft (no
+  refillean después de cada pick).
 
 ---
 
@@ -501,9 +504,10 @@ ganador real, **también sumarlo a este set**.
 - Selector de formación con bullets (dibujo) + bullets (estilo).
 - Cancha animada que refleja la selección.
 - Botón Admin oculto detrás de localStorage flag.
-- Roll team / Roll year con presupuestos separados: hasta 5 rerolls
-  de equipo y 5 rerolls de año del mismo club por pick. En mobile
-  los dos botones quedan fijos al fondo de la pantalla.
+- Roll team / Roll year con presupuestos separados para todo el
+  draft: 5 rerolls de equipo y 5 rerolls de año del mismo club en
+  total (no se refillean entre picks). En mobile los dos botones
+  quedan fijos al fondo de la pantalla.
 - Pick: jugador primero → click en slot eligible (slots pulsan en
   verde). Para coach: mismo flow pero el slot del DT pulsa en oro.
 - Validación de dup (mismo nombre coach + jugador).

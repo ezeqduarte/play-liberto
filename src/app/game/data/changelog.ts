@@ -16,6 +16,13 @@ export interface ChangelogEntry {
 
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: '1.4.1',
+    date: '2026-06-23',
+    changes: [
+      'Los rerolls de equipo y de año ahora son un presupuesto para todo el draft: 5 cambios de equipo y 5 de año en total, en vez de resetearse después de cada pick.',
+    ],
+  },
+  {
     version: '1.4.0',
     date: '2026-06-23',
     changes: [

@@ -21,6 +21,15 @@
   position: relative;
   overflow: hidden;
 
+  // Desktop: lock the screen to the viewport so everything fits without
+  // scrolling. Mobile keeps its current scrolling layout (untouched).
+  @media (min-width: 961px) {
+    min-height: 0;
+    height: 100dvh;
+    padding: 28px 24px;
+    gap: 4px;
+  }
+
   &__trophy {
     width: 240px;
     height: 320px;
@@ -32,6 +41,12 @@
     @media (max-width: 640px) {
       width: 180px;
       height: 240px;
+    }
+
+    @media (min-width: 961px) {
+      width: 180px;
+      height: 240px;
+      margin-bottom: 12px;
     }
   }
 
@@ -56,6 +71,11 @@
       font-size: 36px;
       letter-spacing: -1px;
     }
+
+    @media (min-width: 961px) {
+      font-size: 40px;
+      margin-bottom: 4px;
+    }
   }
 
   &__subtitle {
@@ -63,6 +83,11 @@
     font-size: 18px;
     margin: 0 0 32px;
     max-width: 480px;
+
+    @media (min-width: 961px) {
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
   }
 }
 

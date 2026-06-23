@@ -3,6 +3,13 @@
   max-width: 720px;
   margin: 0 auto 28px;
 
+  // On desktop the host page locks to the viewport; flatten the awards
+  // into a single row of 4 to keep everything on screen.
+  @media (min-width: 961px) {
+    max-width: 1080px;
+    margin-bottom: 16px;
+  }
+
   &__title {
     text-align: center;
     font-size: 14px;
@@ -11,6 +18,10 @@
     color: var(--rarity-legendary);
     margin: 0 0 16px;
     font-weight: 800;
+
+    @media (min-width: 961px) {
+      margin-bottom: 10px;
+    }
   }
 
   &__grid {
@@ -20,6 +31,11 @@
 
     @media (max-width: 640px) {
       grid-template-columns: 1fr;
+    }
+
+    @media (min-width: 961px) {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
     }
   }
 }
@@ -38,9 +54,19 @@
   gap: 10px;
   text-align: left;
   box-shadow: 0 6px 20px rgba(255, 181, 71, 0.08);
+  min-width: 0;
+
+  @media (min-width: 961px) {
+    padding: 12px 14px;
+    gap: 8px;
+  }
 
   &__icon {
     font-size: 22px;
+
+    @media (min-width: 961px) {
+      font-size: 20px;
+    }
   }
 
   &__title {
@@ -55,6 +81,11 @@
     display: flex;
     align-items: center;
     gap: 12px;
+    min-width: 0;
+
+    @media (min-width: 961px) {
+      gap: 8px;
+    }
   }
 
   &__player {
@@ -71,6 +102,12 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
+
+    @media (min-width: 961px) {
+      strong {
+        font-size: 13px;
+      }
+    }
   }
 
   &__team {
@@ -81,6 +118,10 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    @media (min-width: 961px) {
+      font-size: 10px;
+    }
   }
 
   &__count {
@@ -91,5 +132,10 @@
     padding: 4px 10px;
     border-radius: var(--radius-pill);
     white-space: nowrap;
+
+    @media (min-width: 961px) {
+      font-size: 11px;
+      padding: 3px 8px;
+    }
   }
 }

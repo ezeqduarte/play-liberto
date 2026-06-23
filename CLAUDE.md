@@ -4,7 +4,7 @@ Guía para Claude Code cuando trabaja en este repositorio. Densa por
 diseño — leerlo entero al arrancar una sesión nueva. Actualizalo
 cuando algo importante cambie.
 
-**Última versión productiva: `v1.5.1`** (leer `CURRENT_VERSION` en
+**Última versión productiva: `v1.5.2`** (leer `CURRENT_VERSION` en
 `src/app/game/data/changelog.ts` para la fuente de verdad).
 
 ---
@@ -225,6 +225,9 @@ Histórico hasta hoy:
   de 80, slope 0.15). Se aplica simétricamente al user y a los
   rivales históricos.
 - v1.5.1: rerolls bajan a 3 + 3 por draft (antes 5 + 5).
+- v1.5.2: pantallas finales (victory/eliminated) caben en viewport en
+  desktop (`min-width: 961px`) con grilla de awards a 4 columnas;
+  mobile intacto.
 
 ---
 

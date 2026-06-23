@@ -16,6 +16,13 @@ export interface ChangelogEntry {
 
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: '1.5.2',
+    date: '2026-06-23',
+    changes: [
+      'Las pantallas finales de la copa (ganaste / quedaste afuera) entran completas en la pantalla en desktop, sin scroll: trofeo más chico, títulos un poco más bajos, y la grilla de premios pasa a una fila de 4 cards. En mobile sigue todo como antes (scroll natural).',
+    ],
+  },
+  {
     version: '1.5.1',
     date: '2026-06-23',
     changes: [

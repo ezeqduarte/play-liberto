@@ -10,11 +10,12 @@ import {
   Team,
 } from '../models';
 
-/** Re-rolls available per pick cycle, split by axis. The user gets a
- *  dedicated budget for swapping the club and another for swapping the
- *  year of the current club — they don't share a pool. */
-const TEAM_ROLLS_PER_PICK = 5;
-const YEAR_ROLLS_PER_PICK = 5;
+/** Re-rolls available for the *entire draft*, split by axis. The user
+ *  gets a dedicated budget for swapping the club and another for
+ *  swapping the year of the current club — they don't share a pool and
+ *  they don't refill between picks. Spend them carefully. */
+const TEAM_ROLLS_PER_DRAFT = 5;
+const YEAR_ROLLS_PER_DRAFT = 5;
 
 export interface SquadEntry {
   slot: FormationSlot;
@@ -44,8 +45,8 @@ export class DraftService {
   private readonly _squad = signal<SquadEntry[]>([]);
   private readonly _coachEntry = signal<CoachEntry>({ coach: null, fromTeam: null });
   private readonly _currentTeam = signal<Team | null>(null);
-  private readonly _teamRollsLeft = signal(TEAM_ROLLS_PER_PICK);
-  private readonly _yearRollsLeft = signal(YEAR_ROLLS_PER_PICK);
+  private readonly _teamRollsLeft = signal(TEAM_ROLLS_PER_DRAFT);
+  private readonly _yearRollsLeft = signal(YEAR_ROLLS_PER_DRAFT);
   private readonly _pickedNames = signal<Set<string>>(new Set());
   private readonly _selectedPlayer = signal<Player | null>(null);
   private readonly _selectedCoach = signal<Coach | null>(null);
@@ -163,8 +164,8 @@ export class DraftService {
     this._pickedNames.set(new Set());
     this._selectedPlayer.set(null);
     this._selectedCoach.set(null);
-    this._teamRollsLeft.set(TEAM_ROLLS_PER_PICK);
-    this._yearRollsLeft.set(YEAR_ROLLS_PER_PICK);
+    this._teamRollsLeft.set(TEAM_ROLLS_PER_DRAFT);
+    this._yearRollsLeft.set(YEAR_ROLLS_PER_DRAFT);
     this._currentTeam.set(this.randomTeam());
   }
 
@@ -243,7 +244,8 @@ export class DraftService {
 
   /**
    * Step 2: confirms the pending coach candidate into the DT slot and
-   * advances the draft cycle (fresh team + refilled rolls).
+   * rolls a fresh team for the next pick. Reroll budgets are NOT
+   * refilled — they're a draft-wide pool.
    */
   confirmCoachToSlot(): void {
     const coach = this._selectedCoach();
@@ -253,8 +255,6 @@ export class DraftService {
     this._coachEntry.set({ coach, fromTeam: team });
     this._selectedCoach.set(null);
     if (!this.isComplete()) {
-      this._teamRollsLeft.set(TEAM_ROLLS_PER_PICK);
-      this._yearRollsLeft.set(YEAR_ROLLS_PER_PICK);
       this._currentTeam.set(this.randomTeam());
     }
   }
@@ -284,8 +284,8 @@ export class DraftService {
 
   /**
    * Confirms the selected player into the given slot. Advances the
-   * pick cycle: refills the rolls, fetches a new random team, clears
-   * the selection.
+   * pick cycle: fetches a new random team and clears the selection.
+   * Reroll budgets are NOT refilled — they're a draft-wide pool.
    */
   assignSelectedToSlot(slotId: string): void {
     const player = this._selectedPlayer();
@@ -309,9 +309,6 @@ export class DraftService {
     this._selectedPlayer.set(null);
 
     if (!this.isComplete()) {
-      // Reset for the next pick cycle.
-      this._teamRollsLeft.set(TEAM_ROLLS_PER_PICK);
-      this._yearRollsLeft.set(YEAR_ROLLS_PER_PICK);
       this._currentTeam.set(this.randomTeam());
     }
   }
@@ -350,8 +347,8 @@ export class DraftService {
     this._squad.set([]);
     this._coachEntry.set({ coach: null, fromTeam: null });
     this._currentTeam.set(null);
-    this._teamRollsLeft.set(TEAM_ROLLS_PER_PICK);
-    this._yearRollsLeft.set(YEAR_ROLLS_PER_PICK);
+    this._teamRollsLeft.set(TEAM_ROLLS_PER_DRAFT);
+    this._yearRollsLeft.set(YEAR_ROLLS_PER_DRAFT);
     this._pickedNames.set(new Set());
     this._selectedPlayer.set(null);
     this._selectedCoach.set(null);

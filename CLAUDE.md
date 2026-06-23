@@ -4,7 +4,7 @@ Guía para Claude Code cuando trabaja en este repositorio. Densa por
 diseño — leerlo entero al arrancar una sesión nueva. Actualizalo
 cuando algo importante cambie.
 
-**Última versión productiva: `v1.5.0`** (leer `CURRENT_VERSION` en
+**Última versión productiva: `v1.5.1`** (leer `CURRENT_VERSION` en
 `src/app/game/data/changelog.ts` para la fuente de verdad).
 
 ---
@@ -16,8 +16,8 @@ usuario:
 
 1. Elige formación (10 dibujos × 3 estilos = 30 variantes, hay una
    variante extra `4-2-3-1-narrow` con 3 MCO en vez de extremos).
-2. Drafteá 11 jugadores + 1 DT rolleando team-years. Tenés 5 rerolls
-   de equipo + 5 rerolls de año para *todo el draft* (presupuestos
+2. Drafteá 11 jugadores + 1 DT rolleando team-years. Tenés 3 rerolls
+   de equipo + 3 rerolls de año para *todo el draft* (presupuestos
    separados, no se refillean entre picks). Cada team trae sus
    jugadores históricos y su técnico.
 3. Jugás un torneo: 8 grupos de 4, R16/QF/SF/F con ida y vuelta. La
@@ -224,6 +224,7 @@ Histórico hasta hoy:
 - v1.5.0: el rating del técnico afecta `strength` (lineal alrededor
   de 80, slope 0.15). Se aplica simétricamente al user y a los
   rivales históricos.
+- v1.5.1: rerolls bajan a 3 + 3 por draft (antes 5 + 5).
 
 ---
 
@@ -515,7 +516,7 @@ ganador real, **también sumarlo a este set**.
 - Cancha animada que refleja la selección.
 - Botón Admin oculto detrás de localStorage flag.
 - Roll team / Roll year con presupuestos separados para todo el
-  draft: 5 rerolls de equipo y 5 rerolls de año del mismo club en
+  draft: 3 rerolls de equipo y 3 rerolls de año del mismo club en
   total (no se refillean entre picks). En mobile los dos botones
   quedan fijos al fondo de la pantalla.
 - Pick: jugador primero → click en slot eligible (slots pulsan en

@@ -14,8 +14,8 @@ import {
  *  gets a dedicated budget for swapping the club and another for
  *  swapping the year of the current club — they don't share a pool and
  *  they don't refill between picks. Spend them carefully. */
-const TEAM_ROLLS_PER_DRAFT = 5;
-const YEAR_ROLLS_PER_DRAFT = 5;
+const TEAM_ROLLS_PER_DRAFT = 3;
+const YEAR_ROLLS_PER_DRAFT = 3;
 
 export interface SquadEntry {
   slot: FormationSlot;

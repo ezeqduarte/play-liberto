@@ -16,6 +16,13 @@ export interface ChangelogEntry {
 
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: '1.5.1',
+    date: '2026-06-23',
+    changes: [
+      'Los rerolls del draft bajan a 3 + 3 (antes 5 + 5): 3 cambios de equipo y 3 de año del mismo club, para todo el draft.',
+    ],
+  },
+  {
     version: '1.5.0',
     date: '2026-06-23',
     changes: [

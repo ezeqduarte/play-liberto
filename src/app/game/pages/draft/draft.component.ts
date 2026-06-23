@@ -26,7 +26,8 @@ export class DraftComponent {
   readonly squadStrength = this.draft.squadStrength;
   readonly coachEntry = this.draft.coachEntry;
   readonly currentTeam = this.draft.currentTeam;
-  readonly rollsLeft = this.draft.rollsLeft;
+  readonly teamRollsLeft = this.draft.teamRollsLeft;
+  readonly yearRollsLeft = this.draft.yearRollsLeft;
   readonly isComplete = this.draft.isComplete;
   readonly slotsFilled = this.draft.slotsFilled;
   readonly totalSlots = this.draft.totalSlots;
@@ -48,8 +49,9 @@ export class DraftComponent {
     return this.draft.rosterOfCurrentTeam();
   });
 
+  readonly canRollTeam = computed(() => this.teamRollsLeft() > 0);
   readonly canRollYear = computed(
-    () => this.rollsLeft() > 0 && this.draft.canRollYear(),
+    () => this.yearRollsLeft() > 0 && this.draft.canRollYear(),
   );
 
   constructor() {

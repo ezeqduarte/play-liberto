@@ -16,6 +16,15 @@ export interface ChangelogEntry {
 
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: '1.4.0',
+    date: '2026-06-23',
+    changes: [
+      'Los rerolls del draft ahora se dividen en dos contadores independientes: hasta 5 cambios de equipo y hasta 5 cambios de año del mismo club por pick. Antes los dos pedían del mismo pool de 5.',
+      'En mobile, los botones de reroll quedan fijos en la parte inferior de la pantalla — ya no hace falta scrollear el roster para cambiar de equipo o año.',
+      'Repaso de accesibilidad en los botones de reroll: tap targets de 48px, focus ring visible al tabular, feedback al presionar, respeta prefers-reduced-motion y la safe-area inferior de iOS.',
+    ],
+  },
+  {
     version: '1.3.0',
     date: '2026-06-22',
     changes: [

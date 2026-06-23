@@ -10,7 +10,11 @@ import {
   Team,
 } from '../models';
 
-const ROLLS_PER_PICK = 5;
+/** Re-rolls available per pick cycle, split by axis. The user gets a
+ *  dedicated budget for swapping the club and another for swapping the
+ *  year of the current club — they don't share a pool. */
+const TEAM_ROLLS_PER_PICK = 5;
+const YEAR_ROLLS_PER_PICK = 5;
 
 export interface SquadEntry {
   slot: FormationSlot;
@@ -40,7 +44,8 @@ export class DraftService {
   private readonly _squad = signal<SquadEntry[]>([]);
   private readonly _coachEntry = signal<CoachEntry>({ coach: null, fromTeam: null });
   private readonly _currentTeam = signal<Team | null>(null);
-  private readonly _rollsLeft = signal(ROLLS_PER_PICK);
+  private readonly _teamRollsLeft = signal(TEAM_ROLLS_PER_PICK);
+  private readonly _yearRollsLeft = signal(YEAR_ROLLS_PER_PICK);
   private readonly _pickedNames = signal<Set<string>>(new Set());
   private readonly _selectedPlayer = signal<Player | null>(null);
   private readonly _selectedCoach = signal<Coach | null>(null);
@@ -49,7 +54,8 @@ export class DraftService {
   readonly squad = this._squad.asReadonly();
   readonly coachEntry = this._coachEntry.asReadonly();
   readonly currentTeam = this._currentTeam.asReadonly();
-  readonly rollsLeft = this._rollsLeft.asReadonly();
+  readonly teamRollsLeft = this._teamRollsLeft.asReadonly();
+  readonly yearRollsLeft = this._yearRollsLeft.asReadonly();
   readonly selectedPlayer = this._selectedPlayer.asReadonly();
   readonly selectedCoach = this._selectedCoach.asReadonly();
   readonly availableFormations = FORMATIONS;
@@ -157,16 +163,17 @@ export class DraftService {
     this._pickedNames.set(new Set());
     this._selectedPlayer.set(null);
     this._selectedCoach.set(null);
-    this._rollsLeft.set(ROLLS_PER_PICK);
+    this._teamRollsLeft.set(TEAM_ROLLS_PER_PICK);
+    this._yearRollsLeft.set(YEAR_ROLLS_PER_PICK);
     this._currentTeam.set(this.randomTeam());
   }
 
   /**
-   * Rolls a brand-new team-year (different club). Costs one roll.
+   * Rolls a brand-new team-year (different club). Costs one *team* roll.
    * Cancels any pending slot selection so the user re-evaluates.
    */
   rollTeam(): void {
-    if (this._rollsLeft() <= 0) return;
+    if (this._teamRollsLeft() <= 0) return;
     const current = this._currentTeam();
     const candidates = TEAMS.filter(
       (t) => !current || t.name !== current.name || t.year !== current.year,
@@ -174,15 +181,16 @@ export class DraftService {
     this._currentTeam.set(this.pickRandom(candidates));
     this._selectedPlayer.set(null);
     this._selectedCoach.set(null);
-    this._rollsLeft.update((r) => r - 1);
+    this._teamRollsLeft.update((r) => r - 1);
   }
 
   /**
-   * Rolls a different year for the *same* club. Costs one roll. If the club
-   * has no other years in the pool, behaves as no-op (no roll consumed).
+   * Rolls a different year for the *same* club. Costs one *year* roll. If
+   * the club has no other years in the pool, behaves as no-op (no roll
+   * consumed).
    */
   rollYear(): void {
-    if (this._rollsLeft() <= 0) return;
+    if (this._yearRollsLeft() <= 0) return;
     const current = this._currentTeam();
     if (!current) return;
     const candidates = TEAMS.filter(
@@ -192,7 +200,7 @@ export class DraftService {
     this._currentTeam.set(this.pickRandom(candidates));
     this._selectedPlayer.set(null);
     this._selectedCoach.set(null);
-    this._rollsLeft.update((r) => r - 1);
+    this._yearRollsLeft.update((r) => r - 1);
   }
 
   /** Whether the same-club roll-year action would actually have candidates. */
@@ -245,7 +253,8 @@ export class DraftService {
     this._coachEntry.set({ coach, fromTeam: team });
     this._selectedCoach.set(null);
     if (!this.isComplete()) {
-      this._rollsLeft.set(ROLLS_PER_PICK);
+      this._teamRollsLeft.set(TEAM_ROLLS_PER_PICK);
+      this._yearRollsLeft.set(YEAR_ROLLS_PER_PICK);
       this._currentTeam.set(this.randomTeam());
     }
   }
@@ -301,7 +310,8 @@ export class DraftService {
 
     if (!this.isComplete()) {
       // Reset for the next pick cycle.
-      this._rollsLeft.set(ROLLS_PER_PICK);
+      this._teamRollsLeft.set(TEAM_ROLLS_PER_PICK);
+      this._yearRollsLeft.set(YEAR_ROLLS_PER_PICK);
       this._currentTeam.set(this.randomTeam());
     }
   }
@@ -340,7 +350,8 @@ export class DraftService {
     this._squad.set([]);
     this._coachEntry.set({ coach: null, fromTeam: null });
     this._currentTeam.set(null);
-    this._rollsLeft.set(ROLLS_PER_PICK);
+    this._teamRollsLeft.set(TEAM_ROLLS_PER_PICK);
+    this._yearRollsLeft.set(YEAR_ROLLS_PER_PICK);
     this._pickedNames.set(new Set());
     this._selectedPlayer.set(null);
     this._selectedCoach.set(null);
@@ -386,7 +397,8 @@ export class DraftService {
     this._pickedNames.set(new Set(squad.map((e) => e.player!.name)));
     this._selectedPlayer.set(null);
     this._currentTeam.set(null);
-    this._rollsLeft.set(0);
+    this._teamRollsLeft.set(0);
+    this._yearRollsLeft.set(0);
   }
 
   private matchesSlot(player: Player, slot: FormationSlot): boolean {

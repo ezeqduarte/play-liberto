@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
+  Coach,
   Formation,
   GoalEvent,
   MatchResult,
@@ -57,14 +58,36 @@ const CHAMPION_TEAM_YEARS = new Set<string>([
 
 const PRESTIGE_BONUS = 2;
 
+/**
+ * Coach contribution to team strength. A linear curve around a baseline
+ * of 80: a DT rated 99 gives roughly +2.85 to each line, one rated 60
+ * subtracts ~3. Symmetric — applies to the user team and to historic
+ * AI rivals alike (each team gets its own coach's bonus). Stacks on top
+ * of formation modifiers and the prestige bonus.
+ */
+const COACH_BASELINE = 80;
+const COACH_SLOPE = 0.15;
+
+function coachBonus(coach: Coach | null | undefined): number {
+  if (!coach) return 0;
+  return (coach.rating - COACH_BASELINE) * COACH_SLOPE;
+}
+
 @Injectable({ providedIn: 'root' })
 export class MatchService {
   /**
    * Builds a MatchTeam for the user's drafted squad.
    * Strength is computed from where each player sits in the formation
-   * (line is derived from slot.y), then formation modifiers are applied.
+   * (line is derived from slot.y), then formation modifiers and the
+   * coach bonus are applied. `coach` is optional so legacy callers
+   * keep working, but the tournament passes the drafted DT.
    */
-  buildUserTeam(squad: SquadEntry[], formation: Formation, displayName = 'Mi equipo'): MatchTeam {
+  buildUserTeam(
+    squad: SquadEntry[],
+    formation: Formation,
+    displayName = 'Mi equipo',
+    coach?: Coach | null,
+  ): MatchTeam {
     const defs: Player[] = [];
     const mids: Player[] = [];
     const atks: Player[] = [];
@@ -80,10 +103,11 @@ export class MatchService {
     const baseMidfield = avg(mids.map((p) => p.rating));
     const baseAttack = avg(atks.map((p) => p.rating));
 
+    const coachMod = coachBonus(coach);
     const strength: TeamStrength = {
-      attack: baseAttack + formation.modifiers.attack,
-      midfield: baseMidfield + formation.modifiers.midfield,
-      defense: baseDefense + formation.modifiers.defense,
+      attack: baseAttack + formation.modifiers.attack + coachMod,
+      midfield: baseMidfield + formation.modifiers.midfield + coachMod,
+      defense: baseDefense + formation.modifiers.defense + coachMod,
       overall: 0,
     };
     strength.overall = computeOverall(strength);
@@ -112,11 +136,12 @@ export class MatchService {
     const prestige = CHAMPION_TEAM_YEARS.has(`${team.name}|${team.year}`)
       ? PRESTIGE_BONUS
       : 0;
+    const coachMod = coachBonus(team.coach);
 
     const strength: TeamStrength = {
-      attack: avg(atks.map((p) => p.rating)) + prestige,
-      midfield: avg(mids.map((p) => p.rating)) + prestige,
-      defense: avg(defs.map((p) => p.rating)) + prestige,
+      attack: avg(atks.map((p) => p.rating)) + prestige + coachMod,
+      midfield: avg(mids.map((p) => p.rating)) + prestige + coachMod,
+      defense: avg(defs.map((p) => p.rating)) + prestige + coachMod,
       overall: 0,
     };
     strength.overall = computeOverall(strength);

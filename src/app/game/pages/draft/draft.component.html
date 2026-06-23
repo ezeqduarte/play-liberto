@@ -179,29 +179,35 @@
             <h2 class="panel__team-name">{{ team.name }}</h2>
           </div>
 
-          <div class="panel__rolls">
-            <div>
-              <span class="panel__rolls-count">{{ rollsLeft() }}</span>
-              <span class="panel__rolls-label">rolls</span>
-            </div>
-            <div class="panel__buttons">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                [disabled]="rollsLeft() <= 0"
-                (click)="rollTeam()"
-              >
-                🎲 Equipo
-              </button>
-              <button
-                type="button"
-                class="btn btn-secondary"
-                [disabled]="!canRollYear()"
-                (click)="rollYear()"
-              >
-                📅 Año
-              </button>
-            </div>
+          <div class="rolls" role="group" aria-label="Rerolear equipo o año">
+            <button
+              type="button"
+              class="roll"
+              [class.roll--depleted]="!canRollTeam()"
+              [disabled]="!canRollTeam()"
+              [attr.aria-label]="'Cambiar equipo. ' + teamRollsLeft() + ' rerolls restantes'"
+              (click)="rollTeam()"
+            >
+              <span class="roll__icon" aria-hidden="true">🎲</span>
+              <span class="roll__label">Equipo</span>
+              <span class="roll__count" aria-hidden="true">
+                {{ teamRollsLeft() }}<span class="roll__count-total">/5</span>
+              </span>
+            </button>
+            <button
+              type="button"
+              class="roll"
+              [class.roll--depleted]="!canRollYear()"
+              [disabled]="!canRollYear()"
+              [attr.aria-label]="'Cambiar año del mismo club. ' + yearRollsLeft() + ' rerolls restantes'"
+              (click)="rollYear()"
+            >
+              <span class="roll__icon" aria-hidden="true">📅</span>
+              <span class="roll__label">Año</span>
+              <span class="roll__count" aria-hidden="true">
+                {{ yearRollsLeft() }}<span class="roll__count-total">/5</span>
+              </span>
+            </button>
           </div>
 
           @if (currentCoach(); as coach) {

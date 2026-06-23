@@ -4,7 +4,7 @@ Guía para Claude Code cuando trabaja en este repositorio. Densa por
 diseño — leerlo entero al arrancar una sesión nueva. Actualizalo
 cuando algo importante cambie.
 
-**Última versión productiva: `v1.4.1`** (leer `CURRENT_VERSION` en
+**Última versión productiva: `v1.5.0`** (leer `CURRENT_VERSION` en
 `src/app/game/data/changelog.ts` para la fuente de verdad).
 
 ---
@@ -221,6 +221,9 @@ Histórico hasta hoy:
   visible, reduced-motion, safe-area).
 - v1.4.1: los rerolls 5+5 son un presupuesto para todo el draft (no
   refillean después de cada pick).
+- v1.5.0: el rating del técnico afecta `strength` (lineal alrededor
+  de 80, slope 0.15). Se aplica simétricamente al user y a los
+  rivales históricos.
 
 ---
 
@@ -330,12 +333,14 @@ bonus de +2.
 
 ### Construcción de strength
 
-`MatchService.buildUserTeam(squad, formation)`:
+`MatchService.buildUserTeam(squad, formation, displayName?, coach?)`:
 - Bucketea los 11 slots por `slot.y`: `≤35` → defensa, `≤65` →
   medio, resto → ataque.
 - Promedia los ratings de cada bucket.
 - Aplica los modificadores tácticos (defensivo: +5 def / -3 atk;
   ofensivo: +5 atk / -3 def; equilibrado: 0).
+- **Coach bonus** (si se pasó `coach`): suma `(coach.rating - 80) *
+  0.15` a las tres líneas. Rating 99 ≈ +2.85, rating 60 ≈ -3.
 - `overall = round(atk*0.33 + mid*0.34 + def*0.33)`.
 
 `MatchService.buildHistoricTeam(team)`:
@@ -343,6 +348,9 @@ bonus de +2.
 - **Prestige bonus**: si `${team.name}|${team.year}` está en
   `CHAMPION_TEAM_YEARS` (set hardcoded con ~50 campeones reales),
   suma `+2` a cada línea.
+- **Coach bonus**: misma fórmula que el user team, aplicada sobre
+  `team.coach`. Stackea con el prestige (Boca '03 con DT 90 =
+  +2 prestige + +1.5 coach = +3.5 por línea).
 
 ### `simulate(home, away)`
 
@@ -441,6 +449,8 @@ playback de algo ya decidido.
 |---|---|---|
 | `HOME_BOOST` | 2 | Cuanto pesa la localía en ambas líneas |
 | `PRESTIGE_BONUS` | 2 | Bonus a campeones del set hardcoded |
+| `COACH_BASELINE` | 80 | Rating de DT donde el bonus es 0 |
+| `COACH_SLOPE` | 0.15 | Pendiente del bonus por punto de rating de DT |
 | `expected = 0.8 + gap/10` | — | Sensibilidad al rating gap |
 | `* 0.55` cuando gap < -7 | — | Castigo al underdog |
 | Cap final | 6 goles | Tope por equipo |

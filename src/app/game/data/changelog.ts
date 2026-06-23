@@ -16,6 +16,13 @@ export interface ChangelogEntry {
 
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: '1.5.0',
+    date: '2026-06-23',
+    changes: [
+      'El técnico ahora pesa en la simulación. Un DT alto (rating 90+) le suma puntos a las tres líneas de tu equipo; uno bajo te resta. Se aplica también a los rivales históricos, así que elegir bien al DT empieza a importar.',
+    ],
+  },
+  {
     version: '1.4.1',
     date: '2026-06-23',
     changes: [

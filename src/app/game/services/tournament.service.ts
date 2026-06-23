@@ -261,7 +261,8 @@ export class TournamentService {
       throw new Error('No squad available to start tournament.');
     }
 
-    const userTeam = this.matches.buildUserTeam(squad, formation);
+    const coach = this.draft.coachEntry().coach;
+    const userTeam = this.matches.buildUserTeam(squad, formation, undefined, coach);
     this._userTeam.set(userTeam);
 
     // Pick 31 opponents — at most one entry per club so the bracket
